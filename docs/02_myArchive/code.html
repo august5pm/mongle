@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Mongle Archive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#2d3133",
+                    "secondary-fixed": "#e9ddff",
+                    "surface-container-high": "#272a2c",
+                    "primary-fixed-dim": "#ffb4a8",
+                    "surface-dim": "#101415",
+                    "secondary-container": "#571bc1",
+                    "on-primary-fixed-variant": "#6d3830",
+                    "inverse-primary": "#894e45",
+                    "surface-tint": "#ffb4a8",
+                    "inverse-surface": "#e0e3e5",
+                    "on-tertiary": "#2d2a5b",
+                    "surface-variant": "#323537",
+                    "background": "#101415",
+                    "on-secondary-fixed": "#23005c",
+                    "primary-fixed": "#ffdad4",
+                    "surface-container-highest": "#323537",
+                    "outline-variant": "#524341",
+                    "secondary": "#d0bcff",
+                    "on-secondary-container": "#c4abff",
+                    "on-secondary": "#3c0091",
+                    "tertiary-fixed-dim": "#c4c1fb",
+                    "on-tertiary-container": "#4f4c7f",
+                    "on-error": "#690005",
+                    "outline": "#a08c89",
+                    "surface-container-lowest": "#0b0f10",
+                    "on-background": "#e0e3e5",
+                    "surface-container-low": "#191c1e",
+                    "on-surface-variant": "#d7c2be",
+                    "on-tertiary-fixed-variant": "#444173",
+                    "tertiary-fixed": "#e3dfff",
+                    "on-primary-fixed": "#370e08",
+                    "primary": "#ffd9d3",
+                    "surface": "#101415",
+                    "secondary-fixed-dim": "#d0bcff",
+                    "on-primary-container": "#7a423a",
+                    "on-primary": "#51221b",
+                    "tertiary": "#e2deff",
+                    "on-secondary-fixed-variant": "#5516be",
+                    "on-surface": "#e0e3e5",
+                    "surface-container": "#1d2022",
+                    "surface-bright": "#363a3b",
+                    "tertiary-container": "#c4c0fa",
+                    "on-error-container": "#ffdad6",
+                    "error-container": "#93000a",
+                    "primary-container": "#ffb3a7",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed": "#181445"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding-mobile": "20px",
+                    "element-gap": "12px",
+                    "gutter": "16px",
+                    "container-padding-desktop": "40px",
+                    "unit": "8px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "display-lg-mobile": ["Playfair Display"],
+                    "display-lg": ["Playfair Display"],
+                    "headline-md": ["Playfair Display"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #101415;
+            color: #e0e3e5;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(29, 32, 34, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .peach-glow {
+            box-shadow: 0 0 25px rgba(255, 180, 168, 0.2);
+        }
+        .mongle-gradient {
+            background: linear-gradient(135deg, #ffd9d3 0%, #ffb4a8 100%);
+        }
+        .cloud-bubble {
+            border-radius: 20px 20px 20px 4px;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full flex justify-between items-center px-container-padding-mobile h-16 bg-background/80 backdrop-blur-xl border-b border-white/10 z-50">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity active:scale-95 duration-200">menu</button>
+<h1 class="font-display-lg-mobile text-display-lg-mobile bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Mongle</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A cinematic, soft-focus profile portrait of a young creative with warm lighting, against a deep indigo background with subtle bokeh effects. The style is dreamlike and intimate, consistent with a high-end cinematic journal aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD67YhkQCVI1z5tdsNjguRKmYfo456Y2wJdEwHx_HdvBYNJH2VWJDHbabP_OReHUmfuouUSUxHKwDZeSKEL_3hVu-WQR52t6FBsAya3gPzo0Qw1BkZ7UEFU1idavfhZyIMWKDv4q8EqKRnWpHHsOl9R8fCx89pF2NAQRUTPSZ3jRpe-_fX0vSsr_qGxmuVaGqnc9jXdZXjEY1s6XPdQw2YcIwuOvSvpR7Jb3z9jQTigrvjJd3wIIeFjUmYaPs5zmSNSdMI1CwRabkk"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-32 px-container-padding-mobile max-w-7xl mx-auto">
+<!-- Header Section -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h2 class="font-display-lg text-primary mb-2">My Mongle Archive</h2>
+<p class="text-on-surface-variant font-body-lg">A sanctuary for your cinematic reflections and emotional journeys.</p>
+</div>
+<div class="flex gap-4">
+<div class="glass-panel px-6 py-4 rounded-lg flex flex-col items-center justify-center min-w-[140px]">
+<span class="text-secondary font-headline-md leading-none">128</span>
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest mt-1">Total Mongles</span>
+</div>
+<div class="glass-panel px-6 py-4 rounded-lg flex flex-col items-center justify-center min-w-[140px]">
+<span class="text-primary font-headline-md leading-none">42</span>
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest mt-1">This Month</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid / Archive Content -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<!-- Movie Card 1 -->
+<div class="group relative glass-panel rounded-lg overflow-hidden hover:translate-y-[-8px] transition-all duration-500 ease-out cursor-pointer shadow-lg">
+<div class="aspect-[2/3] w-full relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A hauntingly beautiful cinematic poster for a sci-fi drama featuring a lone figure looking at a distant, glowing nebula. Deep teals and oranges dominate the palette, with a grainy film texture and soft glass-like overlays. The mood is contemplative and melancholic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAv3PsVDpvoxNHCzqeS0YO0wRDSmf2lhAZlXwvYGB9NAJ0exk0K7vuT8CQyWTcik-8YshUhOaXFo4Fxe-q5TEurie2Smj2hEjm_HdtqcuTWNoYOFr71IVWxTBS4hUUBP9vYl-NVIGDgEn3oIMku9GeFWQC2-9P1tIvjb6R69ppPHs2vWG4p_2hMga4tF4NTUCEMSlN53-qtDd9I6ZvQbA7kBLOO-hqBt3MwcIcpbH0JVsnHN1K2CGgle0ztI28vr-wckt3YpJg1zPA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+<!-- Cloud Bubble -->
+<div class="absolute bottom-4 left-4 right-4 animate-float">
+<div class="bg-primary/90 backdrop-blur-md p-4 cloud-bubble text-on-primary-container shadow-xl">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-label-sm">Pure Wonder</span>
+</div>
+<p class="text-[13px] leading-relaxed line-clamp-2">"The visual storytelling felt like a warm embrace. I haven't felt this seen by a film in years..."</p>
+</div>
+</div>
+</div>
+<div class="p-5">
+<h3 class="font-headline-md text-on-surface truncate">Celestial Whispers</h3>
+<div class="flex items-center gap-2 mt-2">
+<span class="bg-secondary/20 text-secondary font-label-sm px-2 py-0.5 rounded-full border border-secondary/10">Sci-Fi</span>
+<span class="text-on-surface-variant font-label-sm">Recorded 2d ago</span>
+</div>
+</div>
+</div>
+<!-- Movie Card 2 -->
+<div class="group relative glass-panel rounded-lg overflow-hidden hover:translate-y-[-8px] transition-all duration-500 ease-out cursor-pointer shadow-lg">
+<div class="aspect-[2/3] w-full relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A vintage-style film poster showing a cozy, rain-slicked street in Paris at night. Warm amber streetlights reflect off puddles, creating a nostalgic and romantic atmosphere. Soft focus, high contrast, with deep shadows and vibrant gold highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7SW7ZPp18n7OHsOEnt19maYALCHPCnionUbFeWihm8_YtSldghofslPqopa8g0MIaTFrHi_m5wfTkX36S4HjKv8ndqwU6yusnPqLovyvmkjaRGQBd66Kz0Ap7O8jyAAyWEusFYsUR1c28Z2sNkkIiRVZ7JxKcyPpM1nZhBXy7584UeJfcNvDrCE6OZ6dUbu8Tl6N-z_r91j5Llb8BWfnR0e6DjQpg4YVHPuzjwpqsY3Xl87x0v4IACKi9r9J9KKt4kf_iWbLxQ4o"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<div class="bg-secondary/90 backdrop-blur-md p-4 cloud-bubble text-on-secondary-container shadow-xl">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-sm">Nostalgic</span>
+</div>
+<p class="text-[13px] leading-relaxed line-clamp-2">"It felt like drinking a hot cup of tea on a rainy afternoon. Simple, yet profoundly moving."</p>
+</div>
+</div>
+</div>
+<div class="p-5">
+<h3 class="font-headline-md text-on-surface truncate">Midnight in Montmartre</h3>
+<div class="flex items-center gap-2 mt-2">
+<span class="bg-secondary/20 text-secondary font-label-sm px-2 py-0.5 rounded-full border border-secondary/10">Romance</span>
+<span class="text-on-surface-variant font-label-sm">Recorded 5d ago</span>
+</div>
+</div>
+</div>
+<!-- Movie Card 3 -->
+<div class="group relative glass-panel rounded-lg overflow-hidden hover:translate-y-[-8px] transition-all duration-500 ease-out cursor-pointer shadow-lg">
+<div class="aspect-[2/3] w-full relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="An abstract, vibrant movie poster with energetic splashes of neon pink and electric blue against a pitch black background. Dynamic motion lines suggest a high-octane, stylish action sequence. Modern cinematic style with sharp edges and glowing elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3dveugRvZC2PtTaRwbu-8nIwCrh2LJCXK_6fp8M_C3kDfTBPFySaskO0nfAjgl9kc8m1Lv6WTp9dPVORL4KBx_JBYRFOBANz9RPMARenN3YtOhnO-b9k2GMZcxfNdMkr4PriNdAvfApEN6gN08aWuGzflpdUT5PkZbKoKGPOGoVknofzmEF8aRycVXgiUFM39aTGHHp8vTNJ05TBA1EY5_um2SSFKYRht0E64KpfO4OmQGW6CrTrdG-w7jTJfZvalWii2CmiIwYE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<div class="bg-surface-bright/90 backdrop-blur-md p-4 cloud-bubble text-on-surface shadow-xl">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-label-sm">Electric</span>
+</div>
+<p class="text-[13px] leading-relaxed line-clamp-2">"Pure adrenaline. The color palette was a feast for the eyes. I'm still vibrating!"</p>
+</div>
+</div>
+</div>
+<div class="p-5">
+<h3 class="font-headline-md text-on-surface truncate">Neon Pulse</h3>
+<div class="flex items-center gap-2 mt-2">
+<span class="bg-secondary/20 text-secondary font-label-sm px-2 py-0.5 rounded-full border border-secondary/10">Action</span>
+<span class="text-on-surface-variant font-label-sm">Recorded 1w ago</span>
+</div>
+</div>
+</div>
+<!-- Movie Card 4 -->
+<div class="group relative glass-panel rounded-lg overflow-hidden hover:translate-y-[-8px] transition-all duration-500 ease-out cursor-pointer shadow-lg">
+<div class="aspect-[2/3] w-full relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A minimalist film poster with a vast, snowy landscape and a tiny red cabin in the distance. The lighting is cold, blue, and serene. High-key aesthetic with lots of negative space, conveying silence and solitude." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-Kvj_g_6UWa0RSVS2KcwpVODDckvz9Kq294etrnvk6946Kwx1tSUYbpRMGjNG9XqHTJHIsgnv8xLFv4JgJS6Q3PSqAiYM-C0iVzA6IDEwVq9tyTLve2kUYRPnTgE1CdRzY_WzZMzCtoaGvzgH2fKxACAAEGKcLWs4t4mDibVR2itQRWAqU-el7vLPyXY7PJZ2b-ZogRZXEQKzXxePn7-EFjXbRHHGKnZ_12S8SXkwxbpKfvYnmhHvd2nm_01c7fBIHPrCYQXFNVs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<div class="bg-tertiary-container/90 backdrop-blur-md p-4 cloud-bubble text-on-tertiary-container shadow-xl">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">cloud</span>
+<span class="font-label-sm">Melancholy</span>
+</div>
+<p class="text-[13px] leading-relaxed line-clamp-2">"The silence in this film was its most powerful dialogue. Beautifully heartbreaking."</p>
+</div>
+</div>
+</div>
+<div class="p-5">
+<h3 class="font-headline-md text-on-surface truncate">Quiet Echoes</h3>
+<div class="flex items-center gap-2 mt-2">
+<span class="bg-secondary/20 text-secondary font-label-sm px-2 py-0.5 rounded-full border border-secondary/10">Drama</span>
+<span class="text-on-surface-variant font-label-sm">Recorded 2w ago</span>
+</div>
+</div>
+</div>
+<!-- Repeated or additional cards to fill grid -->
+<!-- Movie Card 5 -->
+<div class="group relative glass-panel rounded-lg overflow-hidden hover:translate-y-[-8px] transition-all duration-500 ease-out cursor-pointer shadow-lg">
+<div class="aspect-[2/3] w-full relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A colorful, hand-drawn animation style poster for a whimsical adventure. Floating islands, giant sunflowers, and a playful breeze visible through swirling lines. Vibrant greens, yellows, and soft sky blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCI_AN8XYUNxW6mC0_KRuJnDH1DPsYrKbEoei8kGs8_ydDM6ZEEGBS_7L43x29pX8MKNXQ7pA4sR4JC0Dj46u_52-k8uNlck4n8SkCDobPlAPynkAEu3ABUqFvoLeAox0SjAKiRqW8SZ4g3Pt4rRSIl8b6cxjapoz2v_1F61gTkRS8MsrYx-rlZFOemTNI56qnz7Up40ziSSFXxgSiZg7MBAkkXv8N6SCnOkYrrdD8WQQaZ1yH5GrgWuYAsoVL_xXEXL---NY9i6ZY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<div class="bg-primary-container/90 backdrop-blur-md p-4 cloud-bubble text-on-primary-container shadow-xl">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">sentiment_satisfied</span>
+<span class="font-label-sm">Whimsical</span>
+</div>
+<p class="text-[13px] leading-relaxed line-clamp-2">"Found my inner child again. Every frame was a painting I wanted to live inside."</p>
+</div>
+</div>
+</div>
+<div class="p-5">
+<h3 class="font-headline-md text-on-surface truncate">The Sunflower Isles</h3>
+<div class="flex items-center gap-2 mt-2">
+<span class="bg-secondary/20 text-secondary font-label-sm px-2 py-0.5 rounded-full border border-secondary/10">Animation</span>
+<span class="text-on-surface-variant font-label-sm">Recorded 3w ago</span>
+</div>
+</div>
+</div>
+<!-- Placeholder for Empty / Add New -->
+<div class="group glass-panel rounded-lg flex flex-col items-center justify-center border-dashed border-2 border-white/10 hover:border-primary/40 transition-colors duration-300 min-h-[400px]">
+<div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center text-primary mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</div>
+<p class="font-headline-md text-on-surface-variant">New Entry</p>
+<p class="font-label-sm text-on-surface-variant/60 mt-1">Capture a new feeling</p>
+</div>
+</div>
+</main>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-28 right-6 w-14 h-14 rounded-full mongle-gradient text-on-primary shadow-2xl flex items-center justify-center active:scale-95 transition-transform z-40 peach-glow">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">edit</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-surface-container/60 backdrop-blur-2xl border-t border-white/5">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">search</span>
+<span class="font-label-sm text-label-sm">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary-container bg-secondary-container/40 rounded-full px-4 py-1 shadow-[0_0_15px_rgba(255,180,168,0.3)] -translate-y-1 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-label-sm text-label-sm">Journal</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Navigation Drawer (Hidden by default) -->
+<div class="fixed inset-y-0 left-0 z-[60] flex flex-col p-6 h-full w-80 rounded-r-lg bg-surface-container-low dark:bg-surface-dim shadow-2xl -translate-x-full transition-transform duration-400 ease-in-out" id="drawer">
+<div class="flex flex-col gap-8">
+<div class="flex items-center gap-4 border-b border-white/5 pb-6">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-secondary">
+<img class="w-full h-full object-cover" data-alt="A cinematic, soft-focus profile portrait of a young creative with warm lighting, against a deep indigo background. The style is dreamlike and intimate, consistent with a high-end cinematic journal aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXRAJdfF_fhcxr9_hMjf0fjSpJFy--xO0mYwVvxepr4AwwkYqybqBnINGQ0K0rU81m3dqbtmXujo7IeIjwZ330pAY1ueYmF47AVW7iCFMc9UjrDdXG7Bdx49UzgxDfr4PVIIqODXfU2DkC6n9UScsBq_pGyf5tCzt2HZUMD1kBz2PP7Ve9uHsZ-p0VEOlQIrDeJt5h50FUy4Pvd0vFhTW68G9pf13cWLYWdYvFHiZrGkuCuFUzvDr_Q2Nrh3YXcT8VsybxRw6gtDk"/>
+</div>
+<div>
+<h4 class="font-headline-md text-on-surface leading-none">Cinematic Dreamer</h4>
+<p class="font-label-sm text-secondary mt-1">Premium Member</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-white/5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-label-sm">My Collections</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-white/5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-sm">Wishlist</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-white/5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm">Settings</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-white/5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-sm">Help Center</span>
+</a>
+<div class="h-px bg-white/5 my-4"></div>
+<a class="flex items-center gap-4 p-3 text-error hover:bg-error/10 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-sm">Logout</span>
+</a>
+</nav>
+</div>
+</div>
+<!-- Drawer Backdrop -->
+<div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[55] hidden opacity-0 transition-opacity duration-400" id="drawer-backdrop"></div>
+<script>
+        // Simple micro-interactions for the drawer
+        const menuBtn = document.querySelector('header button');
+        const drawer = document.getElementById('drawer');
+        const backdrop = document.getElementById('drawer-backdrop');
+
+        menuBtn.addEventListener('click', () => {
+            drawer.classList.remove('-translate-x-full');
+            backdrop.classList.remove('hidden');
+            setTimeout(() => backdrop.classList.add('opacity-100'), 10);
+        });
+
+        backdrop.addEventListener('click', () => {
+            drawer.classList.add('-translate-x-full');
+            backdrop.classList.remove('opacity-100');
+            setTimeout(() => backdrop.classList.add('hidden'), 400);
+        });
+
+        // Add some floating animation to cloud bubbles
+        const bubbles = document.querySelectorAll('.cloud-bubble');
+        bubbles.forEach((bubble, index) => {
+            bubble.style.animation = `float ${3 + index}s ease-in-out infinite alternate`;
+        });
+    </script>
+<style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-10px); }
+        }
+    </style>
+</body></html>

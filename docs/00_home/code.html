@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mongle - Cinematic Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #101415;
+            color: #e0e3e5;
+            overflow-x: hidden;
+        }
+        .font-display { font-family: 'Playfair Display', serif; }
+        .glass-panel {
+            background: rgba(29, 32, 34, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .peach-glow {
+            box-shadow: 0 0 20px rgba(255, 180, 168, 0.2);
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .hero-mask {
+            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+        }
+
+        .active-nav-glow {
+            box-shadow: 0 0 15px rgba(255, 180, 168, 0.3);
+        }
+
+        .mongle-gradient-text {
+            background: linear-gradient(to right, #ffd9d3, #d0bcff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ffd9d3",
+                        "on-primary": "#51221b",
+                        "primary-container": "#ffb3a7",
+                        "on-primary-container": "#7a423a",
+                        "secondary": "#d0bcff",
+                        "on-secondary": "#3c0091",
+                        "secondary-container": "#571bc1",
+                        "on-secondary-container": "#c4abff",
+                        "surface": "#101415",
+                        "surface-container": "#1d2022",
+                        "surface-container-low": "#191c1e",
+                        "surface-container-high": "#272a2c",
+                        "on-surface": "#e0e3e5",
+                        "on-surface-variant": "#d7c2be",
+                        "outline": "#a08c89",
+                        "background": "#101415"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem"
+                    },
+                    spacing: {
+                        "container-padding-mobile": "20px",
+                        "container-padding-desktop": "40px"
+                    },
+                    fontFamily: {
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "body-md": ["Plus Jakarta Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full flex justify-between items-center px-container-padding-mobile h-16 bg-background/80 backdrop-blur-xl border-b border-white/10 z-50">
+<div class="flex items-center gap-3">
+<img alt="Mongle Logo" class="w-8 h-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFZFDv30QlBfj1KlBPnVuo5sFp5rj8SgSYgPV0jHwnViyb7FZI4qBYri-h_l6mLpfu78HFDZV8PQdUVqGVzNQryO2E15SDSJZXdgR8w0JoQCSFVEpo1n3NClDP4ASQyNyTtG822XQvg55cKHcYMs9gY6-TMrmz2lvAZduCDUf3uoJXWeD4eooGiDPuSsh0w4i3bWzwm0mis3fdWAVL-SmVnJyDt8g89JTWhiEsTbL3eoLYX1gdpXncB7v9_ZEJrVmGH7Xf_j__d0o"/>
+<h1 class="font-display-lg-mobile text-display-lg-mobile mongle-gradient-text">Mongle</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity">search</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A sophisticated close-up portrait of a young creative professional with a warm smile, softly lit by cinematic purple and peach ambient lights. The style is high-fidelity and artistic, reflecting a modern digital sanctuary aesthetic with a clean, high-resolution finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxnA0OBTSJU6xJ_lIVX1ZBLAutgfDl1VlNCUX5gyYPCF-ygumqp4ohdLcmChK1C5shFwAE_lwYFc99pgTHESaLYwta6RDNPWny7DiNBvatsiJ8oJpuqX5xD2hLF1XnQxOPPf_Hh2D4mQJ8Bxx3oXNmlDz41ETmI6uOLFxIhjPlg_UyjS1nSY4_tdWrhoQrYkZrmEUNA8nzB5W7t5D__lGONW7HxwGV4_gAz5rqVNDKkBS62ngBC8DZhD24UBpLZKjP-r3svigBV5E"/>
+</div>
+</div>
+</header>
+<main class="pb-32">
+<!-- Hero Section: Today's Mongle Pick -->
+<section class="relative w-full h-[70vh] flex flex-col justify-end overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center hero-mask scale-105 animate-[pulse_10s_infinite_alternate]" data-alt="A breathtaking cinematic wide shot of a solitary figure standing on a misty, pastel-colored mountain peak at dawn. The sky is a blend of soft peaches, deep violets, and indigo. High-fidelity textures, atmospheric depth, and a dreamy, ethereal mood that captures the essence of a reflective cinematic journey." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBNrY0rj8Bn6NAPy2EyI9xWMkU9EWe97hws6tpxHeKnkL5v8Gn2ujQBEOWr0quaRmUD2506r5CeJdjY1of64pcQIdMqZt8lIu0gfK5e7VEgnEIwbzvR0-Tce8NxxJcB70xsL93cukd6-XexRfU5hC0XSOwT6y7YuMnt1Y1XFB5GlQgCfJ506JOXtsYIuX3rIw-kQK_7jOI-aCjaAuw4sMYqKkWppAsdn41HakEvnWS5jfdOOG2pOtavcz-mKisE0IRl29HEHnn_qaA')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 px-container-padding-mobile mb-8 space-y-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel border border-primary/30">
+<span class="material-symbols-outlined text-primary text-[14px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-label-sm font-label-sm text-primary uppercase tracking-widest">Today's Pick</span>
+</div>
+<h2 class="font-display text-4xl md:text-6xl text-on-surface leading-tight">The Whispering<br/>Valley of Dreams</h2>
+<p class="text-on-surface-variant font-body-md max-w-md line-clamp-2">A poetic journey through time and memory, where the wind carries stories of forgotten lives and soft morning light.</p>
+<div class="flex items-center gap-4 pt-2">
+<button class="px-8 py-3 bg-primary text-on-primary rounded-full font-bold hover:scale-105 transition-transform peach-glow flex items-center gap-2">
+<span class="material-symbols-outlined">play_arrow</span> Watch Now
+                    </button>
+<button class="w-12 h-12 glass-panel rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-on-surface">bookmark</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Continue Watching -->
+<section class="mt-8 px-container-padding-mobile">
+<div class="flex justify-between items-end mb-4">
+<h3 class="font-headline-md text-headline-md font-display">Continue Watching</h3>
+<button class="text-primary text-label-sm font-label-sm">View All</button>
+</div>
+<div class="flex overflow-x-auto gap-4 hide-scrollbar pb-4 -mx-container-padding-mobile px-container-padding-mobile">
+<!-- Card 1 -->
+<div class="flex-none w-64 group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden glass-panel border border-white/5 mb-3">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A cinematic still from a modern noir film, featuring a rainy city street at night with neon signs reflecting in deep blue and violet puddles. The composition is wide and moody, with high contrast and soft-edged shadows. Deeply immersive atmosphere in 4k resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyZnb0ROugUJ_zWrKMsoBQDWT_YKAMNLrYGZ5f8YiwFLuTTr26n3AvSFc0Vw2GEQiHtY13ZXezL6xUT6vbamo1np1xdtPU0SJlzv5Med0xFcqZBcgECn7RaXh73ZKvMSAjTE8StIs7Ex_2u8I7toU0RGmirpD4JdFscWJpitbRLim-IGO5tvjklFDLq0Nw8Pg1Z9Q6iRM7tJDCMRGK1feB5xmR6f8sHKC6arqnSKLMxMGO1Tp5P2ujVV8UUu6fH1-bvYaZIPUjIt0"/>
+<div class="absolute bottom-0 left-0 w-full h-1 bg-white/20">
+<div class="h-full bg-primary w-2/3 shadow-[0_0_8px_#ffd9d3]"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
+<span class="material-symbols-outlined text-white text-4xl">play_circle</span>
+</div>
+</div>
+<h4 class="font-bold text-on-surface truncate">Midnight Echoes</h4>
+<p class="text-label-sm text-on-surface-variant">24m remaining</p>
+</div>
+<!-- Card 2 -->
+<div class="flex-none w-64 group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden glass-panel border border-white/5 mb-3">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A lush green forest scene with sunlight filtering through ancient oak trees, creating a warm, golden dappled light effect. A soft, dreamlike haze fills the air. The visual style is vibrant yet peaceful, with rich botanical textures and cinematic depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAzXmBzINwD1m2xfi7xNtQaesqNru-KqhBKAh6JkRL4iZsnSwFHi3Llmh-o0SjgM0GSGaW-3s_Q7U2ycJwjyjPM9HR3C3TQo82W1JIrA8y8KfoVs3zPL1FHAE9IKPrF38-a011sUPBsRXtoPRuj-NrzOTeL9vVUD4oHJLQYYWIXtm7imxsfLUfFrn9U68smTTzl-q1elhqOLMb_7BmH5LxB5qrpOKHEvKJYE2iDDERd_C3DhUpmP6qA1LE7PPngLJi435SSbADARw"/>
+<div class="absolute bottom-0 left-0 w-full h-1 bg-white/20">
+<div class="h-full bg-primary w-1/4 shadow-[0_0_8px_#ffd9d3]"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
+<span class="material-symbols-outlined text-white text-4xl">play_circle</span>
+</div>
+</div>
+<h4 class="font-bold text-on-surface truncate">Green Horizon</h4>
+<p class="text-label-sm text-on-surface-variant">1h 12m remaining</p>
+</div>
+<!-- Card 3 -->
+<div class="flex-none w-64 group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden glass-panel border border-white/5 mb-3">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A stylish futuristic apartment interior at dusk, overlooking a sprawling city with glowing lights. The room is filled with soft ambient lighting in shades of peach and lavender. Minimalist design, high-end cinematic aesthetic, cozy yet sophisticated atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4xSOu89w-Wn9Wkq8EfQYdIxxdIZGDXcgMbZiiHHFnB7Abh9lBhrmp-kSkz5PcMsAqBYqdcYuVssL-zRucm_-M0lIJcdEXvUo82DTT35jnIJhA8yzzzmUBAiBNR9qOaLkJW8knaLoKP3ki2eCoQnc1EkdR36lcYg8RMFFkC6B5BgVpdEgDgmJh-IK8-ouMzQ5vj_rxIllCWNr4JgIwxU6SybnrW_yh9cYZQNaEyw9eAfPifZbVeGs-NdzQGJyV59rzr5XReD4yMV4"/>
+<div class="absolute bottom-0 left-0 w-full h-1 bg-white/20">
+<div class="h-full bg-primary w-5/6 shadow-[0_0_8px_#ffd9d3]"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
+<span class="material-symbols-outlined text-white text-4xl">play_circle</span>
+</div>
+</div>
+<h4 class="font-bold text-on-surface truncate">Apartment 402</h4>
+<p class="text-label-sm text-on-surface-variant">5m remaining</p>
+</div>
+</div>
+</section>
+<!-- Bento Grid: Soft & Fluffy Stories -->
+<section class="mt-12 px-container-padding-mobile">
+<h3 class="font-headline-md text-headline-md font-display mb-6">Soft &amp; Fluffy Stories</h3>
+<div class="grid grid-cols-4 grid-rows-2 gap-3 h-[450px]">
+<!-- Large Featured -->
+<div class="col-span-2 row-span-2 relative rounded-2xl overflow-hidden glass-panel group cursor-pointer border border-white/10">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A whimsical, heartwarming scene of a giant, fluffy white cloud-like creature sitting gently in a meadow of lavender flowers. Soft morning sunlight, pastel color palette, Ghibli-inspired artistic style, extremely cozy and emotional atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByDm9BS02rE7kaMYy0GnK6ykSdKrPKeQ1d6g_EuZH_-gMaoko6fc1DuXPwu9eJA2vwK1Eqxo6f1cYUBTn16ie3AWlGURg9-_hyMG-cJQfPfAOfJOlVweYRT04OUw1Q5qt2UTJOQ4k8XqOnn90IFCdTnfDYi1NTVSa3GH3uyD6LFjbAqqaZTPzN9073yr97YNSHBJEYdhPZVRN2us_yk4Xmn9D1MgRJe5hthuvKZ1zkWscCAUoPQgMva8Q-BVsA6m4gUKCZWJSvjkQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6">
+<span class="px-3 py-1 rounded-full bg-secondary-container/80 text-on-secondary-container text-[10px] uppercase font-bold w-fit mb-2 backdrop-blur-md">Featured Tale</span>
+<h4 class="text-2xl font-display font-bold">Cloud Keeper's Song</h4>
+</div>
+</div>
+<!-- Small Item 1 -->
+<div class="col-span-2 row-span-1 relative rounded-2xl overflow-hidden glass-panel group cursor-pointer border border-white/10">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A cozy indoor library with floating glowing orbs of light and a cat sleeping on an open book. Warm candlelight, soft textures, dreamlike atmosphere with a magical realism touch. Rich browns, warm oranges, and deep purples." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABrzNs_GE333t0k41sFJIGxvvO61K8ijgZG4tNyzPpS6L2vZsQhSxD2AMjDAMADkDqZyVC2st1pTtn1ZmW1VeZB_zemaM0LJNqj-CDdyF81it2a3eI5RHGZaquGr8iKl5wk9hLe0ZccqbZcJDqm2ZtZeea1ba4z_-UM3T6xb63jLT_fRL_Au6U8ia974puBdBcCYdFgwfSsGJZeSAgzZzZ4ehUYOg3V_n4zJj2sxT97xy934qyT-J14LBL95dEwHgp5CzmMYg_FGk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4">
+<h4 class="font-bold">Midnight Library</h4>
+</div>
+</div>
+<!-- Small Item 2 -->
+<div class="col-span-1 row-span-1 relative rounded-2xl overflow-hidden glass-panel group cursor-pointer border border-white/10">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Close up of two hands holding hot ceramic mugs of cocoa with marshmallows. Soft knitted sweater textures, warm hearth fire in the background out of focus. Extremely intimate and comfortable vibe, cinematic soft focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtY4w3w5PcHxIgt27NGiuR9V-ZT5Q4b52PNKEF3NKVNfwchGSlVsK7mHaXghCqwotjLxw_iz2nngagc_gaFKLUAuGc6yHNd1E7rb5spO0avkNl9capKRNt0CNwb71tWvVI25oGpBLcvtu4ahOfKB0rb5qsj6-zLtZ68PJa0qKK4btUXbIicCXZf9YS4mKwA_uHw7j38WDHRfdVmMJn1_o6JJAHCr-H6MxzJFJ7JbOJjiIGwzEf1SY4UW5J6KpyQt0iOQG99DjNs0I"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4">
+<h4 class="text-sm font-bold truncate">Winter Hugs</h4>
+</div>
+</div>
+<!-- Small Item 3 -->
+<div class="col-span-1 row-span-1 relative rounded-2xl overflow-hidden glass-panel group cursor-pointer border border-white/10">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="An artistic shot of paper boats floating on a pond reflecting the pink and orange sky of sunset. Calm ripples, peaceful and nostalgic mood, high artistic fidelity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFow0Cdr9I1itLFgcGJ29pSRs20-7Dmmy1oGmocONbZUSLnXndoeLWyiAo7AyER8_BI2KhAA9SeLw3hVECcC4GjMTPDUx3Q-pzap3PUMvc7FWIFtLki73CDGWYmnM4eR2bpkYfU33JdoszBwdCJ6RrP-X3Fh5NUqpdj_5Z-qWNf3IUXuh7KDcdKXPNbq4j3d5ocPhG6GoC5bjymxg7SjTBBqp30TWGCT_EVVPOiPhcLi5baQtpM5hYQhorazv97GV_hW3JH9FqUDw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4">
+<h4 class="text-sm font-bold truncate">Small Waves</h4>
+</div>
+</div>
+</div>
+</section>
+<!-- Rainy Day Section -->
+<section class="mt-12 px-container-padding-mobile">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">rainy</span>
+<h3 class="font-headline-md text-headline-md font-display">Movies for a Rainy Day</h3>
+</div>
+<div class="flex overflow-x-auto gap-6 hide-scrollbar pb-4 -mx-container-padding-mobile px-container-padding-mobile">
+<!-- Movie Poster 1 -->
+<div class="flex-none w-40 group">
+<div class="aspect-[2/3] rounded-xl overflow-hidden mb-3 border border-white/10 shadow-xl group-hover:-translate-y-2 transition-transform duration-300">
+<img class="w-full h-full object-cover" data-alt="Cinematic movie poster for a romantic drama set in London during a rainstorm. Two people sharing an umbrella, blurred city lights in the background. Moody blue and charcoal tones with warm skin tones. Minimalist elegant typography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2c94f5dnY2-ucTBgPYyIMgvVP7Pz_QnzGrYvUmiSdjqR2CXT9uRXIdzP_IqQ5nbvnNqnIAzoJMxbEI4KOo4CRlPvTwaf5lw0aRNShmCESloqBoDJCOJTEUf4U_CzI9_LwHvtpafO6LRB9yYOtul_XgRvaOQB5jAL-UzZ_AUbsKF5zXcwnG6GetaCwFNabYCQw3GVTv5i6956208IJiooZHdFcB2OfmUNqWQv47ejz-DBqPJjghWTNl5O3LoJwaJ3fi-53M03qiBs"/>
+</div>
+<p class="font-bold text-center text-sm truncate">Blue Raincoat</p>
+<div class="flex justify-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[12px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-[10px] text-on-surface-variant">4.8</span>
+</div>
+</div>
+<!-- Movie Poster 2 -->
+<div class="flex-none w-40 group">
+<div class="aspect-[2/3] rounded-xl overflow-hidden mb-3 border border-white/10 shadow-xl group-hover:-translate-y-2 transition-transform duration-300">
+<img class="w-full h-full object-cover" data-alt="Movie poster for a mystery thriller set in a coastal town during a storm. A lighthouse beam piercing through heavy fog. High-contrast black and white photography with deep grain. Dramatic and tense mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6iVxEyMB8ZDFbEc2ehObMZV25Byj2ouLBE6pV236IzD3YB881-MBrSiseennCS7HwfrB2ez99mrpgy58Mx5p0KSKcEB868veeABWcPMt9IM28chu7otnrjpILh0OphvkyT2p2BXZt0EQbYTkAIvTq0vKXSRZ6K35A159tqBoMHV6W18gfkX1OZEBeKbXT4VkPrWdEZkJ8dbfgcx743NzzHHJsm3Z5EzymgS-J0WlpzFJ8PinrmEqqpxvRSN13xGBZmwvXLavBLaA"/>
+</div>
+<p class="font-bold text-center text-sm truncate">The Fog's Secret</p>
+<div class="flex justify-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[12px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-[10px] text-on-surface-variant">4.2</span>
+</div>
+</div>
+<!-- Movie Poster 3 -->
+<div class="flex-none w-40 group">
+<div class="aspect-[2/3] rounded-xl overflow-hidden mb-3 border border-white/10 shadow-xl group-hover:-translate-y-2 transition-transform duration-300">
+<img class="w-full h-full object-cover" data-alt="Artistic movie poster for a coming-of-age story. A bicycle leaning against a wall with wet cobblestones. Sunny rain, rainbow in the distance. Vibrant green and yellow tones, optimistic and nostalgic vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTAUUFsDC5rceQehefYHVwJWkVhPvl0mY0xuL0_ENiRZXaEpHGA-vxGPm1AZshN6jFKc2G0y02UUckMtZymNdHtWZVp1xwh71mdpdHFHrLnNnS6CHkjm4hTloDH4YLacbXgTPxbJwtf91b_4B6Bir-3quf7fVzifyhE7_MpDmrkXgeidGgyu0qe85rbGD7HUCTJ5F4hCvN05t6tULRSLjTQS-WD0lvIVonVjp49uyX5PcVVClSh8_WwizbRtAqZdR77a2JCdyIwok"/>
+</div>
+<p class="font-bold text-center text-sm truncate">Sunshower</p>
+<div class="flex justify-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[12px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-[10px] text-on-surface-variant">4.9</span>
+</div>
+</div>
+<!-- Movie Poster 4 -->
+<div class="flex-none w-40 group">
+<div class="aspect-[2/3] rounded-xl overflow-hidden mb-3 border border-white/10 shadow-xl group-hover:-translate-y-2 transition-transform duration-300">
+<img class="w-full h-full object-cover" data-alt="Movie poster for a quiet indie drama. A steaming cup of coffee next to a rainy window. Soft morning light, cozy home interior. Muted earth tones, extremely peaceful and contemplative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdcb_ENja9BG8cR3EgE4xtjAlQ4IUTQq2-_cMFvCbmkm6hrGyOoe-S5QzybET0QBuvDKs3IOPsoWT1VnL2ZlvlcNT1yvpqfFB73k2twQ2QgE0B8rLd4TrvZmZS2ykgopus3rI3yLUkd5rHtJrDU4sVRuOQq14FOgrkbZk67QCZzwPcTYHB9MRsidUitaHUxYTpy-Q5vWaGiodycaixLPNgRPNc-W1_j6bkvIWqS4Y6-G8bvbeYXHPpqI3m3-Xnv9544_MV5j7rcUY"/>
+</div>
+<p class="font-bold text-center text-sm truncate">Quiet Mornings</p>
+<div class="flex justify-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[12px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-[10px] text-on-surface-variant">4.5</span>
+</div>
+</div>
+<!-- Movie Poster 5 -->
+<div class="flex-none w-40 group">
+<div class="aspect-[2/3] rounded-xl overflow-hidden mb-3 border border-white/10 shadow-xl group-hover:-translate-y-2 transition-transform duration-300">
+<img class="w-full h-full object-cover" data-alt="Cinematic poster of a jazz club with neon signs reflected on a wet sidewalk. Saxophone player in silhouette. Deep purples, magentas and blacks. Rich, soulful atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrq1fPpUaZsyGVZsIlXAKjn8aY7iJSgzMI-rirTjIn-Jr7b-Q64XC2_lEwXfC0dTThdL7PNFrS46rSiGrFIvp26n6JJPIpQRd2w6G99bAH0PP0y6yQFn-nSjcANFGA6L5IJSr4ntg4ruBRxE8jf17qdY2abjikmAn5xzibJY25x5XHPw9oJUdgTdocUmE0cnlG6MQae4LYv3lkpVqAYjNvq1xtmx84f5-utiYKhXzjjfexdRM6BINwSIHTFZ8mGP8pYeFLXePYvh4"/>
+</div>
+<p class="font-bold text-center text-sm truncate">Jazz &amp; Rain</p>
+<div class="flex justify-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[12px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-[10px] text-on-surface-variant">4.7</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-surface-container/60 backdrop-blur-2xl border-t border-white/5 rounded-t-xl shadow-[0_-8px_32px_rgba(87,27,193,0.15)]">
+<a class="flex flex-col items-center justify-center text-primary-container bg-secondary-container/40 rounded-full px-4 py-1 active-nav-glow -translate-y-1 duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm mt-0.5">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-label-sm text-label-sm mt-0.5">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-label-sm text-label-sm mt-0.5">Journal</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm mt-0.5">Profile</span>
+</a>
+</nav>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-primary text-on-primary shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform z-40 peach-glow">
+<span class="material-symbols-outlined text-3xl">edit</span>
+</button>
+<script>
+        // Micro-interactions for glass cards
+        document.querySelectorAll('.glass-panel').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mongle - Explore</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(29, 32, 34, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .peach-glow {
+            box-shadow: 0 15px 35px -5px rgba(255, 180, 168, 0.2);
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(180px, auto);
+            gap: 16px;
+        }
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#2d3133",
+                        "secondary-fixed": "#e9ddff",
+                        "surface-container-high": "#272a2c",
+                        "primary-fixed-dim": "#ffb4a8",
+                        "surface-dim": "#101415",
+                        "secondary-container": "#571bc1",
+                        "on-primary-fixed-variant": "#6d3830",
+                        "inverse-primary": "#894e45",
+                        "surface-tint": "#ffb4a8",
+                        "inverse-surface": "#e0e3e5",
+                        "on-tertiary": "#2d2a5b",
+                        "surface-variant": "#323537",
+                        "background": "#101415",
+                        "on-secondary-fixed": "#23005c",
+                        "primary-fixed": "#ffdad4",
+                        "surface-container-highest": "#323537",
+                        "outline-variant": "#524341",
+                        "secondary": "#d0bcff",
+                        "on-secondary-container": "#c4abff",
+                        "on-secondary": "#3c0091",
+                        "tertiary-fixed-dim": "#c4c1fb",
+                        "on-tertiary-container": "#4f4c7f",
+                        "on-error": "#690005",
+                        "outline": "#a08c89",
+                        "surface-container-lowest": "#0b0f10",
+                        "on-background": "#e0e3e5",
+                        "surface-container-low": "#191c1e",
+                        "on-surface-variant": "#d7c2be",
+                        "on-tertiary-fixed-variant": "#444173",
+                        "tertiary-fixed": "#e3dfff",
+                        "on-primary-fixed": "#370e08",
+                        "primary": "#ffd9d3",
+                        "surface": "#101415",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "on-primary-container": "#7a423a",
+                        "on-primary": "#51221b",
+                        "tertiary": "#e2deff",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "on-surface": "#e0e3e5",
+                        "surface-container": "#1d2022",
+                        "surface-bright": "#363a3b",
+                        "tertiary-container": "#c4c0fa",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "primary-container": "#ffb3a7",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#181445"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding-mobile": "20px",
+                        "element-gap": "12px",
+                        "gutter": "16px",
+                        "container-padding-desktop": "40px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "display-lg-mobile": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg-mobile": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full flex justify-between items-center px-container-padding-mobile h-16 bg-background/80 backdrop-blur-xl border-b border-white/10 z-50 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity active:scale-95 duration-200">menu</button>
+<h1 class="font-display-lg-mobile text-display-lg-mobile bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Mongle</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-white/20">
+<img class="w-full h-full object-cover" data-alt="A professional close-up studio portrait of a young creative professional with a warm smile. The lighting is cinematic with a soft teal and orange color grade. The background is a blurred modern home office with warm ambient lighting, fitting the cozy and sophisticated aesthetic of the Mongle brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5KW5QJbUmxVXFqWPCAV79Z6IBuRrZtCHqwBfiNmEbstVEPn442QrlUFxbMz_z06gnnJTUr9y7jdxBKIE58bsVWxBcKRorUNHsIwQKdBmWcoXts8vqMNDKWJWzOtis0rdmDvbdqfcsyD13pDx07OgFEA1F1QwOFvVylNiMcbMKR9piQ4BefEFoo3MITaDEeA8NjKPsTmBPUUnJQfWt-25lzJzMS7ZEiB2Sh9uzthpyDyepf2wMYbNtDEsds_-tYqQqLX2P_M6hXqI"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="pt-24 px-container-padding-mobile md:px-container-padding-desktop max-w-7xl mx-auto space-y-10">
+<!-- Search Section -->
+<section class="space-y-6">
+<div class="relative group">
+<div class="absolute inset-y-0 left-5 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</div>
+<input class="w-full h-14 pl-14 pr-6 rounded-full glass-panel focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/50 transition-all text-body-lg font-body-lg text-on-surface placeholder:text-on-surface-variant/50" placeholder="Find movies, journals, or moods..." type="text"/>
+<div class="absolute inset-0 -z-10 bg-primary/5 blur-2xl rounded-full opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
+</div>
+<!-- Category Chips -->
+<div class="flex gap-3 overflow-x-auto pb-2 scroll-smooth">
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm peach-glow flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">trending_up</span>
+                    #Cinematic
+                </button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full glass-panel text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors">
+                    #Warm
+                </button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full glass-panel text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors">
+                    #Thrilling
+                </button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full glass-panel text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors">
+                    #Dreamy
+                </button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full glass-panel text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors">
+                    #Melancholic
+                </button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full glass-panel text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors">
+                    #Nostalgic
+                </button>
+</div>
+</section>
+<!-- Trending Mongles (Bento Layout) -->
+<section class="space-y-6">
+<div class="flex justify-between items-end">
+<div class="space-y-1">
+<h2 class="font-headline-md text-headline-md text-primary">Trending Mongles</h2>
+<p class="font-body-md text-body-md text-on-surface-variant/70">Films the community is reflecting on this week</p>
+</div>
+<button class="text-secondary font-label-sm text-label-sm hover:underline">View All</button>
+</div>
+<div class="bento-grid">
+<!-- Large Featured Card -->
+<div class="col-span-2 row-span-2 relative rounded-lg overflow-hidden group cursor-pointer glass-panel">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A breathtaking cinematic still from a sci-fi epic featuring a lone explorer standing before a massive, glowing celestial portal. The color palette is dominated by deep indigos, violets, and vibrant peach glows. High-fidelity textures and atmospheric haze create an immersive, dreamy depth consistent with the Mongle aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKAo3d-VRiUMT5XakUItMvuf1t30BCGz7y4Lt9O90XY49vJStmTbj4rCwT04aauA8FZlxaSQxse6BN0b4ta5bfEBqKbSzy3b8ljLmd10674dKdKQXa2FICv9Rut7UNgoVrnnLbMKpca12JehdDOgvOcdwtsPW3Vvfhz4-dbdjs58marg3siovBVzvTgy4z0Zrm2qiGU23X8vcw_I5fpJJpT9ltcbJ6Cn98ZVEBD6N_ueKe4m-vZcjHJaRQhzMIeEnZ7bfTjQVH238')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<div class="flex gap-2 mb-3">
+<span class="px-3 py-1 rounded-full bg-primary-container/30 backdrop-blur-md text-primary font-label-sm text-label-sm">Must Watch</span>
+</div>
+<h3 class="font-display-lg-mobile text-display-lg-mobile text-on-surface mb-2">Echoes of Time</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">A visually stunning journey through the remnants of a lost civilization, captured in 70mm film grain.</p>
+</div>
+</div>
+<!-- Secondary Cards -->
+<div class="col-span-2 relative rounded-lg overflow-hidden group cursor-pointer glass-panel">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A cozy, intimate interior scene of a Parisian cafe at night. Soft golden light spills from vintage lamps, illuminating rain-streaked windows. The atmosphere is warm, romantic, and slightly melancholic. Rich textures of wood and velvet are rendered with cinematic precision in deep warm tones." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDThPhcuqvTvCQllAx05G3yRbu-SYtluRh1S2M_4jQ0yw74KxUyKXN0Tuc_VEa1UmtNAQAebSGr-NlIUIUCkvxh3KZqCIEQ3O0yHeNm5YUQGaK8EnQhe8TCGkijWtTLeGNIHP39w57OYk4GqyaUBic2w69shCejIk5ON2PcgMN_Yk1QLKt1qiM6sZlB-Eh1kY57_Dw0s7YonmHLhETpnYbmzMVmYrl9IlYkNsICRl5Jd39PPkdn3j6RTB2MXXrbcAyFdEYrr1TkZAE')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6">
+<h4 class="font-headline-md text-headline-md text-on-surface">Midnight Whispers</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">428 Journal Entries</p>
+</div>
+</div>
+<div class="relative rounded-lg overflow-hidden group cursor-pointer glass-panel">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A minimalist abstract composition featuring shifting sand dunes under a pale moon. The lighting is ethereal and cool, with soft violet shadows and silver highlights. The style is clean, modern, and evocative, focusing on texture and form in a digital sanctuary style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtzPizWdHFlWgmfqUblZQyb7_vkQQXPA2TAGFBvxutKfrBogoHJM3nryHQFt68i_lvwii8wO0tbrFJPYeLlxl746Jg81NjIbcWx7RpAIpOm-bUHnNDCRdBR-11vjZPKlGKZJgwqpsiTZX0VJXzJ7NNUJy3eSW4vmBJKABzdNwDdBTNVI0N7qqFauz8Wwkdul-7v7-3X3GglZrhnO2UPDM3V2lRi3urykeTjWBE4UHxSh4WmdM32uuEfuYdfpwDrL8bMUu-uqeydXU')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-4">
+<p class="font-label-sm text-label-sm text-on-surface font-bold">Desert Soul</p>
+</div>
+</div>
+<div class="relative rounded-lg overflow-hidden group cursor-pointer glass-panel">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="An artistic close-up of a vintage film projector lens with light refracting through the glass, creating beautiful bokeh and flares in shades of peach and amber. The focus is sharp on the intricate mechanics, symbolizing the heart of cinema and personal reflection." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCaGab8b91H6QgTpkETc86e4OW_17q5-M9uSmyKX-gqdeqsOa64rxjLFxQgUNXGoerWGVvT2Rhe3kglg3NktYAed-86ax5bFWJVxmeGrpQXsw_GSuxKwJfKDio_bxOVoZR0cXB8MHgERGpMYdkfKX6xF9BFtTOjMqrDRw62ChMvmYKDSoil1GR0RMa3gUl_YouUTh7Ck6KzcjpYKqbw0TG1WvxkoOFSw0MbzNaRngLsFcNNpGAOlYkEczMQWVz_cgAI34SlWMv9O4M')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-4">
+<p class="font-label-sm text-label-sm text-on-surface font-bold">Projector 9</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Visual Explorations (Mood-based) -->
+<section class="space-y-6">
+<h2 class="font-headline-md text-headline-md text-primary">Browse by Sentiment</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Mood Card: Dreamy -->
+<div class="glass-panel p-6 rounded-lg space-y-4 hover:translate-y-[-4px] transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-secondary-container/40 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">cloudy_filled</span>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-md text-headline-md">Dreamy</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Surreal visuals and ethereal soundtracks.</p>
+</div>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="A stylized movie poster fragment showing a mystical purple forest." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC81rWZjUcL3MilQ70laIdvZy2jthuLQh6BLa6zgihKq0iAcsh9Ng-ahpSun-p2bWQEnT-6u3Zplt1i-N7hKVaKu_UeW_kVIw9g0XrBC8KYUPCqQ-Eeh_0SU-aB7pppafS1oTA0-rogYyoF8m65QHskiWw_C5BgmaExvkiyZU3xM3EyNfhj1iPMp1ixuc3VbEvd45zQeRArebouDgFyyvgwPeuJT2mh1h-si5zOYR_GuJr5nBueyrIvnR6WyHnxWpllNIgkT2ldUrk"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="A stylized movie poster fragment showing an astronaut floating in a nebula." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwvHSotWiDyrBnO7FFMJPYMsNOkXkm7oFKFKFpmhAc2YWr8dk-DH_U89in95-b36vFu-T_JuzX93Ob41Hcyv8XCTacLsPDdm6GCp1k0bZfHssl2B-1hDgGMzd1_NnIuDUisdaldnxx_WTs_uyTOn6Kezn4ZzOJrBWLvqLOxyo7E69MIJfSqgVlPqnZlqshZECbgbv-bDS1LiGglyfcIxDa136czZyEq0-X8PmUWPIO9x8yuvyD5hpzIwOIPMz3yZqQy8Oqtcb28ZY"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="A stylized movie poster fragment showing a glowing crystal city." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtCQtOUbgRjPBP0lJiJErXst8Ux1Nkb2_wUaVxdvgWyZXdeBsHuk29Xo5W7qag2X3SBOGjEOHgPp9xyxVFDRT4HpGQ1ORR-87X5FwHEYly7-YHyl-fNhPjM8dSv6I0Z6WgAVjyhl-5fJ5rza2S8degPacULkzWVZcSXVHvkFr-w3VuNM4RYDsaeNnpwYYMTN2WY2rWjnmQLRWATrsIs_aEZvaFyRHv2Wix-uTsu7eaoKdo9592555iNJzzoESr68-VieWIQvW9KXw"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container bg-surface-container-high flex items-center justify-center text-[10px] text-on-surface-variant">+12</div>
+</div>
+</div>
+<!-- Mood Card: Intense -->
+<div class="glass-panel p-6 rounded-lg space-y-4 hover:translate-y-[-4px] transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-error-container/40 flex items-center justify-center text-error">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-md text-headline-md">Intense</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Grips you from the first frame to the last.</p>
+</div>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="A stylized movie poster fragment showing a neon-lit car chase." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfbnSJJ8Ltw0G2WiRBO9JoNTTsoP97Q4iHg6TkFD-teida8ftLGLWANYPLMk9zmz-edbTBl0nm505v4rw-25pjwLGu8JVJUubCxguLKaud6qE31DEwjduYPVf7Ur6wkCiB_tnRyKUGGzwbE_Izq98n88klSfy9II3TrHoKP0Ipdy88zLXl7gdjm4lCH7cTYfcWSZWvMAZL87pU0klqx45Bmml8SSU3aEIHL8wq1cX5llRcMIocYNZO9tjTAoNvjDjDDYV602IzsK0"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="A stylized movie poster fragment showing a shadowy figure in a hallway." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi11PZDrkvpYfhlVXTln4eIf-uFHfLymlpB9LEt25KU4EqT0MyDHzISR0dw3P00iBTcWTqU14FbaL-0N0xvx_ECIRv8pdfc8TWIsWGEFl3HvZo_hl_TgNSEo4qYdkErWJVkpYQsv6T2_K-2V7l2zTQcyqhxfaK3WgX6dPlFKQHpk_ohD1LE7jldcZDGah3-gfiRyDQPnx42AM3nbFa1C47EFv5jD1NfWphnw-ghdVnIXdGQQMgYaiy7gYeb5gfPVh3br7a7v1ttoo"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="A stylized movie poster fragment showing a close up of an intense eye." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOE_Ei-rUNOeQg7fFzVnMZn6Q-z9-9-oxWWdVh6ovUTGEWhFL2zE6z1qskRaUJ2lZud0UdNuGpEkX4mXf0aj4eeybWzex4lDvYqLm2aHq9LN8jrH6A3vQHxxFXNvQK7aKwfiyMYqyXo2WW2bQUNI0eI44O0GXlniMGOtjhVguudz5FDGdEoWX0YjEgbUnI_FN-qu1kQV6-fzTSTsCJb9DlPxN4AUFDX7H09vAGuZhg7aftvP9L3jD222AJCixnFk7BTzDBeiQp_qk"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container bg-surface-container-high flex items-center justify-center text-[10px] text-on-surface-variant">+8</div>
+</div>
+</div>
+<!-- Mood Card: Heartwarming -->
+<div class="glass-panel p-6 rounded-lg space-y-4 hover:translate-y-[-4px] transition-transform duration-300">
+<div class="w-12 h-12 rounded-full bg-primary-container/40 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-md text-headline-md">Warm</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Stories that feel like a soft blanket.</p>
+</div>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="A stylized movie poster fragment showing a sunny garden picnic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZG8fRcDNheamakUkXIkLSmuRBFstRpL8rAVth2ugUxjiME7wBMRG2-Ev8n1kefNO4EYot7UekOGfHspT-xz2cesJhNh6kK9BdLy_-oODMsJWOF7_OTwaVhY_79H13ZRslMK_pzJ-tdKF3lPmgsFDC8C_GDfbDLPfrV3wG9sefMZouZViGGOhftuK667wR8sYCgTtMkCwITx97NkyF3nqrSJHA5wWltjU3OfQyZVeQCWHD0GawHKgb88qhl5VMxVgo9E6GZ-YMjEo"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="A stylized movie poster fragment showing two hands holding coffee mugs." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIeHkAFxqQzTBDf2nfXhjyszKFhGHyWpktJLcw9V3IOkGEebYkeg9uPR4UX_9AxL48CD9WUvcXBFceoF-yX09Dj9FlnxhofH9HCv8OVksB0x4bsn2chiaKYtU9kvUDxwUEj6luTSI9G7nl_lOBXhKhHUFvq80THd-aWfgitJ_84WnzTsLR5OzzAt5GW36-f8O0GVKe2m5YRuMnKKScDSdqwoOd1ol8P8TD0arq92_pHlJ1tthO2FRK-SRxuwuaNyMZtXElPx8Ytgk"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container overflow-hidden bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="A stylized movie poster fragment showing a golden retriever in a field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4Ghi6-jeANuwvx3DBx6UunbKXSNfgMoNdiaEHmav5tHQ_j0H-jE97NRBPTrCSRmubQmFC6y18qYxdnAorv8wXf700_ipyJJXiuYi8zRUxdOO8M4Qpkdu1jsRMJc_9S61l-h2jeCC2be3GK9iDlAUinwHVbVSkCuS9FS1_y0v_mQkFH69j9gs3f-aZ0ekoohjUfAxl3FEjy-tBVRRC3ow4oQq6CtnD-7_UABvO0Y5BRwGzUftfw-QyEvngAIfum_6UgsiGNxodH6g"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container bg-surface-container-high flex items-center justify-center text-[10px] text-on-surface-variant">+24</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile-focused but remains for structure as per JSON) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-surface-container/60 backdrop-blur-2xl border-t border-white/5 rounded-t-xl shadow-[0_-8px_32px_rgba(87,27,193,0.15)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary-container bg-secondary-container/40 rounded-full px-4 py-1 shadow-[0_0_15px_rgba(255,180,168,0.3)] -translate-y-1 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-label-sm text-label-sm">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-label-sm text-label-sm">Journal</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Subtle Background Ambient Light -->
+<div class="fixed top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+<div class="fixed bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-secondary/10 rounded-full blur-[140px] -z-10"></div>
+<script>
+        // Micro-interaction for search focus
+        const searchInput = document.querySelector('input');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.01]');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.01]');
+        });
+
+        // Hover lift effect for mood cards
+        const moodCards = document.querySelectorAll('.glass-panel');
+        moodCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderColor = 'rgba(255, 217, 211, 0.3)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            });
+        });
+    </script>
+</body></html>
