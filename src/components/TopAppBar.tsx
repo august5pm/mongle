@@ -3,12 +3,35 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { ArrowLeft, Heart, Search } from "lucide-react";
+import type { User } from "@supabase/supabase-js";
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 
 export function TopAppBar() {
   const pathname = usePathname();
   const router = useRouter();
   const isDetail = pathname.startsWith("/movie/");
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    if (!isSupabaseConfigured()) return;
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const avatar =
+    user?.user_metadata?.avatar_url || user?.user_metadata?.picture;
+  const initial =
+    (user?.user_metadata?.full_name as string | undefined)?.slice(0, 1) ||
+    user?.email?.slice(0, 1)?.toUpperCase() ||
+    "나";
 
   return (
     <header className="fixed top-0 z-50 flex h-16 w-full items-center justify-between px-container-mobile sm:px-container-desktop">
@@ -66,11 +89,16 @@ export function TopAppBar() {
           </Link>
         )}
         <Link
-          href="/profile"
-          className="pearl-clay flex h-9 w-9 items-center justify-center overflow-hidden rounded-full transition-transform hover:scale-105"
-          aria-label="프로필"
+          href={user ? "/profile" : `/login?next=${encodeURIComponent(pathname)}`}
+          className="pearl-clay relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full transition-transform hover:scale-105"
+          aria-label={user ? "프로필" : "로그인"}
         >
-          <span className="text-xs font-bold">나</span>
+          {avatar ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={avatar} alt="" className="h-full w-full object-cover" />
+          ) : (
+            <span className="text-xs font-bold">{initial}</span>
+          )}
         </Link>
       </div>
     </header>

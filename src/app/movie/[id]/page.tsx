@@ -92,7 +92,7 @@ export default function MovieDetailPage({ params }: MoviePageProps) {
         {/* CTA */}
         <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-6">
           <Link
-            href="/archive"
+            href={`/journal/new?mediaId=${item.id}`}
             className="pearl-clay peach-glow flex items-center gap-3 rounded-full px-8 py-4 font-bold transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <PenLine size={22} />
