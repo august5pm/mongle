@@ -53,6 +53,7 @@
 
 - 탭: **모두의 몽글** / **내 몽글**  
 - 카드에 작성자 이모지·닉네임 표시 (내 글은 `나` 뱃지)  
+- 내 글: 수정 · 삭제 버튼  
 - 비로그인도 공개 피드 열람 가능, 작성은 로그인 필요  
 - FAB · 새 기록 → `/journal/new`  
 
@@ -60,13 +61,13 @@
 
 Google OAuth (`LoginClient`) → `/auth/callback`  
 
-## `/journal/new` 새 몽글
+## `/journal/new` 새 몽글 / 수정
 
 로그인 필수. 미로그인 시 `/login?next=…`  
 
-1. 작품 선택 — `?mediaId=`면 생략  
+1. 작품 선택 — `?mediaId=`면 생략, `?edit=` 수정 시 작품 고정  
 2. 감정 선택  
-3. 메모 → Supabase `journals` insert → `/archive`  
+3. 메모 → insert 또는 update → `/archive`  
 
 ## `/movie/[id]` 상세
 

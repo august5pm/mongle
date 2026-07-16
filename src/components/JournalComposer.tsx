@@ -14,7 +14,11 @@ import {
 } from "@/data/mock";
 import { MediaVisual } from "@/components/MediaVisual";
 import { tmdbImage } from "@/lib/tmdb-image";
-import { addJournalEntry } from "@/lib/journal";
+import {
+  addJournalEntry,
+  fetchJournalById,
+  updateJournalEntry,
+} from "@/lib/journal";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 
 type Step = "pick" | "feel" | "note";
@@ -23,10 +27,13 @@ export function JournalComposer() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const presetId = searchParams.get("mediaId");
+  const editId = searchParams.get("edit");
+  const isEdit = Boolean(editId);
   const localPreset = presetId ? getMediaById(presetId) : undefined;
 
   const [user, setUser] = useState<User | null>(null);
   const [authReady, setAuthReady] = useState(false);
+  const [editReady, setEditReady] = useState(!editId);
   const [media, setMedia] = useState<MediaItem | undefined>(localPreset);
   const [step, setStep] = useState<Step>(localPreset ? "feel" : "pick");
   const [emotion, setEmotion] = useState<Sentiment | null>(null);
@@ -36,10 +43,70 @@ export function JournalComposer() {
   const [searching, setSearching] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [presetLocked, setPresetLocked] = useState(Boolean(localPreset));
+  const [presetLocked, setPresetLocked] = useState(
+    Boolean(localPreset) || Boolean(editId),
+  );
 
   useEffect(() => {
-    if (!presetId || localPreset) return;
+    if (!editId) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const entry = await fetchJournalById(editId);
+        if (cancelled) return;
+        if (!entry) {
+          setError("기록을 찾을 수 없거나 수정 권한이 없어요.");
+          setEditReady(true);
+          return;
+        }
+        setEmotion(entry.emotion);
+        setNote(entry.note);
+        setPresetLocked(true);
+        setStep("feel");
+
+        const local = getMediaById(entry.mediaId);
+        if (local) {
+          setMedia(local);
+          setEditReady(true);
+          return;
+        }
+        const res = await fetch(
+          `/api/tmdb/media/${encodeURIComponent(entry.mediaId)}`,
+        );
+        const data = (await res.json()) as { item?: MediaItem | null };
+        if (!cancelled) {
+          if (data.item) setMedia(data.item);
+          else {
+            setMedia({
+              id: entry.mediaId,
+              title: entry.genreLabel || "작품",
+              type: "movie",
+              year: 0,
+              rating: 0,
+              overview: "",
+              genres: [entry.genreLabel || "영화"],
+              posterTone:
+                "linear-gradient(160deg, #1a1230 0%, #4a2a58 45%, #ffb3a7 150%)",
+              backdropTone:
+                "linear-gradient(160deg, #0c1420 0%, #1e3a5f 50%, #c9d8ff 140%)",
+            });
+          }
+          setEditReady(true);
+        }
+      } catch (e) {
+        if (!cancelled) {
+          setError(e instanceof Error ? e.message : "불러오기 실패");
+          setEditReady(true);
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [editId]);
+
+  useEffect(() => {
+    if (editId || !presetId || localPreset) return;
     let cancelled = false;
     fetch(`/api/tmdb/media/${encodeURIComponent(presetId)}`)
       .then(async (res) => {
@@ -56,7 +123,7 @@ export function JournalComposer() {
     return () => {
       cancelled = true;
     };
-  }, [presetId, localPreset]);
+  }, [editId, presetId, localPreset]);
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
@@ -74,10 +141,12 @@ export function JournalComposer() {
     if (!authReady) return;
     if (!isSupabaseConfigured()) return;
     if (!user) {
-      const next = `/journal/new${presetId ? `?mediaId=${presetId}` : ""}`;
+      const next = editId
+        ? `/journal/new?edit=${editId}`
+        : `/journal/new${presetId ? `?mediaId=${presetId}` : ""}`;
       router.replace(`/login?next=${encodeURIComponent(next)}`);
     }
-  }, [authReady, user, router, presetId]);
+  }, [authReady, user, router, presetId, editId]);
 
   useEffect(() => {
     const q = query.trim();
@@ -123,6 +192,7 @@ export function JournalComposer() {
     Boolean(media) && Boolean(emotion) && note.trim().length >= 2 && !saving;
 
   function pickMedia(item: MediaItem) {
+    if (isEdit) return;
     setMedia(item);
     setPresetLocked(false);
     setStep("feel");
@@ -139,12 +209,19 @@ export function JournalComposer() {
     setSaving(true);
     setError(null);
     try {
-      await addJournalEntry({
-        mediaId: media.id,
-        emotion,
-        note: trimmed,
-        genreLabel: media.genres[0] ?? "영화",
-      });
+      if (editId) {
+        await updateJournalEntry(editId, {
+          emotion,
+          note: trimmed,
+        });
+      } else {
+        await addJournalEntry({
+          mediaId: media.id,
+          emotion,
+          note: trimmed,
+          genreLabel: media.genres[0] ?? "영화",
+        });
+      }
       router.push("/archive");
       router.refresh();
     } catch (e) {
@@ -153,10 +230,10 @@ export function JournalComposer() {
     }
   }
 
-  if (!authReady || (isSupabaseConfigured() && !user)) {
+  if (!authReady || (isSupabaseConfigured() && !user) || !editReady) {
     return (
       <div className="px-container-mobile pt-28 text-on-surface-variant">
-        로그인 확인 중…
+        {isEdit ? "기록을 불러오는 중…" : "로그인 확인 중…"}
       </div>
     );
   }
@@ -168,7 +245,8 @@ export function JournalComposer() {
           type="button"
           onClick={() => {
             if (step === "note") setStep("feel");
-            else if (step === "feel" && !presetLocked) setStep("pick");
+            else if (step === "feel" && !presetLocked && !isEdit)
+              setStep("pick");
             else router.back();
           }}
           className="pearl-clay-soft flex h-10 w-10 items-center justify-center rounded-full"
@@ -177,8 +255,12 @@ export function JournalComposer() {
           <ArrowLeft size={18} />
         </button>
         <div>
-          <p className="text-label-sm tracking-widest text-primary">새 몽글</p>
-          <h1 className="font-display text-3xl text-on-surface">감정을 남겨요</h1>
+          <p className="text-label-sm tracking-widest text-primary">
+            {isEdit ? "몽글 수정" : "새 몽글"}
+          </p>
+          <h1 className="font-display text-3xl text-on-surface">
+            {isEdit ? "기록을 다듬어요" : "감정을 남겨요"}
+          </h1>
         </div>
       </div>
 
@@ -190,11 +272,15 @@ export function JournalComposer() {
           <div className="min-w-0 flex-1">
             <p className="truncate font-bold text-on-surface">{media.title}</p>
             <p className="text-xs text-on-surface-variant">
-              {media.year}
-              <span className="mx-1.5 opacity-40">·</span>
+              {media.year ? (
+                <>
+                  {media.year}
+                  <span className="mx-1.5 opacity-40">·</span>
+                </>
+              ) : null}
               {media.genres[0]}
             </p>
-            {!presetLocked && step !== "pick" ? (
+            {!presetLocked && !isEdit && step !== "pick" ? (
               <button
                 type="button"
                 onClick={() => setStep("pick")}
@@ -207,7 +293,7 @@ export function JournalComposer() {
         </div>
       ) : null}
 
-      {step === "pick" ? (
+      {step === "pick" && !isEdit ? (
         <section className="space-y-4">
           <p className="text-body-md text-on-surface-variant">
             어떤 작품의 여운을 기록할까요?
@@ -340,9 +426,17 @@ export function JournalComposer() {
             }`}
           >
             <Check size={18} />
-            {saving ? "저장 중…" : "아카이브에 남기기"}
+            {saving
+              ? "저장 중…"
+              : isEdit
+                ? "수정 저장"
+                : "아카이브에 남기기"}
           </button>
         </section>
+      ) : null}
+
+      {error && step !== "note" ? (
+        <p className="mt-4 text-sm text-error">{error}</p>
       ) : null}
     </div>
   );

@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { JournalComposer } from "@/components/JournalComposer";
 
 export const metadata: Metadata = {
-  title: "새 몽글",
+  title: "몽글 기록",
 };
 
 export default function NewJournalPage() {

@@ -168,6 +168,84 @@ export async function addJournalEntry(input: {
   return rowToEntry(data as JournalRow);
 }
 
+export async function fetchJournalById(
+  id: string,
+): Promise<JournalEntry | null> {
+  if (!isSupabaseConfigured()) return null;
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  const { data, error } = await supabase
+    .from("journals")
+    .select("*")
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (error) throw error;
+  return data ? rowToEntry(data as JournalRow) : null;
+}
+
+export async function updateJournalEntry(
+  id: string,
+  input: {
+    emotion: Sentiment;
+    note: string;
+  },
+): Promise<JournalEntry> {
+  if (!isSupabaseConfigured()) {
+    throw new Error("Supabase가 설정되지 않았습니다.");
+  }
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("로그인이 필요합니다.");
+
+  const trimmed = input.note.trim();
+  if (trimmed.length < 2 || trimmed.length > 140) {
+    throw new Error("메모는 2~140자로 적어 주세요.");
+  }
+
+  const { data, error } = await supabase
+    .from("journals")
+    .update({
+      emotion: input.emotion,
+      emotion_label: sentimentLabel(input.emotion),
+      note: trimmed,
+      bubble_tone: bubbleByEmotion[input.emotion],
+    })
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .select("*")
+    .single();
+
+  if (error) throw error;
+  return rowToEntry(data as JournalRow);
+}
+
+export async function deleteJournalEntry(id: string): Promise<void> {
+  if (!isSupabaseConfigured()) {
+    throw new Error("Supabase가 설정되지 않았습니다.");
+  }
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("로그인이 필요합니다.");
+
+  const { error } = await supabase
+    .from("journals")
+    .delete()
+    .eq("id", id)
+    .eq("user_id", user.id);
+
+  if (error) throw error;
+}
+
 export function computeArchiveStats(entries: JournalEntry[]) {
   const now = new Date();
   const thisMonth = entries.filter((e) => {

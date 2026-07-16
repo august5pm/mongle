@@ -191,6 +191,10 @@ export function ArchiveClient() {
               entry={entry}
               Icon={Icon}
               isMine={isMine}
+              onDeleted={(id) => {
+                setAllEntries((prev) => prev.filter((e) => e.id !== id));
+                setMyEntries((prev) => prev.filter((e) => e.id !== id));
+              }}
             />
           );
         })}
