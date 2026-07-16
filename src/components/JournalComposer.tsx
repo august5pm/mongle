@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Check, Search } from "lucide-react";
@@ -14,7 +13,7 @@ import {
   type Sentiment,
 } from "@/data/mock";
 import { MediaVisual } from "@/components/MediaVisual";
-import { tmdbImage } from "@/lib/tmdb";
+import { tmdbImage } from "@/lib/tmdb-image";
 import { addJournalEntry } from "@/lib/journal";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 
@@ -24,17 +23,40 @@ export function JournalComposer() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const presetId = searchParams.get("mediaId");
-  const preset = presetId ? getMediaById(presetId) : undefined;
+  const localPreset = presetId ? getMediaById(presetId) : undefined;
 
   const [user, setUser] = useState<User | null>(null);
   const [authReady, setAuthReady] = useState(false);
-  const [media, setMedia] = useState<MediaItem | undefined>(preset);
-  const [step, setStep] = useState<Step>(preset ? "feel" : "pick");
+  const [media, setMedia] = useState<MediaItem | undefined>(localPreset);
+  const [step, setStep] = useState<Step>(localPreset ? "feel" : "pick");
   const [emotion, setEmotion] = useState<Sentiment | null>(null);
   const [note, setNote] = useState("");
   const [query, setQuery] = useState("");
+  const [remoteResults, setRemoteResults] = useState<MediaItem[]>([]);
+  const [searching, setSearching] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [presetLocked, setPresetLocked] = useState(Boolean(localPreset));
+
+  useEffect(() => {
+    if (!presetId || localPreset) return;
+    let cancelled = false;
+    fetch(`/api/tmdb/media/${encodeURIComponent(presetId)}`)
+      .then(async (res) => {
+        const data = (await res.json()) as { item?: MediaItem | null };
+        if (!cancelled && data.item) {
+          setMedia(data.item);
+          setStep("feel");
+          setPresetLocked(true);
+        }
+      })
+      .catch(() => {
+        /* ignore */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [presetId, localPreset]);
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
@@ -57,22 +79,52 @@ export function JournalComposer() {
     }
   }, [authReady, user, router, presetId]);
 
+  useEffect(() => {
+    const q = query.trim();
+    if (q.length < 1) {
+      setRemoteResults([]);
+      setSearching(false);
+      return;
+    }
+    let cancelled = false;
+    setSearching(true);
+    const t = window.setTimeout(() => {
+      fetch(`/api/tmdb/search?q=${encodeURIComponent(q)}`)
+        .then(async (res) => {
+          const data = (await res.json()) as { results?: MediaItem[] };
+          if (!cancelled) setRemoteResults(data.results ?? []);
+        })
+        .catch(() => {
+          if (!cancelled) setRemoteResults([]);
+        })
+        .finally(() => {
+          if (!cancelled) setSearching(false);
+        });
+    }, 300);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+  }, [query]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return allMedia;
+    if (remoteResults.length) return remoteResults;
     return allMedia.filter(
       (m) =>
         m.title.toLowerCase().includes(q) ||
         m.originalTitle?.toLowerCase().includes(q) ||
         m.genres.some((g) => g.toLowerCase().includes(q)),
     );
-  }, [query]);
+  }, [query, remoteResults]);
 
   const canSubmit =
     Boolean(media) && Boolean(emotion) && note.trim().length >= 2 && !saving;
 
   function pickMedia(item: MediaItem) {
     setMedia(item);
+    setPresetLocked(false);
     setStep("feel");
     setError(null);
   }
@@ -91,6 +143,7 @@ export function JournalComposer() {
         mediaId: media.id,
         emotion,
         note: trimmed,
+        genreLabel: media.genres[0] ?? "영화",
       });
       router.push("/archive");
       router.refresh();
@@ -115,7 +168,7 @@ export function JournalComposer() {
           type="button"
           onClick={() => {
             if (step === "note") setStep("feel");
-            else if (step === "feel" && !preset) setStep("pick");
+            else if (step === "feel" && !presetLocked) setStep("pick");
             else router.back();
           }}
           className="pearl-clay-soft flex h-10 w-10 items-center justify-center rounded-full"
@@ -141,7 +194,7 @@ export function JournalComposer() {
               <span className="mx-1.5 opacity-40">·</span>
               {media.genres[0]}
             </p>
-            {!preset && step !== "pick" ? (
+            {!presetLocked && step !== "pick" ? (
               <button
                 type="button"
                 onClick={() => setStep("pick")}
@@ -167,10 +220,13 @@ export function JournalComposer() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="제목 · 장르로 찾기"
+              placeholder="TMDB에서 제목으로 검색"
               className="glass-panel h-12 w-full rounded-full pl-11 pr-4 text-sm outline-none placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/30"
             />
           </div>
+          {searching ? (
+            <p className="text-xs text-on-surface-variant">검색 중…</p>
+          ) : null}
           <div className="grid max-h-[52vh] grid-cols-3 gap-3 overflow-y-auto pb-2">
             {filtered.map((item) => {
               const src = tmdbImage(item.posterPath, "w185");

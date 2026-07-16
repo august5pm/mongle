@@ -33,9 +33,14 @@
 | 포근한 이야기 | `SoftFluffyBento` | 2×2 벤토 |
 | 비 오는 날 | `RainyDayRail` | 세로 포스터 레일 |
 
-데이터: `featured`, `continueWatching`, `softFluffy`, `rainyDay`
+데이터: TMDB (`fetchHomeRails`) — 실패 시 mock 폴백  
+레일: 오늘의 추천 · 지금 뜨는 · 포근한 이야기 · 비 오는 날의 영화
 
-## `/explore` 탐색
+## `/wishlist` 위시리스트
+
+- 로그인 필요 (Supabase `wishlists`)  
+- 상세·히어로·앱바 하트/북마크로 토글  
+- 프로필에서 진입  
 
 `ExploreClient` (클라이언트)
 
@@ -46,11 +51,10 @@
 
 ## `/archive` 아카이브
 
-- 헤더 + 통계(전체 몽글 / 이번 달)  
-- 저널 카드 그리드: 포스터 + `cloud-bubble` 감정 메모  
-- “새 기록” 점선 카드 → 로그인 시 `/journal/new`, 아니면 `/login`  
-- FAB → 동일  
-- 시드 미리보기(비로그인) / Supabase 내 기록(로그인)  
+- 탭: **모두의 몽글** / **내 몽글**  
+- 카드에 작성자 이모지·닉네임 표시 (내 글은 `나` 뱃지)  
+- 비로그인도 공개 피드 열람 가능, 작성은 로그인 필요  
+- FAB · 새 기록 → `/journal/new`  
 
 ## `/login`
 
@@ -72,7 +76,8 @@ Google OAuth (`LoginClient`) → `/auth/callback`
 ## `/profile` 프로필
 
 - 비로그인: Google 로그인 CTA  
-- 로그인: 아바타·이메일·저널 수·로그아웃  
+- 로그인: 이모지 아바타 · 닉네임(편집 가능) · 이메일 · 저널 수 · 로그아웃  
+- 닉네임/이모지는 Supabase `user_metadata`에 저장되어 기기 간 동기화  
 
 ## 리다이렉트
 

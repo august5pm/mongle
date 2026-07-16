@@ -33,6 +33,9 @@ export type JournalEntry = {
   recordedAgo: string;
   genreLabel: string;
   bubbleTone: "primary" | "secondary" | "surface" | "tertiary" | "container";
+  userId?: string;
+  authorNickname?: string;
+  authorEmoji?: string;
 };
 
 export const sentiments: {
@@ -439,6 +442,8 @@ export const journalEntries: JournalEntry[] = [
     recordedAgo: "2일 전 기록",
     genreLabel: "판타지",
     bubbleTone: "primary",
+    authorNickname: "별빛수집가",
+    authorEmoji: "✨",
   },
   {
     id: "j2",
@@ -450,6 +455,8 @@ export const journalEntries: JournalEntry[] = [
     recordedAgo: "5일 전 기록",
     genreLabel: "애니메이션",
     bubbleTone: "secondary",
+    authorNickname: "담요속관객",
+    authorEmoji: "🍵",
   },
   {
     id: "j3",
@@ -461,6 +468,8 @@ export const journalEntries: JournalEntry[] = [
     recordedAgo: "1주 전 기록",
     genreLabel: "SF",
     bubbleTone: "surface",
+    authorNickname: "야간상영러",
+    authorEmoji: "🎬",
   },
   {
     id: "j4",
@@ -472,6 +481,8 @@ export const journalEntries: JournalEntry[] = [
     recordedAgo: "2주 전 기록",
     genreLabel: "가족",
     bubbleTone: "tertiary",
+    authorNickname: "고요한크레딧",
+    authorEmoji: "🌙",
   },
   {
     id: "j5",
@@ -483,6 +494,8 @@ export const journalEntries: JournalEntry[] = [
     recordedAgo: "3주 전 기록",
     genreLabel: "애니메이션",
     bubbleTone: "container",
+    authorNickname: "몽글러",
+    authorEmoji: "☁️",
   },
 ];
 

@@ -10,6 +10,8 @@ create table if not exists public.journals (
   note text not null check (char_length(note) >= 2 and char_length(note) <= 140),
   genre_label text not null default '영화',
   bubble_tone text not null default 'primary',
+  author_nickname text not null default '몽글러',
+  author_emoji text not null default '☁️',
   created_at timestamptz not null default now()
 );
 
@@ -18,10 +20,12 @@ create index if not exists journals_user_id_created_at_idx
 
 alter table public.journals enable row level security;
 
+-- 누구나 조회 (아카이브 공개 피드)
 drop policy if exists "journals_select_own" on public.journals;
-create policy "journals_select_own"
+drop policy if exists "journals_select_public" on public.journals;
+create policy "journals_select_public"
   on public.journals for select
-  using (auth.uid() = user_id);
+  using (true);
 
 drop policy if exists "journals_insert_own" on public.journals;
 create policy "journals_insert_own"

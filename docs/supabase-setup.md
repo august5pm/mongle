@@ -15,7 +15,14 @@ cp .env.example .env.local
 # 값을 채워 넣기
 ```
 
-4. **SQL Editor**에서 [`supabase/migrations/001_journals.sql`](../supabase/migrations/001_journals.sql) 전체를 실행
+4. **SQL Editor**에서 아래를 **순서대로** 실행
+   - [`supabase/migrations/001_journals.sql`](../supabase/migrations/001_journals.sql)
+   - [`supabase/migrations/002_journals_public_read.sql`](../supabase/migrations/002_journals_public_read.sql)  
+     → 아카이브 **공개 피드**(다른 사람 기록 조회) + 작성자 닉네임/이모지 컬럼
+   - [`supabase/migrations/003_wishlists.sql`](../supabase/migrations/003_wishlists.sql)  
+     → **위시리스트**(본인만 조회·추가·삭제)
+
+> 이미 `001`만 실행했다면 `002`·`003`만 추가 실행하면 됩니다.
 
 ## 2. Google OAuth
 
@@ -60,7 +67,8 @@ npm run dev
 |------|------|
 | Auth | Supabase Auth + Google OAuth |
 | 콜백 | `/auth/callback` (code → session) |
-| 테이블 | `public.journals` + RLS (`auth.uid() = user_id`) |
+| 테이블 | `public.journals` — SELECT 공개, INSERT/UPDATE/DELETE 본인만 |
+| 테이블 | `public.wishlists` — SELECT/INSERT/DELETE 본인만 |
 | 미들웨어 | 세션 쿠키 갱신 (`src/middleware.ts`) |
 | 비로그인 아카이브 | 시드 미리보기 + 로그인 CTA |
 | 로그인 아카이브 | DB의 내 기록만 |

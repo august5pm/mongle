@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Bookmark, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import type { MediaItem } from "@/data/mock";
 import { MediaVisual } from "@/components/MediaVisual";
+import { WishlistButton } from "@/components/WishlistButton";
 
 type HeroProps = {
   item: MediaItem;
@@ -73,13 +74,13 @@ export function Hero({ item }: HeroProps) {
             <Play size={20} fill="currentColor" />
             자세히 보기
           </Link>
-          <button
-            type="button"
-            className="pearl-clay-soft flex h-12 w-12 items-center justify-center rounded-full transition-transform hover:scale-105"
-            aria-label="나중에 보기"
-          >
-            <Bookmark size={20} className="text-on-surface" />
-          </button>
+          <WishlistButton
+            mediaId={item.id}
+            title={item.title}
+            posterPath={item.posterPath}
+            mediaType={item.type}
+            variant="bookmark"
+          />
         </div>
       </div>
     </section>

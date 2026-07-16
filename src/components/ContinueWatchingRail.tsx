@@ -5,18 +5,24 @@ import { MediaVisual } from "@/components/MediaVisual";
 
 type ContinueWatchingRailProps = {
   items: MediaItem[];
+  title?: string;
+  subtitle?: string;
 };
 
-export function ContinueWatchingRail({ items }: ContinueWatchingRailProps) {
+export function ContinueWatchingRail({
+  items,
+  title = "이어보기",
+  subtitle = "Continue Watching",
+}: ContinueWatchingRailProps) {
   return (
     <section className="mt-8 px-container-mobile sm:px-container-desktop">
       <div className="mb-4 flex items-end justify-between">
         <div>
           <h3 className="font-display text-headline-md text-on-surface">
-            이어보기
+            {title}
           </h3>
           <p className="mt-0.5 text-xs tracking-wide text-on-surface-variant">
-            Continue Watching
+            {subtitle}
           </p>
         </div>
         <Link href="/explore" className="text-label-sm text-primary">

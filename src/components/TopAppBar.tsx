@@ -4,15 +4,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Heart, Search } from "lucide-react";
+import { ArrowLeft, Search } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { getMongleProfile } from "@/lib/profile";
+import { WishlistButton } from "@/components/WishlistButton";
+import { getMediaById } from "@/data/mock";
 
 export function TopAppBar() {
   const pathname = usePathname();
   const router = useRouter();
   const isDetail = pathname.startsWith("/movie/");
+  const detailId = isDetail ? decodeURIComponent(pathname.slice("/movie/".length)) : null;
   const [user, setUser] = useState<User | null>(null);
+  const [detailMeta, setDetailMeta] = useState<{
+    title: string;
+    posterPath?: string;
+    mediaType: "movie" | "tv";
+  } | null>(null);
 
   useEffect(() => {
     if (!isSupabaseConfigured()) return;
@@ -23,15 +32,59 @@ export function TopAppBar() {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
-    return () => subscription.unsubscribe();
+
+    const onProfileUpdated = () => {
+      supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
+    };
+    window.addEventListener("mongle-profile-updated", onProfileUpdated);
+
+    return () => {
+      subscription.unsubscribe();
+      window.removeEventListener("mongle-profile-updated", onProfileUpdated);
+    };
   }, []);
 
-  const avatar =
-    user?.user_metadata?.avatar_url || user?.user_metadata?.picture;
-  const initial =
-    (user?.user_metadata?.full_name as string | undefined)?.slice(0, 1) ||
-    user?.email?.slice(0, 1)?.toUpperCase() ||
-    "나";
+  useEffect(() => {
+    if (!detailId) {
+      setDetailMeta(null);
+      return;
+    }
+    const local = getMediaById(detailId);
+    if (local) {
+      setDetailMeta({
+        title: local.title,
+        posterPath: local.posterPath,
+        mediaType: local.type,
+      });
+      return;
+    }
+    let cancelled = false;
+    fetch(`/api/tmdb/media/${encodeURIComponent(detailId)}`)
+      .then(async (res) => {
+        const data = (await res.json()) as {
+          item?: {
+            title?: string;
+            posterPath?: string;
+            type?: "movie" | "tv";
+          } | null;
+        };
+        if (!cancelled && data.item?.title) {
+          setDetailMeta({
+            title: data.item.title,
+            posterPath: data.item.posterPath,
+            mediaType: data.item.type ?? "movie",
+          });
+        }
+      })
+      .catch(() => {
+        /* ignore */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [detailId]);
+
+  const profile = getMongleProfile(user);
 
   return (
     <header className="fixed top-0 z-50 flex h-16 w-full items-center justify-between px-container-mobile sm:px-container-desktop">
@@ -71,14 +124,14 @@ export function TopAppBar() {
       </div>
 
       <div className="relative z-10 flex items-center gap-3">
-        {isDetail ? (
-          <button
-            type="button"
-            className="pearl-clay-soft flex h-9 w-9 items-center justify-center rounded-full text-on-surface-variant transition-opacity hover:opacity-80"
-            aria-label="찜하기"
-          >
-            <Heart size={18} />
-          </button>
+        {isDetail && detailId && detailMeta ? (
+          <WishlistButton
+            mediaId={detailId}
+            title={detailMeta.title}
+            posterPath={detailMeta.posterPath}
+            mediaType={detailMeta.mediaType}
+            variant="heart"
+          />
         ) : (
           <Link
             href="/explore"
@@ -90,14 +143,13 @@ export function TopAppBar() {
         )}
         <Link
           href={user ? "/profile" : `/login?next=${encodeURIComponent(pathname)}`}
-          className="pearl-clay relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full transition-transform hover:scale-105"
+          className="pearl-clay relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full text-base leading-none transition-transform hover:scale-105"
           aria-label={user ? "프로필" : "로그인"}
         >
-          {avatar ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={avatar} alt="" className="h-full w-full object-cover" />
+          {user ? (
+            <span aria-hidden>{profile.emoji}</span>
           ) : (
-            <span className="text-xs font-bold">{initial}</span>
+            <span className="text-xs font-bold">나</span>
           )}
         </Link>
       </div>

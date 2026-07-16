@@ -3,7 +3,8 @@
 영화와 감정을 부드럽게 기록하는 시네마틱 웹 앱입니다.  
 부드러운 진주(pearl) 글래스 UI 위에, 오늘의 추천 · 감정 탐색 · 저널 아카이브를 담았습니다.
 
-**Repository:** [github.com/august5pm/mongle](https://github.com/august5pm/mongle)
+**Repository:** [github.com/august5pm/mongle](https://github.com/august5pm/mongle)  
+**Live:** [mongle-steel.vercel.app](https://mongle-steel.vercel.app)
 
 ---
 
@@ -13,7 +14,7 @@
 |------|------|
 | Framework | Next.js 14 (App Router) + TypeScript |
 | Styling | Tailwind CSS + `globals.css` 유틸 |
-| Auth / DB | Supabase (Google OAuth + `journals` + RLS) |
+| Auth / DB | Supabase (Google OAuth + `journals` / `wishlists` + RLS) |
 | Icons | Lucide React |
 | Fonts | Dongle(브랜드·제목) · Nunito / Pretendard(본문) |
 | Images | TMDB CDN (`media.themoviedb.org`) + mock path |
@@ -41,7 +42,7 @@ cp .env.example .env.local
 |----|------|
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase 프로젝트 URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | anon public key |
-| `TMDB_API_KEY` | (선택) TMDB API 키. 이미지 CDN은 키 없이 사용 중 |
+| `TMDB_API_KEY` | TMDB API v3 키. 홈·탐색 검색·트렌딩·상세에 사용 (서버 전용) |
 
 구글 로그인·DB 테이블 설정은 [docs/supabase-setup.md](./docs/supabase-setup.md)를 따르세요.
 
@@ -51,12 +52,13 @@ cp .env.example .env.local
 
 | 경로 | 설명 |
 |------|------|
-| `/` | 오늘의 추천 히어로, 이어보기, 포근한 이야기, 비 오는 날의 영화 |
+| `/` | 오늘의 추천, 지금 뜨는(TMDB), 포근한 이야기, 비 오는 날의 영화 |
 | `/explore` | 검색, 감정/분위기 칩, 트렌딩 벤토, 감정별 탐색 |
-| `/archive` | 몽글 통계, 저널 카드(클라우드 버블), 새 기록 FAB |
-| `/journal/new` | 작품 선택 → 감정 → 한 줄 메모 (localStorage) |
-| `/movie/[id]` | 시네마 백드롭, 줄거리, 감독·출연, 관련 작품 |
-| `/profile` | 간단 프로필 · 통계 요약 |
+| `/archive` | 모두의 몽글 / 내 몽글, 저널 카드, 새 기록 FAB |
+| `/journal/new` | 작품 선택 → 감정 → 한 줄 메모 |
+| `/wishlist` | 찜한 작품 목록 (로그인) |
+| `/movie/[id]` | 시네마 백드롭, 줄거리, 위시리스트, 관련 작품 |
+| `/profile` | 닉네임·이모지, 통계, 위시리스트 링크 |
 | `/search`, `/detail/[id]` | 레거시 리다이렉트 → `/explore`, `/movie/[id]` |
 
 ---

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   Bolt,
@@ -14,10 +14,11 @@ import {
   searchMedia,
   softFluffy,
   sentiments,
+  type MediaItem,
   type Sentiment,
 } from "@/data/mock";
 import { MediaVisual } from "@/components/MediaVisual";
-import { tmdbImage } from "@/lib/tmdb";
+import { tmdbImage } from "@/lib/tmdb-image";
 
 function chipToSentiment(chip: string): Sentiment | "all" {
   if (chip === "Dreamy") return "Dreamy";
@@ -27,16 +28,102 @@ function chipToSentiment(chip: string): Sentiment | "all" {
   return "all";
 }
 
+function useDebounced(value: string, ms = 350) {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const t = window.setTimeout(() => setDebounced(value), ms);
+    return () => window.clearTimeout(t);
+  }, [value, ms]);
+  return debounced;
+}
+
 export function ExploreClient() {
   const [query, setQuery] = useState("");
   const [activeChip, setActiveChip] = useState("Cinematic");
+  const [trending, setTrending] = useState<MediaItem[]>([]);
+  const [tmdbResults, setTmdbResults] = useState<MediaItem[]>([]);
+  const [searching, setSearching] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
 
-  const results = useMemo(
-    () => searchMedia(query, chipToSentiment(activeChip)),
-    [query, activeChip],
+  const debouncedQuery = useDebounced(query.trim());
+
+  const mockFiltered = useMemo(
+    () => searchMedia(debouncedQuery, chipToSentiment(activeChip)),
+    [debouncedQuery, activeChip],
   );
 
-  const [featured, second, third, fourth] = softFluffy;
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/tmdb/trending")
+      .then(async (res) => {
+        const data = (await res.json()) as {
+          results?: MediaItem[];
+          error?: string;
+        };
+        if (!cancelled && data.results?.length) {
+          setTrending(data.results);
+        }
+      })
+      .catch(() => {
+        /* keep mock fallback */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!debouncedQuery) {
+      setTmdbResults([]);
+      setSearchError(null);
+      setSearching(false);
+      return;
+    }
+
+    let cancelled = false;
+    setSearching(true);
+    setSearchError(null);
+
+    fetch(`/api/tmdb/search?q=${encodeURIComponent(debouncedQuery)}`)
+      .then(async (res) => {
+        const data = (await res.json()) as {
+          results?: MediaItem[];
+          error?: string;
+        };
+        if (cancelled) return;
+        if (!res.ok) {
+          setSearchError(data.error ?? "검색에 실패했어요.");
+          setTmdbResults([]);
+          return;
+        }
+        setTmdbResults(data.results ?? []);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setSearchError("검색에 실패했어요.");
+          setTmdbResults([]);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setSearching(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [debouncedQuery]);
+
+  const bento = trending.length >= 4 ? trending : softFluffy;
+  const [featured, second, third, fourth] = bento;
+
+  const results =
+    debouncedQuery && tmdbResults.length > 0
+      ? tmdbResults
+      : debouncedQuery
+        ? mockFiltered
+        : [];
+
+  const moodThumbs = trending.length ? trending : softFluffy;
 
   return (
     <div className="space-y-10">
@@ -49,7 +136,7 @@ export function ExploreClient() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="작품, 저널, 감정으로 찾아보세요"
+            placeholder="작품 제목으로 찾아보세요 (TMDB)"
             className="glass-panel h-14 w-full rounded-full pl-14 pr-6 text-body-lg text-on-surface outline-none transition-all placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:ring-2 focus:ring-primary/40"
           />
           <div className="absolute inset-0 -z-10 rounded-full bg-primary/5 opacity-0 blur-2xl transition-opacity group-focus-within:opacity-100" />
@@ -86,10 +173,12 @@ export function ExploreClient() {
                 지금 뜨는 몽글
               </h2>
               <p className="text-body-md text-on-surface-variant/70">
-                이번 주 사람들이 남긴 감정과 이야기
+                {trending.length
+                  ? "TMDB 이번 주 트렌딩"
+                  : "이번 주 사람들이 남긴 감정과 이야기"}
               </p>
             </div>
-            <span className="text-label-sm text-secondary">전체 보기</span>
+            <span className="text-label-sm text-secondary">Trending</span>
           </div>
 
           <div className="bento-grid">
@@ -99,7 +188,10 @@ export function ExploreClient() {
                 className="glass-panel group relative col-span-2 row-span-2 min-h-[280px] cursor-pointer overflow-hidden rounded-3xl"
               >
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-                  <MediaVisual item={featured} sizes="(max-width:768px) 100vw, 60vw" />
+                  <MediaVisual
+                    item={featured}
+                    sizes="(max-width:768px) 100vw, 60vw"
+                  />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8">
@@ -136,7 +228,7 @@ export function ExploreClient() {
                     {second.title}
                   </h4>
                   <p className="text-label-sm text-on-surface-variant">
-                    저널 428개
+                    ★ {second.rating.toFixed(1)}
                   </p>
                 </div>
               </Link>
@@ -221,15 +313,19 @@ export function ExploreClient() {
                     <Icon size={22} fill="currentColor" />
                   </div>
                   <div className="space-y-1">
-                    <h3 className="font-display text-headline-md">{mood.label}</h3>
-                    <p className="text-xs text-on-surface-variant/70">{mood.hash}</p>
+                    <h3 className="font-display text-headline-md">
+                      {mood.label}
+                    </h3>
+                    <p className="text-xs text-on-surface-variant/70">
+                      {mood.hash}
+                    </p>
                     <p className="text-body-md text-on-surface-variant">
                       {mood.description}
                     </p>
                   </div>
                   <div className="flex -space-x-2">
                     {[0, 1, 2].map((i) => {
-                      const thumb = softFluffy[i];
+                      const thumb = moodThumbs[i];
                       const src = tmdbImage(thumb?.posterPath, "w185");
                       return (
                         <div
@@ -238,8 +334,7 @@ export function ExploreClient() {
                           style={
                             !src
                               ? {
-                                  background:
-                                    thumb?.posterTone ?? "#272a2c",
+                                  background: thumb?.posterTone ?? "#272a2c",
                                 }
                               : undefined
                           }
@@ -268,8 +363,13 @@ export function ExploreClient() {
       {query.trim() ? (
         <section className="space-y-4">
           <p className="text-sm text-on-surface-variant">
-            &ldquo;{query.trim()}&rdquo; 검색 결과 {results.length}개
+            {searching
+              ? "검색 중…"
+              : `“${query.trim()}” 검색 결과 ${results.length}개`}
           </p>
+          {searchError ? (
+            <p className="text-sm text-error">{searchError}</p>
+          ) : null}
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {results.map((item) => (
               <Link key={item.id} href={`/movie/${item.id}`} className="group">

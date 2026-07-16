@@ -6,6 +6,7 @@ import {
   type Sentiment,
 } from "@/data/mock";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { getMongleProfile } from "@/lib/profile";
 
 export type JournalRow = {
   id: string;
@@ -17,6 +18,8 @@ export type JournalRow = {
   genre_label: string;
   bubble_tone: JournalEntry["bubbleTone"];
   created_at: string;
+  author_nickname?: string | null;
+  author_emoji?: string | null;
 };
 
 export const bubbleByEmotion: Record<Sentiment, JournalEntry["bubbleTone"]> = {
@@ -74,6 +77,9 @@ export function rowToEntry(row: JournalRow): JournalEntry {
     recordedAgo: formatRecordedAgo(created),
     genreLabel: row.genre_label,
     bubbleTone: row.bubble_tone,
+    userId: row.user_id,
+    authorNickname: row.author_nickname?.trim() || "몽글러",
+    authorEmoji: row.author_emoji?.trim() || "☁️",
   };
 }
 
@@ -84,12 +90,34 @@ export function getSeedJournals(): JournalEntry[] {
   }));
 }
 
-export async function fetchMyJournals(): Promise<JournalEntry[]> {
-  if (!isSupabaseConfigured()) return [];
+/** 모두의 몽글 (공개 피드) */
+export async function fetchPublicJournals(): Promise<JournalEntry[]> {
+  if (!isSupabaseConfigured()) return getSeedJournals();
   const supabase = createClient();
   const { data, error } = await supabase
     .from("journals")
     .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  const rows = (data as JournalRow[] | null)?.map(rowToEntry) ?? [];
+  // DB가 비어 있으면 시드로 분위기 유지
+  return rows.length > 0 ? rows : getSeedJournals();
+}
+
+/** 내가 남긴 몽글만 */
+export async function fetchMyJournals(): Promise<JournalEntry[]> {
+  if (!isSupabaseConfigured()) return [];
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  const { data, error } = await supabase
+    .from("journals")
+    .select("*")
+    .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
   if (error) throw error;
@@ -100,9 +128,12 @@ export async function addJournalEntry(input: {
   mediaId: string;
   emotion: Sentiment;
   note: string;
+  genreLabel?: string;
 }): Promise<JournalEntry> {
   const media = getMediaById(input.mediaId);
-  if (!media) throw new Error("작품을 찾을 수 없습니다.");
+  if (!media && !input.genreLabel) {
+    // TMDB 작품은 mock에 없을 수 있음 — genreLabel로 저장 허용
+  }
   if (!isSupabaseConfigured()) {
     throw new Error("Supabase가 설정되지 않았습니다.");
   }
@@ -113,14 +144,18 @@ export async function addJournalEntry(input: {
   } = await supabase.auth.getUser();
   if (!user) throw new Error("로그인이 필요합니다.");
 
+  const profile = getMongleProfile(user);
+
   const payload = {
     user_id: user.id,
-    media_id: media.id,
+    media_id: input.mediaId,
     emotion: input.emotion,
     emotion_label: sentimentLabel(input.emotion),
     note: input.note.trim(),
-    genre_label: media.genres[0] ?? "영화",
+    genre_label: input.genreLabel ?? media?.genres[0] ?? "영화",
     bubble_tone: bubbleByEmotion[input.emotion],
+    author_nickname: profile.nickname,
+    author_emoji: profile.emoji,
   };
 
   const { data, error } = await supabase

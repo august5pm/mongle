@@ -31,7 +31,7 @@ docs/
 | 로그인 | Google OAuth via Supabase (`/login`) |
 | 콜백 | `/auth/callback` |
 | 세션 | `@supabase/ssr` + `middleware` 쿠키 갱신 |
-| 저널 | `public.journals` + RLS (`user_id = auth.uid()`) |
+| 저널 | `public.journals` — **조회는 전체 공개**, 작성/수정/삭제는 본인만 (RLS) |
 | 비로그인 아카이브 | mock 시드 미리보기 |
 | 로그인 아카이브 | DB 본인 기록 |
 
@@ -52,9 +52,9 @@ docs/
 
 ## 작품 데이터
 
-`MediaItem`은 여전히 mock. 포스터는 TMDB CDN path.
-
-저널만 계정에 묶입니다. `media_id`는 mock id 문자열을 저장합니다.
+- 탐색 검색·트렌딩·상세·홈 레일: TMDB (`/api/tmdb/*`, `lib/tmdb-api.ts`)
+- 포스터 URL 헬퍼: `lib/tmdb-image.ts` (클라이언트 안전)
+- mock은 폴백용. 저널·위시 `media_id`는 `tmdb-m-{id}` / `tmdb-t-{id}` 또는 mock id
 
 ## 이미지
 
@@ -65,7 +65,10 @@ docs/
 
 ```
 UI
- ├─ data/mock.ts          작품
+ ├─ data/mock.ts          홈·폴백 작품
+ ├─ lib/tmdb-api.ts       TMDB API (server-only)
+ ├─ lib/tmdb-image.ts     포스터 URL
  ├─ lib/journal.ts        저널 ↔ Supabase
+ ├─ lib/wishlist.ts       찜 ↔ Supabase
  └─ lib/supabase/*        Auth 세션
 ```

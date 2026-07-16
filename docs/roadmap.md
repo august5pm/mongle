@@ -13,35 +13,20 @@
 - [x] 프로젝트 문서 (`docs/`) 정리  
 - [x] 저널 작성 플로우 (`/journal/new`)  
 - [x] Supabase + Google 로그인 · journals RLS  
+- [x] 아카이브 공개 피드 (모두의 몽글)  
+- [x] TMDB API 검색·트렌딩·상세 연동  
+- [x] 홈 레일 TMDB화 (트렌딩·포근·비오는날 discover)  
+- [x] 위시리스트 / 찜 (`wishlists` + `/wishlist`)  
+- [x] Vercel 배포 ([mongle-steel.vercel.app](https://mongle-steel.vercel.app))  
 
 ## 다음 우선순위
 
-### 1. Supabase/Google 프로덕션 키 연결
+### 다음으로 좋은 것
 
-로컬 `.env.local` + [supabase-setup.md](./supabase-setup.md) 완료 후 배포 환경 변수 등록.
-
-### 2. 포스터·목 데이터 품질
-
-- 전 화면에서 `MediaVisual` 누락 없는지 점검  
-- 깨진 TMDB path 교체, 홈/탐색 목록 콘텐츠 차별화  
-
-### 2. TMDB API 연동
-
-- `TMDB_API_KEY`로 검색·인기작 fetch  
-- mock → API 어댑터로 `searchMedia` 등 교체  
-
-### 3. 배포
-
-- Vercel 배포  
-- README에 라이브 링크  
-
-### 4. 있으면 좋은 것
-
-- 위시리스트 / 찜 동작  
-- 프로필 편집  
-- 접근성(포커스 링, 이미지 alt) 보강  
-- README 스크린샷  
-- 저널 삭제·수정
+- GitHub ↔ Vercel 자동 배포 연결  
+- Supabase Redirect URLs에 프로덕션 도메인 추가  
+- 저널 삭제·수정  
+- 접근성·README 스크린샷  
 ## 참고 · 주의
 
 개발 서버(`next dev`) 실행 중 `npm run build`를 돌리면 `.next`가 깨질 수 있습니다.

@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  Bookmark,
-  Calendar,
-  Clock,
-  PenLine,
-  Star,
-} from "lucide-react";
-import { allMedia, getMediaById } from "@/data/mock";
+import { Calendar, Clock, PenLine, Star } from "lucide-react";
+import { allMedia, getMediaById, type MediaItem } from "@/data/mock";
 import { MediaVisual } from "@/components/MediaVisual";
+import { WishlistButton } from "@/components/WishlistButton";
+import { fetchTmdbMediaByAppId, trendingTmdb } from "@/lib/tmdb-api";
+import { parseAppMediaId } from "@/lib/tmdb-image";
 
 type MoviePageProps = {
   params: { id: string };
@@ -19,18 +16,33 @@ export function generateStaticParams() {
   return allMedia.map((item) => ({ id: item.id }));
 }
 
-export function generateMetadata({ params }: MoviePageProps): Metadata {
-  const item = getMediaById(params.id);
+async function resolveMedia(id: string): Promise<MediaItem | undefined> {
+  const local = getMediaById(id);
+  if (local) return local;
+  if (parseAppMediaId(id)) {
+    try {
+      return await fetchTmdbMediaByAppId(id);
+    } catch {
+      return undefined;
+    }
+  }
+  return undefined;
+}
+
+export async function generateMetadata({
+  params,
+}: MoviePageProps): Promise<Metadata> {
+  const item = await resolveMedia(params.id);
   return {
     title: item?.title ?? "Details",
   };
 }
 
-export default function MovieDetailPage({ params }: MoviePageProps) {
-  const item = getMediaById(params.id);
+export default async function MovieDetailPage({ params }: MoviePageProps) {
+  const item = await resolveMedia(params.id);
   if (!item) notFound();
 
-  const related = allMedia
+  let related = allMedia
     .filter((m) => m.id !== item.id)
     .filter(
       (m) =>
@@ -39,9 +51,17 @@ export default function MovieDetailPage({ params }: MoviePageProps) {
     )
     .slice(0, 4);
 
+  if (parseAppMediaId(item.id) || related.length < 4) {
+    try {
+      const trend = await trendingTmdb("week");
+      related = trend.filter((m) => m.id !== item.id).slice(0, 4);
+    } catch {
+      /* keep mock related */
+    }
+  }
+
   return (
     <div className="relative min-h-screen">
-      {/* Hero Backdrop */}
       <div className="relative h-[530px] w-full overflow-hidden md:h-[663px]">
         <div className="mask-vignette absolute inset-0 scale-105">
           <MediaVisual
@@ -80,16 +100,17 @@ export default function MovieDetailPage({ params }: MoviePageProps) {
                 <span>{item.runtime}</span>
               </div>
             ) : null}
-            <div className="flex items-center gap-1">
-              <Calendar size={18} />
-              <span>{item.year}</span>
-            </div>
+            {item.year ? (
+              <div className="flex items-center gap-1">
+                <Calendar size={18} />
+                <span>{item.year}</span>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
 
       <div className="space-y-12 px-container-mobile pb-8 pt-8 sm:px-container-desktop">
-        {/* CTA */}
         <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-6">
           <Link
             href={`/journal/new?mediaId=${item.id}`}
@@ -98,16 +119,15 @@ export default function MovieDetailPage({ params }: MoviePageProps) {
             <PenLine size={22} />
             <span className="text-body-lg">몽글 기록하기</span>
           </Link>
-          <button
-            type="button"
-            className="pearl-clay-soft flex items-center gap-3 rounded-full px-6 py-4 text-on-surface transition-transform hover:scale-[1.02]"
-          >
-            <Bookmark size={20} />
-            <span>위시리스트에 담기</span>
-          </button>
+          <WishlistButton
+            mediaId={item.id}
+            title={item.title}
+            posterPath={item.posterPath}
+            mediaType={item.type}
+            variant="pill"
+          />
         </div>
 
-        {/* Synopsis & Director */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="space-y-6 lg:col-span-2">
             <section>
@@ -136,14 +156,12 @@ export default function MovieDetailPage({ params }: MoviePageProps) {
           </div>
         </div>
 
-        {/* Cast */}
         {item.cast && item.cast.length > 0 ? (
           <section>
             <div className="mb-6 flex items-end justify-between">
               <h2 className="font-display text-headline-md text-primary">
                 출연
               </h2>
-              <span className="text-label-sm text-secondary">전체 보기</span>
             </div>
             <div className="hide-scrollbar -mx-container-mobile flex gap-4 overflow-x-auto px-container-mobile pb-4 snap-x scroll-smooth sm:-mx-container-desktop sm:px-container-desktop">
               {item.cast.map((person) => (
@@ -173,7 +191,6 @@ export default function MovieDetailPage({ params }: MoviePageProps) {
           </section>
         ) : null}
 
-        {/* Related */}
         {related.length > 0 ? (
           <section>
             <div className="mb-6 flex items-end justify-between">

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { tmdbImage, type TmdbSize } from "@/lib/tmdb";
+import { tmdbImage, type TmdbSize } from "@/lib/tmdb-image";
 import type { MediaItem } from "@/data/mock";
 
 type MediaVisualProps = {
