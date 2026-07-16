@@ -19,6 +19,10 @@ import {
   fetchPublicJournals,
   getSeedJournals,
 } from "@/lib/journal";
+import {
+  fetchLikeStates,
+  type LikeState,
+} from "@/lib/journal-likes";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 
 const emotionIcons: Record<string, typeof Sparkles> = {
@@ -38,6 +42,7 @@ type FeedTab = "all" | "mine";
 export function ArchiveClient() {
   const [allEntries, setAllEntries] = useState<JournalEntry[]>([]);
   const [myEntries, setMyEntries] = useState<JournalEntry[]>([]);
+  const [likes, setLikes] = useState<Record<string, LikeState>>({});
   const [user, setUser] = useState<User | null>(null);
   const [tab, setTab] = useState<FeedTab>("all");
   const [ready, setReady] = useState(false);
@@ -48,6 +53,7 @@ export function ArchiveClient() {
       if (!isSupabaseConfigured()) {
         setAllEntries(getSeedJournals());
         setMyEntries([]);
+        setLikes({});
         setUser(null);
         setReady(true);
         return;
@@ -62,17 +68,29 @@ export function ArchiveClient() {
       const publicFeed = await fetchPublicJournals();
       setAllEntries(publicFeed);
 
+      let mine: JournalEntry[] = [];
       if (u) {
-        const mine = await fetchMyJournals();
+        mine = await fetchMyJournals();
         setMyEntries(mine);
       } else {
         setMyEntries([]);
+      }
+
+      const ids = [
+        ...publicFeed.map((e) => e.id),
+        ...mine.map((e) => e.id),
+      ];
+      try {
+        setLikes(await fetchLikeStates(ids));
+      } catch {
+        setLikes({});
       }
       setLoadError(null);
     } catch (e) {
       setLoadError(e instanceof Error ? e.message : "불러오기 실패");
       setAllEntries(getSeedJournals());
       setMyEntries([]);
+      setLikes({});
     } finally {
       setReady(true);
     }
@@ -199,9 +217,19 @@ export function ArchiveClient() {
               entry={entry}
               Icon={Icon}
               isMine={isMine}
+              loggedIn={Boolean(user)}
+              like={likes[entry.id]}
+              onLikeChange={(id, next) => {
+                setLikes((prev) => ({ ...prev, [id]: next }));
+              }}
               onDeleted={(id) => {
                 setAllEntries((prev) => prev.filter((e) => e.id !== id));
                 setMyEntries((prev) => prev.filter((e) => e.id !== id));
+                setLikes((prev) => {
+                  const copy = { ...prev };
+                  delete copy[id];
+                  return copy;
+                });
               }}
             />
           );

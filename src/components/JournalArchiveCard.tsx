@@ -2,12 +2,19 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import type { LucideIcon } from "lucide-react";
-import { Pencil, Trash2 } from "lucide-react";
+import { Heart, Pencil, Trash2 } from "lucide-react";
 import { getMediaById, type JournalEntry, type MediaItem } from "@/data/mock";
 import { MediaVisual } from "@/components/MediaVisual";
 import { parseAppMediaId } from "@/lib/tmdb-image";
 import { deleteJournalEntry } from "@/lib/journal";
+import {
+  isJournalUuid,
+  toggleJournalLike,
+  type LikeState,
+} from "@/lib/journal-likes";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
 
 const bubbleStyles: Record<JournalEntry["bubbleTone"], string> = {
   primary: "pearl-clay",
@@ -21,19 +28,35 @@ type Props = {
   entry: JournalEntry;
   Icon: LucideIcon;
   isMine?: boolean;
+  like?: LikeState;
+  loggedIn?: boolean;
   onDeleted?: (id: string) => void;
+  onLikeChange?: (id: string, next: LikeState) => void;
 };
 
 export function JournalArchiveCard({
   entry,
   Icon,
   isMine,
+  like,
+  loggedIn,
   onDeleted,
+  onLikeChange,
 }: Props) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [media, setMedia] = useState<MediaItem | undefined>(() =>
     getMediaById(entry.mediaId),
   );
   const [busy, setBusy] = useState(false);
+  const [likeBusy, setLikeBusy] = useState(false);
+  const [localLike, setLocalLike] = useState<LikeState>(
+    like ?? { count: 0, likedByMe: false },
+  );
+
+  useEffect(() => {
+    setLocalLike(like ?? { count: 0, likedByMe: false });
+  }, [like]);
 
   useEffect(() => {
     const local = getMediaById(entry.mediaId);
@@ -57,6 +80,8 @@ export function JournalArchiveCard({
     };
   }, [entry.mediaId]);
 
+  const canLike = isJournalUuid(entry.id);
+
   async function onDelete() {
     if (busy) return;
     const ok = window.confirm("이 몽글 기록을 삭제할까요?");
@@ -68,6 +93,30 @@ export function JournalArchiveCard({
     } catch (e) {
       alert(e instanceof Error ? e.message : "삭제에 실패했어요.");
       setBusy(false);
+    }
+  }
+
+  async function onLike() {
+    if (!canLike || likeBusy) return;
+    if (!isSupabaseConfigured() || !loggedIn) {
+      router.push(`/login?next=${encodeURIComponent(pathname)}`);
+      return;
+    }
+    setLikeBusy(true);
+    const prev = localLike;
+    setLocalLike({
+      count: prev.likedByMe ? Math.max(0, prev.count - 1) : prev.count + 1,
+      likedByMe: !prev.likedByMe,
+    });
+    try {
+      const next = await toggleJournalLike(entry.id);
+      setLocalLike(next);
+      onLikeChange?.(entry.id, next);
+    } catch (e) {
+      setLocalLike(prev);
+      alert(e instanceof Error ? e.message : "좋아요에 실패했어요.");
+    } finally {
+      setLikeBusy(false);
     }
   }
 
@@ -138,10 +187,15 @@ export function JournalArchiveCard({
             </div>
           </div>
         </div>
-        <div className="p-5">
-          <h3 className="truncate font-display text-headline-md text-on-surface">
-            {media.title}
-          </h3>
+      </Link>
+
+      <div className="flex items-center justify-between gap-2 p-5 pt-4">
+        <div className="min-w-0 flex-1">
+          <Link href={`/movie/${media.id}`} className="block">
+            <h3 className="truncate font-display text-headline-md text-on-surface">
+              {media.title}
+            </h3>
+          </Link>
           <div className="mt-2 flex items-center gap-2">
             <span className="rounded-full border border-secondary/10 bg-secondary/20 px-2 py-0.5 text-label-sm text-secondary">
               {entry.genreLabel}
@@ -151,7 +205,30 @@ export function JournalArchiveCard({
             </span>
           </div>
         </div>
-      </Link>
+
+        {canLike ? (
+          <button
+            type="button"
+            disabled={likeBusy}
+            onClick={onLike}
+            aria-pressed={localLike.likedByMe}
+            aria-label={
+              localLike.likedByMe ? "좋아요 취소" : "좋아요"
+            }
+            className={`pearl-clay-soft flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2 text-sm transition hover:scale-105 disabled:opacity-50 ${
+              localLike.likedByMe ? "text-primary" : "text-on-surface-variant"
+            }`}
+          >
+            <Heart
+              size={16}
+              fill={localLike.likedByMe ? "currentColor" : "none"}
+            />
+            <span className="min-w-[1ch] tabular-nums font-semibold">
+              {localLike.count}
+            </span>
+          </button>
+        ) : null}
+      </div>
     </article>
   );
 }

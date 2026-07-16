@@ -21,8 +21,10 @@ cp .env.example .env.local
      → 아카이브 **공개 피드**(다른 사람 기록 조회) + 작성자 닉네임/이모지 컬럼
    - [`supabase/migrations/003_wishlists.sql`](../supabase/migrations/003_wishlists.sql)  
      → **위시리스트**(본인만 조회·추가·삭제)
+   - [`supabase/migrations/004_journal_likes.sql`](../supabase/migrations/004_journal_likes.sql)  
+     → 몽글 **좋아요**(조회 공개, 추가·삭제는 본인만)
 
-> 이미 `001`만 실행했다면 `002`·`003`만 추가 실행하면 됩니다.
+> 이미 앞선 마이그레이션만 실행했다면 빠진 번호만 추가 실행하면 됩니다.
 
 ## 2. Google OAuth
 
@@ -81,6 +83,7 @@ npm run dev
 | 콜백 | `/auth/callback` (code → session) |
 | 테이블 | `public.journals` — SELECT 공개, INSERT/UPDATE/DELETE 본인만 |
 | 테이블 | `public.wishlists` — SELECT/INSERT/DELETE 본인만 |
+| 테이블 | `public.journal_likes` — SELECT 공개, INSERT/DELETE 본인만 |
 | 미들웨어 | 세션 쿠키 갱신 (`src/middleware.ts`) |
 | 비로그인 아카이브 | 시드 미리보기 + 로그인 CTA |
 | 로그인 아카이브 | DB의 내 기록만 |
