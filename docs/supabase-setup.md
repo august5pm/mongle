@@ -44,10 +44,22 @@ cp .env.example .env.local
 1. Authentication → Providers → **Google** 활성화
 2. Client ID / Secret 붙여넣기
 3. Authentication → URL Configuration
-   - Site URL: `http://localhost:3000`
+   - Site URL: `https://mongle-steel.vercel.app` (프로덕션)
    - Redirect URLs에 추가:
      - `http://localhost:3000/auth/callback`
-     - (배포 시) `https://your-domain.com/auth/callback`
+     - `http://localhost:3000/**`
+     - `https://mongle-steel.vercel.app/auth/callback`
+     - `https://mongle-steel.vercel.app/**`
+     - (프리뷰용, 선택) `https://*.vercel.app/**`
+
+### Google Cloud Console — 배포 후 추가
+
+Authorized JavaScript origins에 프로덕션도 넣습니다:
+
+- `https://mongle-steel.vercel.app`
+
+> Google **Authorized redirect URIs**는 앱 도메인이 아니라  
+> `https://<PROJECT_REF>.supabase.co/auth/v1/callback` 만 있으면 됩니다.
 
 ## 3. 확인
 

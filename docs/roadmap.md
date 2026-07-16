@@ -24,9 +24,10 @@
 ### 다음으로 좋은 것
 
 - GitHub ↔ Vercel 자동 배포 연결  
-- Supabase Redirect URLs에 프로덕션 도메인 추가  
+- [x] Supabase Redirect URLs에 프로덕션 도메인 추가  
 - 저널 삭제·수정  
 - 접근성·README 스크린샷  
+- Google Cloud JS origin에 프로덕션 도메인 추가 (콘솔에서)  
 ## 참고 · 주의
 
 개발 서버(`next dev`) 실행 중 `npm run build`를 돌리면 `.next`가 깨질 수 있습니다.
