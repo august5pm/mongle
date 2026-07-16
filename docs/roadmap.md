@@ -20,6 +20,7 @@
 - [x] Vercel 배포 ([mongle-steel.vercel.app](https://mongle-steel.vercel.app))  
 - [x] Supabase Redirect URLs에 프로덕션 도메인 추가  
 - [x] 저널 삭제·수정  
+- [x] README 스크린샷 · 기본 접근성 (skip link, focus-visible, aria)  
 
 ## 다음 우선순위
 
@@ -27,7 +28,6 @@
 
 - GitHub ↔ Vercel 자동 배포 연결 확인  
 - Google Cloud JS origin에 프로덕션 도메인 추가 (콘솔에서)  
-- 접근성·README 스크린샷  
 ## 참고 · 주의
 
 개발 서버(`next dev`) 실행 중 `npm run build`를 돌리면 `.next`가 깨질 수 있습니다.

@@ -131,9 +131,15 @@ export function ArchiveClient() {
         </div>
       </section>
 
-      <div className="mb-8 flex gap-2">
+      <div
+        className="mb-8 flex gap-2"
+        role="tablist"
+        aria-label="아카이브 피드"
+      >
         <button
           type="button"
+          role="tab"
+          aria-selected={tab === "all"}
           onClick={() => setTab("all")}
           className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
             tab === "all"
@@ -145,6 +151,8 @@ export function ArchiveClient() {
         </button>
         <button
           type="button"
+          role="tab"
+          aria-selected={tab === "mine"}
           onClick={() => {
             if (!user) return;
             setTab("mine");

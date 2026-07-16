@@ -43,7 +43,7 @@ export function LoginClient() {
     <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-container-mobile pb-12 pt-24 sm:px-container-desktop">
       <div className="mb-10 text-center">
         <div className="relative mx-auto mb-4 h-14 w-16">
-          <Image src="/cloud.png" alt="" fill className="object-contain" />
+          <Image src="/cloud.png" alt="몽글 구름 로고" fill className="object-contain" />
         </div>
         <h1 className="font-display text-4xl text-on-surface">몽글 로그인</h1>
         <p className="mt-2 text-body-md text-on-surface-variant">

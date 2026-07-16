@@ -56,6 +56,7 @@ export function BottomNav() {
       }`}
     >
       <nav
+        aria-label="주요 메뉴"
         className={`pointer-events-auto glass-panel spec-shine flex w-full max-w-lg items-end justify-between transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] ${
           compact
             ? "gap-0 rounded-[1.85rem] px-1.5 py-1.5"
@@ -75,6 +76,8 @@ export function BottomNav() {
             <Link
               key={href}
               href={href}
+              aria-current={active ? "page" : undefined}
+              aria-label={label}
               className={`relative flex flex-1 flex-col items-center justify-center rounded-[1.15rem] transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                 compact ? "px-1 py-2" : "px-1 py-2.5"
               } ${
@@ -87,6 +90,7 @@ export function BottomNav() {
                 size={compact ? 20 : 22}
                 strokeWidth={active ? 2.2 : 1.75}
                 fill={active ? "currentColor" : "none"}
+                aria-hidden
                 className="transition-[width,height,transform] duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
               />
               <span
@@ -95,11 +99,15 @@ export function BottomNav() {
                     ? "mt-0 max-h-0 scale-90 text-[10px] leading-none opacity-0"
                     : "mt-1 max-h-5 scale-100 text-[11px] font-semibold leading-none opacity-100"
                 }`}
+                aria-hidden={compact ? true : undefined}
               >
                 {label}
               </span>
               {active && compact ? (
-                <span className="absolute bottom-1 h-1 w-1 rounded-full bg-[#2a3038]/70" />
+                <span
+                  className="absolute bottom-1 h-1 w-1 rounded-full bg-[#2a3038]/70"
+                  aria-hidden
+                />
               ) : null}
             </Link>
           );

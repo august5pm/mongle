@@ -11,4 +11,6 @@
 | [roadmap.md](./roadmap.md) | 진행 현황과 다음 우선순위 |
 | [supabase-setup.md](./supabase-setup.md) | Supabase · Google OAuth 설정 |
 
-루트 [README.md](../README.md)에서 실행 방법과 화면 목록을 바로 확인할 수 있습니다.
+루트 [README.md](../README.md)에서 실행 방법·화면 미리보기(스크린샷)를 바로 확인할 수 있습니다.  
+스크린샷 원본: [`screenshots/`](./screenshots/)
+

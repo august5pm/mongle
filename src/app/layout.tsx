@@ -48,8 +48,13 @@ export default function RootLayout({
       <body
         className={`${dongle.variable} ${nunito.variable} ${pretendard.variable} bg-background text-on-surface antialiased`}
       >
+        <a href="#main-content" className="skip-to-content pearl-clay">
+          본문으로 건너뛰기
+        </a>
         <TopAppBar />
-        <main className="min-h-screen pb-32">{children}</main>
+        <main id="main-content" className="min-h-screen pb-32" tabIndex={-1}>
+          {children}
+        </main>
         <JournalFab />
         <BottomNav />
       </body>
