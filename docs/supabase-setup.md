@@ -36,7 +36,7 @@ cp .env.example .env.local
    - Application type: **Web application**
    - Authorized JavaScript origins:
      - `http://localhost:3000`
-     - (배포 후) `https://your-domain.com`
+     - `https://mongle-steel.vercel.app`
    - Authorized redirect URIs — **Supabase 콜백**을 넣습니다:
      - `https://<PROJECT_REF>.supabase.co/auth/v1/callback`
 4. Client ID / Client Secret 복사

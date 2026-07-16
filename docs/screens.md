@@ -29,7 +29,7 @@
 | 블록 | 컴포넌트 | 내용 |
 |------|----------|------|
 | 히어로 | `Hero` | 오늘의 추천, 백드롭, 자세히 보기 |
-| 이어보기 | `ContinueWatchingRail` | 진행률 바 |
+| 이어보기 | `ContinueWatchingRail` | TMDB 트렌딩(지금 뜨는) |
 | 포근한 이야기 | `SoftFluffyBento` | 2×2 벤토 |
 | 비 오는 날 | `RainyDayRail` | 세로 포스터 레일 |
 
@@ -42,9 +42,11 @@
 - 상세·히어로·앱바 하트/북마크로 토글  
 - 프로필에서 진입  
 
+## `/explore` 탐색
+
 `ExploreClient` (클라이언트)
 
-1. 검색 인풋 — `searchMedia(query, sentiment)`  
+1. 검색 인풋 — TMDB `/api/tmdb/search` (디바운스)  
 2. 분위기 칩 — Cinematic / Warm / Thrilling / Dreamy / Melancholic  
 3. 비검색 시: 트렌딩 벤토 + 감정 섹션  
 4. 검색 시: 결과 그리드  
@@ -73,12 +75,13 @@ Google OAuth (`LoginClient`) → `/auth/callback`
 ## `/movie/[id]` 상세
 
 - CTA: 몽글 기록하기 → `/journal/new?mediaId=` (미로그인 시 작성 화면에서 로그인으로 보냄)  
-- 줄거리 · 감독 · 출연 · 관련 몽글  
+- 위시리스트 토글 (`WishlistButton`)  
+- 줄거리 · 감독 · 출연 · 관련 작품(TMDB 트렌딩)  
 
 ## `/profile` 프로필
 
 - 비로그인: Google 로그인 CTA  
-- 로그인: 이모지 아바타 · 닉네임(편집 가능) · 이메일 · 저널 수 · 로그아웃  
+- 로그인: 이모지 아바타 · 닉네임(편집 가능) · 이메일 · 저널 수 · 위시리스트 링크 · 로그아웃  
 - 닉네임/이모지는 Supabase `user_metadata`에 저장되어 기기 간 동기화  
 
 ## 리다이렉트

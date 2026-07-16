@@ -24,7 +24,7 @@
 
 - **홈** — TMDB 트렌딩·분위기별 디스커버 레일  
 - **탐색** — 작품 검색, 감정 칩, 트렌딩 벤토  
-- **저널** — Google 로그인 후 감정 한 줄 기록 · 수정·삭제 · 공개 아카이브  
+- **저널** — Google 로그인 후 감정 한 줄 기록 · 수정·삭제 · 공개 아카이브 · **좋아요**  
 - **위시리스트** — 작품 찜 (계정 연동)  
 - **프로필** — 닉네임·이모지 아바타
 
@@ -36,7 +36,7 @@
 |------|------|
 | Framework | Next.js 14 (App Router) + TypeScript |
 | Styling | Tailwind CSS + `globals.css` 유틸 |
-| Auth / DB | Supabase (Google OAuth + `journals` / `wishlists` + RLS) |
+| Auth / DB | Supabase (Google OAuth + `journals` / `wishlists` / `journal_likes` + RLS) |
 | API | TMDB (검색·트렌딩·상세, 서버 전용 키) |
 | Icons | Lucide React |
 | Fonts | Dongle(브랜드·제목) · Nunito / Pretendard(본문) |
@@ -74,7 +74,7 @@ npm run dev
 |------|------|
 | `/` | 오늘의 추천, 지금 뜨는(TMDB), 포근한 이야기, 비 오는 날의 영화 |
 | `/explore` | 검색, 감정/분위기 칩, 트렌딩 벤토 |
-| `/archive` | 모두의 몽글 / 내 몽글, 수정·삭제 |
+| `/archive` | 모두의 몽글 / 내 몽글, 좋아요, 수정·삭제 |
 | `/journal/new` | 작품 선택 → 감정 → 한 줄 메모 (`?edit=` 수정) |
 | `/wishlist` | 찜한 작품 목록 (로그인) |
 | `/movie/[id]` | 상세, 위시리스트, 기록하기 |
