@@ -62,18 +62,19 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
 
   return (
     <div className="relative min-h-screen">
-      <div className="relative h-[530px] w-full overflow-hidden md:h-[663px]">
+      <div className="app-bleed relative h-[min(530px,70vh)] w-auto overflow-hidden md:h-[min(663px,75vh)]">
         <div className="mask-vignette absolute inset-0 scale-105">
           <MediaVisual
             item={item}
             kind="backdrop"
+            size="w1280"
             priority
-            sizes="100vw"
+            sizes="(max-width:1100px) 100vw, 1100px"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
 
-        <div className="absolute bottom-0 left-0 flex w-full flex-col gap-4 p-container-mobile sm:px-container-desktop">
+        <div className="absolute bottom-0 left-0 flex w-full flex-col gap-4 px-[var(--app-pad)] pb-6">
           <div className="mb-2 flex flex-wrap gap-2">
             {item.genres.map((genre) => (
               <span
@@ -110,7 +111,7 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
         </div>
       </div>
 
-      <div className="space-y-12 px-container-mobile pb-8 pt-8 sm:px-container-desktop">
+      <div className="space-y-12 pb-8 pt-8">
         <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-6">
           <Link
             href={`/journal/new?mediaId=${item.id}`}
@@ -163,7 +164,7 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
                 출연
               </h2>
             </div>
-            <div className="hide-scrollbar -mx-container-mobile flex gap-4 overflow-x-auto px-container-mobile pb-4 snap-x scroll-smooth sm:-mx-container-desktop sm:px-container-desktop">
+            <div className="app-bleed hide-scrollbar flex gap-4 overflow-x-auto pb-4 snap-x scroll-smooth">
               {item.cast.map((person) => (
                 <div
                   key={person.name}
@@ -206,7 +207,7 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
                 <Link key={m.id} href={`/movie/${m.id}`} className="group">
                   <div className="glass-panel relative mb-3 aspect-[2/3] overflow-hidden rounded-2xl">
                     <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
-                      <MediaVisual item={m} sizes="25vw" />
+                      <MediaVisual item={m} size="w185" sizes="25vw" />
                     </div>
                     <div className="glass-panel absolute right-2 top-2 rounded-md px-2 py-1 text-[10px] font-bold">
                       {m.rating.toFixed(1)}

@@ -98,7 +98,7 @@ export function ProfileClient() {
   const profile = getMongleProfile(user);
 
   return (
-    <div className="mx-auto max-w-lg px-container-mobile pb-8 pt-24 sm:px-container-desktop">
+    <div className="mx-auto max-w-lg pb-8 pt-24">
       <p className="text-label-sm tracking-widest text-primary">프로필</p>
       <h1 className="mt-3 font-display text-display-lg-mobile text-on-surface">
         나의 몽글

@@ -10,7 +10,7 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="px-container-mobile pt-28 text-on-surface-variant">
+        <div className="pt-28 text-on-surface-variant">
           로그인 준비 중…
         </div>
       }

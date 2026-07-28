@@ -190,6 +190,8 @@ export function ExploreClient() {
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
                   <MediaVisual
                     item={featured}
+                    size="w500"
+                    priority
                     sizes="(max-width:768px) 100vw, 60vw"
                   />
                 </div>
@@ -219,6 +221,8 @@ export function ExploreClient() {
                   <MediaVisual
                     item={second}
                     kind="backdrop"
+                    size="w500"
+                    priority
                     sizes="(max-width:768px) 100vw, 50vw"
                   />
                 </div>
@@ -240,7 +244,7 @@ export function ExploreClient() {
                 className="glass-panel group relative min-h-[140px] cursor-pointer overflow-hidden rounded-3xl"
               >
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-                  <MediaVisual item={third} sizes="30vw" />
+                  <MediaVisual item={third} size="w185" sizes="30vw" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                 <div className="absolute bottom-0 left-0 p-4">
@@ -257,7 +261,7 @@ export function ExploreClient() {
                 className="glass-panel group relative min-h-[140px] cursor-pointer overflow-hidden rounded-3xl"
               >
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-                  <MediaVisual item={fourth} sizes="30vw" />
+                  <MediaVisual item={fourth} size="w185" sizes="30vw" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                 <div className="absolute bottom-0 left-0 p-4">
@@ -375,7 +379,7 @@ export function ExploreClient() {
               <Link key={item.id} href={`/movie/${item.id}`} className="group">
                 <div className="glass-panel relative mb-2 aspect-[2/3] overflow-hidden rounded-2xl">
                   <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
-                    <MediaVisual item={item} sizes="20vw" />
+                    <MediaVisual item={item} size="w185" sizes="20vw" />
                   </div>
                 </div>
                 <p className="truncate text-sm font-bold">{item.title}</p>

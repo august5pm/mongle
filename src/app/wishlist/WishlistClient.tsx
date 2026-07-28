@@ -61,7 +61,7 @@ export function WishlistClient() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-5xl px-container-mobile pb-8 pt-24 sm:px-container-desktop">
+    <div className="pb-8 pt-24">
       <p className="text-label-sm tracking-widest text-primary">Wishlist</p>
       <h1 className="mt-3 font-display text-display-lg-mobile text-on-surface">
         위시리스트
@@ -106,7 +106,7 @@ export function WishlistClient() {
                 <Link href={`/movie/${row.media_id}`} className="block">
                   <div className="glass-panel relative mb-3 aspect-[2/3] overflow-hidden rounded-2xl">
                     <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
-                      <MediaVisual item={item} sizes="25vw" />
+                      <MediaVisual item={item} size="w185" sizes="25vw" />
                     </div>
                   </div>
                   <h3 className="truncate text-sm font-semibold text-on-surface">

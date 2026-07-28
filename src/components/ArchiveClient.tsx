@@ -111,7 +111,7 @@ export function ArchiveClient() {
     : `/login?next=${encodeURIComponent("/journal/new")}`;
 
   return (
-    <div className="mx-auto max-w-7xl px-container-mobile pb-8 pt-24 sm:px-container-desktop">
+    <div className="pb-8 pt-24">
       <section className="mb-8">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>

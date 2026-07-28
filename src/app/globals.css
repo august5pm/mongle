@@ -14,6 +14,10 @@
   --pearl-soft: rgba(232, 240, 255, 0.14);
   --pearl-edge: rgba(255, 255, 255, 0.55);
   --cool-shadow: rgba(120, 150, 180, 0.22);
+  /* 중앙 정렬 앱 프레임 — 뷰포트가 좁아지면 width 100%로 같이 줄어듦 */
+  --app-max: 80rem; /* 1280px */
+  --app-pad: clamp(1rem, 3.2vw, 2.5rem);
+  --poster-w: clamp(6.75rem, 28vw, 10.5rem);
 }
 
 html {
@@ -68,9 +72,8 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.95);
     box-shadow:
       inset 0 1.5px 1px rgba(255, 255, 255, 0.95),
-      inset 0 -10px 18px rgba(255, 160, 140, 0.18),
-      0 0 28px rgba(255, 190, 175, 0.35),
-      0 10px 28px rgba(0, 0, 0, 0.38);
+      inset 0 -8px 14px rgba(255, 160, 140, 0.12),
+      0 6px 18px rgba(0, 0, 0, 0.32);
     color: #3d2824;
   }
 
@@ -86,9 +89,9 @@ body {
     color: #f5f7fa;
   }
 
-  /* box-shadow를 덮어쓰지 않도록 filter로 글로우 */
+  /* 은은한 쿨 블루 글로우 — secondary 톤과 맞춤 */
   .peach-glow {
-    filter: drop-shadow(0 0 14px rgba(255, 186, 168, 0.45));
+    filter: drop-shadow(0 0 6px rgba(201, 216, 255, 0.28));
   }
 
   .peach-gradient {
@@ -109,8 +112,43 @@ body {
   }
 
   .hero-mask {
-    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    /* 하단 페이드만 — 좌우는 edge-fade-x와 동일 처리 */
+    mask-image: linear-gradient(to bottom, black 58%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 58%, transparent 100%);
+  }
+
+  /* 키비주얼 전용 — 좌우 가장자리 페이드 (배경과 연결) */
+  .edge-fade-x {
+    overflow: hidden;
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 1.25rem,
+      #000 calc(100% - 1.25rem),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 1.25rem,
+      #000 calc(100% - 1.25rem),
+      transparent 100%
+    );
+  }
+
+  /* 키비주얼 하단 — 배경과 이어지는 그라데이션 오버레이 */
+  .hero-fade-bottom {
+    pointer-events: none;
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: 2;
+    height: min(55%, 280px);
+    background: linear-gradient(
+      to top,
+      var(--background) 0%,
+      rgba(5, 6, 7, 0.85) 40%,
+      transparent 100%
+    );
   }
 
   .mongle-gradient-text {
@@ -121,7 +159,7 @@ body {
   }
 
   .active-nav-glow {
-    filter: drop-shadow(0 0 10px rgba(255, 200, 185, 0.4));
+    filter: drop-shadow(0 0 8px rgba(201, 216, 255, 0.35));
   }
 
   .cloud-bubble {
@@ -215,3 +253,101 @@ button:focus-visible,
   outline: 2px solid rgba(255, 232, 226, 0.95);
   outline-offset: 2px;
 }
+
+/* 중앙 max-width 프레임 — 좁은 화면에서는 100%로 축소 */
+.app-shell {
+  width: min(100%, var(--app-max));
+  margin-inline: auto;
+  padding-inline: var(--app-pad);
+  container-type: inline-size;
+  container-name: app;
+  --poster-w: clamp(6.75rem, 22cqi, 10.5rem);
+}
+
+/* 셸 패딩을 상쇄해 가로 스크롤 레일이 프레임 가장자리까지 닿게 */
+.app-bleed {
+  margin-inline: calc(var(--app-pad) * -1);
+  padding-inline: var(--app-pad);
+}
+
+.poster-card {
+  width: var(--poster-w);
+  flex: none;
+}
+
+/* 넘치는 포스터는 마스크로 클립 */
+.poster-swiper {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    #000 calc(100% - 1.25rem),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    #000 calc(100% - 1.25rem),
+    transparent 100%
+  );
+}
+
+.poster-swiper .swiper {
+  overflow: hidden;
+}
+
+.poster-swiper .swiper-slide {
+  width: auto;
+  height: auto;
+}
+
+/* 호버 시 좌우 네비 — 포스터 이미지 세로 중앙 */
+.poster-swiper-nav {
+  position: absolute;
+  z-index: 20;
+  top: calc(var(--poster-w) * 0.75);
+  display: flex;
+  height: 2.75rem;
+  width: 2.75rem;
+  translate: 0 -50%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(12, 14, 16, 0.72);
+  color: #f2f4f6;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.poster-swiper-wrap:hover .poster-swiper-nav:not(:disabled) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.poster-swiper-nav:hover {
+  background: rgba(20, 24, 28, 0.92);
+  transform: scale(1.05);
+}
+
+.poster-swiper-nav--prev {
+  left: calc(var(--app-pad) + 0.35rem);
+}
+
+.poster-swiper-nav--next {
+  right: calc(var(--app-pad) + 0.35rem);
+}
+
+@media (hover: none) {
+  .poster-swiper-nav:not(:disabled) {
+    opacity: 0.85;
+    pointer-events: auto;
+  }
+}
+
+

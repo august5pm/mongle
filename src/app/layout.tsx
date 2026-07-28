@@ -53,7 +53,7 @@ export default function RootLayout({
         </a>
         <TopAppBar />
         <main id="main-content" className="min-h-screen pb-32" tabIndex={-1}>
-          {children}
+          <div className="app-shell">{children}</div>
         </main>
         <JournalFab />
         <BottomNav />

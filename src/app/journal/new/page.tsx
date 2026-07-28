@@ -10,7 +10,7 @@ export default function NewJournalPage() {
   return (
     <Suspense
       fallback={
-        <div className="px-container-mobile pt-28 text-on-surface-variant">
+        <div className="pt-28 text-on-surface-variant">
           기록을 준비하는 중…
         </div>
       }

@@ -118,7 +118,7 @@ const config: Config = {
       },
       boxShadow: {
         "peach-glow":
-          "0 0 24px rgba(255, 200, 190, 0.28), inset 0 1px 0 rgba(255,255,255,0.5)",
+          "0 0 16px rgba(201, 216, 255, 0.28), inset 0 1px 0 rgba(255,255,255,0.5)",
         "nav-glow": "0 0 20px rgba(200, 220, 255, 0.22)",
         lift: "0 26px 60px rgba(0, 0, 0, 0.5)",
         poster:

@@ -13,7 +13,7 @@ import {
   type Sentiment,
 } from "@/data/mock";
 import { MediaVisual } from "@/components/MediaVisual";
-import { tmdbImage } from "@/lib/tmdb-image";
+import { blurDataURLFromTone, tmdbImage } from "@/lib/tmdb-image";
 import {
   addJournalEntry,
   fetchJournalById,
@@ -232,14 +232,14 @@ export function JournalComposer() {
 
   if (!authReady || (isSupabaseConfigured() && !user) || !editReady) {
     return (
-      <div className="px-container-mobile pt-28 text-on-surface-variant">
+      <div className="pt-28 text-on-surface-variant">
         {isEdit ? "기록을 불러오는 중…" : "로그인 확인 중…"}
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-lg px-container-mobile pb-12 pt-24 sm:px-container-desktop">
+    <div className="mx-auto max-w-lg pb-12 pt-24">
       <div className="mb-8 flex items-center gap-3">
         <button
           type="button"
@@ -333,7 +333,9 @@ export function JournalComposer() {
                         alt=""
                         fill
                         sizes="33vw"
-                        className="object-cover"
+                        placeholder="blur"
+                        blurDataURL={blurDataURLFromTone(item.posterTone)}
+                        className="object-cover transition-opacity duration-500"
                       />
                     ) : null}
                   </div>

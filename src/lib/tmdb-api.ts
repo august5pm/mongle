@@ -1,6 +1,10 @@
 import "server-only";
 
 import type { MediaItem, MediaType } from "@/data/mock";
+import {
+  pickTodayCurations,
+  type HomeCurationCategory,
+} from "@/lib/home-curation";
 import { parseAppMediaId } from "@/lib/tmdb-image";
 
 const TMDB_API = "https://api.themoviedb.org/3";
@@ -191,7 +195,7 @@ export async function trendingTmdb(
     .filter((x): x is MediaItem =>
       Boolean(x && (x.posterPath || x.backdropPath)),
     )
-    .slice(0, 12);
+    .slice(0, 20);
 }
 
 export async function fetchTmdbMediaByAppId(
@@ -232,54 +236,72 @@ export async function discoverMoviesTmdb(
     .slice(0, limit);
 }
 
+export type HomeCurationSlot = {
+  category: HomeCurationCategory;
+  items: MediaItem[];
+};
+
 export type HomeRails = {
   featured: MediaItem;
+  /** 오늘 이거 볼까요 — 일간 트렌딩 */
+  todayPicks: MediaItem[];
+  /** 지금 뜨는 — 주간 트렌딩 */
   trending: MediaItem[];
-  softFluffy: MediaItem[];
-  rainyDay: MediaItem[];
+  /** 벤토 그리드 슬롯 */
+  bento: HomeCurationSlot;
+  /** 가로 포스터 레일 슬롯 */
+  posterRail: HomeCurationSlot;
 };
 
 export async function fetchHomeRails(): Promise<HomeRails | null> {
   if (!isTmdbConfigured()) return null;
 
   try {
-    const [week, soft, rainy] = await Promise.all([
+    const [bentoCat, railCat] = pickTodayCurations();
+
+    const [week, day, bentoItems, railItems] = await Promise.all([
       trendingTmdb("week"),
-      discoverMoviesTmdb(
-        {
-          with_genres: "10751|16|35|10749",
-          "vote_average.gte": "6.5",
-        },
-        8,
-      ),
-      discoverMoviesTmdb(
-        {
-          with_genres: "18|9648|10749",
-          "vote_average.gte": "7",
-          sort_by: "vote_average.desc",
-        },
-        12,
-      ),
+      trendingTmdb("day"),
+      discoverMoviesTmdb(bentoCat.discover, 12),
+      discoverMoviesTmdb(railCat.discover, 12),
     ]);
 
     const featured =
-      week.find((m) => m.backdropPath) ?? week[0] ?? soft[0] ?? rainy[0];
+      week.find((m) => m.backdropPath) ??
+      week[0] ??
+      day[0] ??
+      bentoItems[0] ??
+      railItems[0];
     if (!featured) return null;
 
-    const trending = week
-      .filter((m) => m.id !== featured.id)
-      .slice(0, 8)
-      .map((m, i) => ({
-        ...m,
-        progress: Math.min(92, Math.max(35, Math.round(m.rating * 9) - i * 3)),
-        remainingLabel: m.genres[0] ?? (m.type === "tv" ? "시리즈" : "영화"),
-      }));
+    // 슬롯 간·히어로와 중복 줄이기
+    const used = new Set<string>([featured.id]);
+    const uniqueSlice = (list: MediaItem[], n: number) => {
+      const out: MediaItem[] = [];
+      for (const item of list) {
+        if (used.has(item.id)) continue;
+        used.add(item.id);
+        out.push(item);
+        if (out.length >= n) break;
+      }
+      return out;
+    };
+
+    const todayPicks = uniqueSlice(day.length ? day : week, 10);
+    const trending = uniqueSlice(week, 12);
 
     return {
       featured,
-      trending: trending.length ? trending : week.slice(0, 8),
-      softFluffy: soft.slice(0, 4),
-      rainyDay: rainy.slice(0, 10),
+      todayPicks,
+      trending,
+      bento: {
+        category: bentoCat,
+        items: uniqueSlice(bentoItems, 10),
+      },
+      posterRail: {
+        category: railCat,
+        items: uniqueSlice(railItems, 10),
+      },
     };
   } catch {
     return null;

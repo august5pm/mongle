@@ -16,6 +16,21 @@ export function tmdbImage(path: string | undefined, size: TmdbSize = "w500") {
   return `${TMDB_IMG}/${size}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
+/** next/image blur용 — tone 그라데이션에서 첫 hex를 뽑아 단색 SVG data URL 생성 */
+export function blurDataURLFromTone(tone: string): string {
+  const match = tone.match(/#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b/);
+  let color = match ? `#${match[1]}` : "#272a2c";
+  if (color.length === 4) {
+    color = `#${color[1]}${color[1]}${color[2]}${color[2]}${color[3]}${color[3]}`;
+  }
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="8" height="12"><rect width="100%" height="100%" fill="${color}"/></svg>`;
+  const encoded =
+    typeof Buffer !== "undefined"
+      ? Buffer.from(svg).toString("base64")
+      : btoa(svg);
+  return `data:image/svg+xml;base64,${encoded}`;
+}
+
 export function parseAppMediaId(
   id: string,
 ): { type: "movie" | "tv"; tmdbId: number } | null {

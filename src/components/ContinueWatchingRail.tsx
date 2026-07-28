@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PlayCircle } from "lucide-react";
+import { PlayCircle, Star } from "lucide-react";
 import type { MediaItem } from "@/data/mock";
 import { MediaVisual } from "@/components/MediaVisual";
 
@@ -31,7 +31,7 @@ export function ContinueWatchingRail({
       </div>
 
       <div className="hide-scrollbar -mx-container-mobile flex gap-4 overflow-x-auto px-container-mobile pb-4 sm:-mx-container-desktop sm:px-container-desktop">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <Link
             key={item.id}
             href={`/movie/${item.id}`}
@@ -42,23 +42,21 @@ export function ContinueWatchingRail({
                 <MediaVisual
                   item={item}
                   kind="backdrop"
+                  size="w500"
+                  priority={index < 3}
                   sizes="280px"
                 />
               </div>
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 h-1 w-full bg-white/20">
-                <div
-                  className="h-full bg-pearl shadow-[0_0_10px_rgba(255,255,255,0.4)]"
-                  style={{ width: `${item.progress ?? 0}%` }}
-                />
-              </div>
               <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
                 <PlayCircle size={40} className="text-white" />
               </div>
             </div>
             <h4 className="truncate font-bold text-on-surface">{item.title}</h4>
-            <p className="text-label-sm text-on-surface-variant">
-              {item.remainingLabel ?? `${100 - (item.progress ?? 0)}% 남음`}
+            <p className="flex items-center gap-1 text-label-sm text-on-surface-variant">
+              <Star size={12} className="text-primary" fill="currentColor" />
+              {item.rating.toFixed(1)}
+              {item.year ? ` · ${item.year}` : null}
             </p>
           </Link>
         ))}

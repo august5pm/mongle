@@ -26,15 +26,18 @@
 
 ## `/` 홈
 
+중앙 `max-width: 1280px` 프레임. 키비주얼은 풀블리드로 좌우 배경과 페이드 연결.
+
 | 블록 | 컴포넌트 | 내용 |
 |------|----------|------|
-| 히어로 | `Hero` | 오늘의 추천, 백드롭, 자세히 보기 |
-| 이어보기 | `ContinueWatchingRail` | TMDB 트렌딩(지금 뜨는) |
-| 포근한 이야기 | `SoftFluffyBento` | 2×2 벤토 |
-| 비 오는 날 | `RainyDayRail` | 세로 포스터 레일 |
+| 히어로 | `Hero` | 오늘의 추천 (풀블리드 + 사이드 페이드) |
+| 오늘 픽 | `TodayPickGrid` + `PosterSwiper` | 「오늘 이거 볼까요」 스와이프 포스터 레일 |
+| 지금 뜨는 | `PosterRail` + `PosterSwiper` | 타이트 세로 포스터 스와이프 |
+| 큐레이션 | `SoftFluffyBento` | 날짜 로테이션 카테고리 벤토 |
+| 호불호 | `PosterRail` + `PosterSwiper` | 「호불호 갈리는 작품」 |
 
 데이터: TMDB (`fetchHomeRails`) — 실패 시 mock 폴백  
-레일: 오늘의 추천 · 지금 뜨는 · 포근한 이야기 · 비 오는 날의 영화
+큐레이션: [`pickTodayCurations`](../src/lib/home-curation.ts) 매일 2슬롯
 
 ## `/wishlist` 위시리스트
 

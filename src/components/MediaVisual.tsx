@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { tmdbImage, type TmdbSize } from "@/lib/tmdb-image";
+import { blurDataURLFromTone, tmdbImage, type TmdbSize } from "@/lib/tmdb-image";
 import type { MediaItem } from "@/data/mock";
 
 type MediaVisualProps = {
@@ -13,7 +13,7 @@ type MediaVisualProps = {
   alt?: string;
 };
 
-/** 포스터/백드롭 이미지. 실패 시 톤 그라데이션이 비침. */
+/** 포스터/백드롭 이미지. 로드 전엔 tone blur, 실패 시 톤 그라데이션이 비침. */
 export function MediaVisual({
   item,
   kind = "poster",
@@ -27,8 +27,9 @@ export function MediaVisual({
   const fallbackTone =
     kind === "backdrop" ? item.backdropTone : item.posterTone;
   const imgSize =
-    size ?? (kind === "backdrop" ? "w1280" : "w500");
+    size ?? (kind === "backdrop" ? "w780" : "w342");
   const src = tmdbImage(path, imgSize);
+  const blurDataURL = blurDataURLFromTone(fallbackTone);
   const resolvedAlt =
     alt ??
     (item.title
@@ -49,7 +50,9 @@ export function MediaVisual({
           fill
           priority={priority}
           sizes={sizes}
-          className={`object-cover ${className}`}
+          placeholder="blur"
+          blurDataURL={blurDataURL}
+          className={`object-cover transition-opacity duration-500 ${className}`}
         />
       ) : null}
     </div>

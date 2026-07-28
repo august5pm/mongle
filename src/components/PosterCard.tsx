@@ -21,7 +21,7 @@ export function PosterCard({
       className={`group block w-full shrink-0 animate-rail-in ${className}`}
       style={{ animationDelay: `${Math.min(index, 8) * 50}ms` }}
     >
-      <div className="relative aspect-[2/3] overflow-hidden rounded-2xl bg-surface-container shadow-poster ring-1 ring-white/20 transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:shadow-lift group-hover:ring-pearl/50">
+      <div className="relative aspect-[2/3] overflow-hidden rounded-[8px] bg-surface-container shadow-poster ring-1 ring-white/20 transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:shadow-lift group-hover:ring-pearl/50">
         <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105">
           <MediaVisual item={item} sizes="(max-width:768px) 40vw, 200px" />
         </div>

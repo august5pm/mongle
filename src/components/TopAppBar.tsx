@@ -87,9 +87,10 @@ export function TopAppBar() {
   const profile = getMongleProfile(user);
 
   return (
-    <header className="fixed top-0 z-50 flex h-16 w-full items-center justify-between px-container-mobile sm:px-container-desktop">
+    <header className="fixed top-0 z-50 w-full">
       <div className="absolute inset-0 border-b border-white/10 bg-[#050607]/55 backdrop-blur-2xl" />
 
+      <div className="app-shell relative z-10 flex h-16 items-center justify-between">
       <div className="relative z-10 flex items-center gap-2.5">
         {isDetail ? (
           <button
@@ -152,6 +153,7 @@ export function TopAppBar() {
             <span className="text-xs font-bold">나</span>
           )}
         </Link>
+      </div>
       </div>
     </header>
   );
