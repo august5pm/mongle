@@ -1,7 +1,7 @@
 # 몽글 (Mongle)
 
 영화와 감정을 부드럽게 기록하는 시네마틱 웹 앱입니다.  
-부드러운 진주(pearl) 글래스 UI 위에, 오늘의 추천 · 감정 탐색 · 저널 아카이브를 담았습니다.
+부드러운 진주(pearl) 글래스 UI 위에, 오늘의 추천 · 작품 찾기 · 몽글 아카이브를 담았습니다.
 
 **Live:** [mongle-steel.vercel.app](https://mongle-steel.vercel.app)  
 **Repository:** [github.com/august5pm/mongle](https://github.com/august5pm/mongle)
@@ -10,9 +10,9 @@
 
 ## 미리보기
 
-| 홈 | 탐색 |
+| 홈 | 찾기 |
 |:--:|:--:|
-| ![홈](docs/screenshots/home.png) | ![탐색](docs/screenshots/explore.png) |
+| ![홈](docs/screenshots/home.png) | ![찾기](docs/screenshots/explore.png) |
 
 | 아카이브 | 모바일 홈 |
 |:--:|:--:|
@@ -23,8 +23,8 @@
 ## 주요 기능
 
 - **홈** — 히어로 · 일/주 트렌딩 · 날짜 로테이션 큐레이션 (스와이프 레일)  
-- **탐색** — 작품 검색, 감정 칩, 트렌딩 벤토  
-- **저널** — Google 로그인 후 감정 한 줄 기록 · 수정·삭제 · 공개 아카이브 · **좋아요**  
+- **찾기** — 작품 검색, 감정 칩, 트렌딩 벤토  
+- **몽글** — Google 로그인 후 감정 한 줄 기록 · 수정·삭제 · 공개 아카이브 · **좋아요**  
 - **위시리스트** — 작품 찜 (계정 연동)  
 - **프로필** — 닉네임·이모지 아바타
 

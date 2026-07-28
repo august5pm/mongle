@@ -275,20 +275,23 @@ button:focus-visible,
   flex: none;
 }
 
-/* 넘치는 포스터는 마스크로 클립 */
+/* 넘치는 포스터 클립 — mask-image는 transform(Swiper)과 리사이즈 시 검정 잔상이 남음 */
 .poster-swiper {
+  position: relative;
   overflow: hidden;
-  mask-image: linear-gradient(
+}
+
+.poster-swiper::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: 5;
+  width: 1.25rem;
+  pointer-events: none;
+  background: linear-gradient(
     to right,
-    #000 0%,
-    #000 calc(100% - 1.25rem),
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to right,
-    #000 0%,
-    #000 calc(100% - 1.25rem),
-    transparent 100%
+    transparent,
+    var(--background, #050607)
   );
 }
 

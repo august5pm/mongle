@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ExploreClient } from "@/components/ExploreClient";
 
 export const metadata: Metadata = {
-  title: "탐색",
+  title: "찾기",
 };
 
 export default function ExplorePage() {

@@ -69,7 +69,7 @@ docs/
 
 ## 작품 데이터
 
-- 홈·탐색·상세: TMDB (`/api/tmdb/*` → `lib/tmdb-api.ts`)
+- 홈·찾기·상세: TMDB (`/api/tmdb/*` → `lib/tmdb-api.ts`)
 - 홈 레일: `fetchHomeRails()` — featured · todayPicks(day) · trending(week) · 큐레이션 discover 2슬롯
 - 큐레이션 카테고리: `lib/home-curation.ts` (`pickTodayCurations`)
 - 포스터 URL · blur: `lib/tmdb-image.ts` (클라이언트 안전)

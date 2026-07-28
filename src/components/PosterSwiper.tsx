@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperInstance } from "swiper";
@@ -29,7 +29,27 @@ function getVisibleCount(instance: SwiperInstance) {
   );
 }
 
-/** 마스크 + 호버 좌우 버튼 — 한 화면씩 이동, 이동 중엔 재클릭 불가 */
+/** 포스터 폭(cqi) 변경 후 레이아웃이 안정되면 Swiper 크기·가장자리 상태를 맞춤 */
+function refreshSwiper(
+  instance: SwiperInstance,
+  syncEdges: (s: SwiperInstance) => void,
+) {
+  if (instance.destroyed) return;
+  instance.updateSize();
+  instance.updateSlides();
+  instance.updateProgress();
+  instance.updateSlidesClasses();
+  // translate가 새 max를 넘지 않게
+  const max = instance.maxTranslate();
+  const min = instance.minTranslate();
+  const current = instance.getTranslate();
+  if (current < max || current > min) {
+    instance.setTranslate(Math.max(max, Math.min(min, current)));
+  }
+  syncEdges(instance);
+}
+
+/** 우측 페이드 + 호버 좌우 버튼 — 한 화면씩 이동, 이동 중엔 재클릭 불가 */
 export function PosterSwiper({
   items,
   priorityCount = 0,
@@ -41,12 +61,40 @@ export function PosterSwiper({
   const [moving, setMoving] = useState(false);
   const movingRef = useRef(false);
   const moveTimerRef = useRef<number | null>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const resizeTimerRef = useRef<number | null>(null);
 
   const syncEdges = useCallback((instance: SwiperInstance) => {
     setAtStart(instance.isBeginning);
     setAtEnd(instance.isEnd);
     setLocked(instance.isLocked);
   }, []);
+
+  // 셸/포스터 폭이 바뀔 때(모바일↔웹) cqi 반영 후 Swiper 재계산
+  useEffect(() => {
+    if (!swiper || !wrapRef.current) return;
+
+    const scheduleRefresh = () => {
+      if (resizeTimerRef.current != null) {
+        window.clearTimeout(resizeTimerRef.current);
+      }
+      resizeTimerRef.current = window.setTimeout(() => {
+        requestAnimationFrame(() => {
+          refreshSwiper(swiper, syncEdges);
+        });
+      }, 80);
+    };
+
+    const ro = new ResizeObserver(scheduleRefresh);
+    ro.observe(wrapRef.current);
+
+    return () => {
+      ro.disconnect();
+      if (resizeTimerRef.current != null) {
+        window.clearTimeout(resizeTimerRef.current);
+      }
+    };
+  }, [swiper, syncEdges]);
 
   const unlockMoving = useCallback(
     (instance?: SwiperInstance | null) => {
@@ -102,7 +150,7 @@ export function PosterSwiper({
   const navBusy = moving;
 
   return (
-    <div className="poster-swiper-wrap app-bleed relative">
+    <div ref={wrapRef} className="poster-swiper-wrap app-bleed relative">
       <div className="poster-swiper">
         <Swiper
           modules={[FreeMode, Mousewheel]}
@@ -119,13 +167,14 @@ export function PosterSwiper({
           spaceBetween={SPACE_BETWEEN}
           grabCursor
           watchOverflow
+          resizeObserver
           speed={MOVE_DURATION}
           onSwiper={(instance) => {
             setSwiper(instance);
             syncEdges(instance);
           }}
           onSlideChange={syncEdges}
-          onResize={syncEdges}
+          onResize={(instance) => refreshSwiper(instance, syncEdges)}
           onReachBeginning={syncEdges}
           onReachEnd={syncEdges}
           onFromEdge={syncEdges}

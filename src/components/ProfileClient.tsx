@@ -239,7 +239,7 @@ export function ProfileClient() {
               href="/archive"
               className="glass-panel block rounded-2xl px-5 py-4 text-sm text-on-surface transition-colors hover:border-white/30"
             >
-              저널 아카이브 보기 →
+              몽글 아카이브 보기 →
             </Link>
             <Link
               href="/journal/new"

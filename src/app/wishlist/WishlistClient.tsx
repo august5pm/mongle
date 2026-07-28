@@ -94,7 +94,7 @@ export function WishlistClient() {
             href="/explore"
             className="pearl-clay peach-glow inline-flex rounded-full px-6 py-3 text-sm font-bold"
           >
-            탐색하러 가기
+            찾으러 가기
           </Link>
         </div>
       ) : (
