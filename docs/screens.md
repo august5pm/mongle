@@ -16,6 +16,11 @@
 - **컴팩트:** 스크롤 다운 시 알약형으로 축소, 활성 탭은 pearl 칩  
 - 항상 떠 있는 도크가 폭·여백만 변해 형태가 이어짐
 
+### SiteFooter
+
+- 페이지 하단 (BottomNav 위): 몽글 워드마크 + `© {year} by august5pm. All rights reserved.`
+- GitHub: https://github.com/august5pm
+
 ### JournalFab
 
 - `/archive`에서만 표시  

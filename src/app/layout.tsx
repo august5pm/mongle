@@ -3,6 +3,7 @@ import { Dongle, Nunito } from "next/font/google";
 import localFont from "next/font/local";
 import { BottomNav } from "@/components/BottomNav";
 import { JournalFab } from "@/components/JournalFab";
+import { SiteFooter } from "@/components/SiteFooter";
 import { TopAppBar } from "@/components/TopAppBar";
 import "./globals.css";
 
@@ -52,8 +53,15 @@ export default function RootLayout({
           본문으로 건너뛰기
         </a>
         <TopAppBar />
-        <main id="main-content" className="min-h-screen pb-32" tabIndex={-1}>
-          <div className="app-shell">{children}</div>
+        <main
+          id="main-content"
+          className="min-h-screen pb-[calc(4.75rem+env(safe-area-inset-bottom))]"
+          tabIndex={-1}
+        >
+          <div className="app-shell">
+            {children}
+            <SiteFooter />
+          </div>
         </main>
         <JournalFab />
         <BottomNav />
