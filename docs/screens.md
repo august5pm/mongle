@@ -22,22 +22,31 @@
 - 스크롤 다운 시 숨김, 업/상단에서 표시  
 - 링크: `/journal/new`
 
+### 앱 셸
+
+- `layout`의 `main.app-shell`: 중앙 `max-width: 1280px` (`--app-max`)
+- 좌우 패딩은 셸이 담당. 포스터 폭은 `--poster-w` / `.poster-card`
+
 ---
 
 ## `/` 홈
 
-중앙 `max-width: 1280px` 프레임. 키비주얼은 풀블리드로 좌우 배경과 페이드 연결.
+키비주얼은 셸 폭에 맞춘 `app-bleed` + 좌우·하단 페이드로 배경과 자연스럽게 이어짐.
 
 | 블록 | 컴포넌트 | 내용 |
 |------|----------|------|
-| 히어로 | `Hero` | 오늘의 추천 (풀블리드 + 사이드 페이드) |
-| 오늘 픽 | `TodayPickGrid` + `PosterSwiper` | 「오늘 이거 볼까요」 스와이프 포스터 레일 |
-| 지금 뜨는 | `PosterRail` + `PosterSwiper` | 타이트 세로 포스터 스와이프 |
-| 큐레이션 | `SoftFluffyBento` | 날짜 로테이션 카테고리 벤토 |
-| 호불호 | `PosterRail` + `PosterSwiper` | 「호불호 갈리는 작품」 |
+| 히어로 | `Hero` | 오늘의 추천 (셸 폭 + `.edge-fade-x` / `.hero-fade-bottom`) |
+| 오늘 픽 | `TodayPickGrid` + `PosterSwiper` | 「오늘 이거 볼까요」 — **일간** 트렌딩 |
+| 지금 뜨는 | `PosterRail` + `PosterSwiper` | 「지금 뜨는」 — **주간** 트렌딩 (일간과 중복 제거) |
+| 큐레이션 A | `SoftFluffyBento` → `PosterRail` | 날짜 로테이션 카테고리 1 (세로 포스터 스와이프) |
+| 큐레이션 B | `PosterRail` + `PosterSwiper` | 날짜 로테이션 카테고리 2 (제목은 카테고리명) |
 
 데이터: TMDB (`fetchHomeRails`) — 실패 시 mock 폴백  
-큐레이션: [`pickTodayCurations`](../src/lib/home-curation.ts) 매일 2슬롯
+큐레이션: [`pickTodayCurations`](../src/lib/home-curation.ts) 매일 서로 다른 2슬롯  
+레일 UI: FreeMode + 마우스휠 `PosterSwiper` (페이지 단위 화살표 이동)  
+`revalidate = 3600` — 날짜 큐레이션이 바뀌도록 주기 재생성
+
+> `SoftFluffyBento`는 이름만 벤토이고, 실제로는 다른 홈 레일과 같은 세로 포스터 스와이퍼를 쓴다.
 
 ## `/wishlist` 위시리스트
 

@@ -22,7 +22,7 @@
 
 ## 주요 기능
 
-- **홈** — TMDB 트렌딩·분위기별 디스커버 레일  
+- **홈** — 히어로 · 일/주 트렌딩 · 날짜 로테이션 큐레이션 (스와이프 레일)  
 - **탐색** — 작품 검색, 감정 칩, 트렌딩 벤토  
 - **저널** — Google 로그인 후 감정 한 줄 기록 · 수정·삭제 · 공개 아카이브 · **좋아요**  
 - **위시리스트** — 작품 찜 (계정 연동)  
@@ -39,6 +39,7 @@
 | Auth / DB | Supabase (Google OAuth + `journals` / `wishlists` / `journal_likes` + RLS) |
 | API | TMDB (검색·트렌딩·상세, 서버 전용 키) |
 | Icons | Lucide React |
+| Carousel | Swiper (홈 포스터 레일) |
 | Fonts | Dongle(브랜드·제목) · Nunito / Pretendard(본문) |
 | Deploy | Vercel |
 | Runtime | Node.js 20 (`nvm use 20`) |
@@ -72,7 +73,7 @@ npm run dev
 
 | 경로 | 설명 |
 |------|------|
-| `/` | 오늘의 추천, 지금 뜨는(TMDB), 포근한 이야기, 비 오는 날의 영화 |
+| `/` | 히어로, 오늘 픽(일간), 지금 뜨는(주간), 날짜 큐레이션 2슬롯 |
 | `/explore` | 검색, 감정/분위기 칩, 트렌딩 벤토 |
 | `/archive` | 모두의 몽글 / 내 몽글, 좋아요, 수정·삭제 |
 | `/journal/new` | 작품 선택 → 감정 → 한 줄 메모 (`?edit=` 수정) |

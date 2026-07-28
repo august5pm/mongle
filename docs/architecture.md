@@ -5,8 +5,8 @@
 ```
 src/
   app/
-    layout.tsx
-    page.tsx              # 홈 (TMDB 레일)
+    layout.tsx            # app-shell (max 1280px)
+    page.tsx              # 홈 (트렌딩 + 날짜 큐레이션)
     explore/
     archive/              # ArchiveClient
     wishlist/
@@ -17,10 +17,17 @@ src/
     profile/
     api/tmdb/             # search · trending · media/[id]
   components/
+    Hero.tsx
+    TodayPickGrid.tsx     # 「오늘 이거 볼까요」
+    PosterRail.tsx        # 제목 + PosterSwiper
+    PosterSwiper.tsx      # FreeMode 스와이프 레일
+    SoftFluffyBento.tsx   # 큐레이션 A (내부는 PosterRail)
+    HomePosterBits.tsx
   data/mock.ts            # 폴백 작품 · 저널 시드 미리보기
   lib/
+    home-curation.ts      # 날짜/요일 큐레이션 풀·픽
     tmdb-api.ts           # TMDB API (server-only)
-    tmdb-image.ts         # 포스터 URL (클라이언트 안전)
+    tmdb-image.ts         # 포스터 URL · blur placeholder
     journal.ts            # journals CRUD
     journal-likes.ts      # 좋아요 토글·카운트
     wishlist.ts           # 찜 CRUD
@@ -49,7 +56,7 @@ docs/
 
 | 경로 | 비고 |
 |------|------|
-| `/` | Hero + TMDB 레일 (실패 시 mock) |
+| `/` | Hero + 일/주 트렌딩 + 날짜 큐레이션 2레일 (실패 시 mock) |
 | `/explore` | TMDB 검색·트렌딩 |
 | `/archive` | 공개 피드 / 내 몽글, 좋아요 |
 | `/wishlist` | 찜 목록 (로그인) |
@@ -63,7 +70,9 @@ docs/
 ## 작품 데이터
 
 - 홈·탐색·상세: TMDB (`/api/tmdb/*` → `lib/tmdb-api.ts`)
-- 포스터 URL: `lib/tmdb-image.ts` (클라이언트 안전)
+- 홈 레일: `fetchHomeRails()` — featured · todayPicks(day) · trending(week) · 큐레이션 discover 2슬롯
+- 큐레이션 카테고리: `lib/home-curation.ts` (`pickTodayCurations`)
+- 포스터 URL · blur: `lib/tmdb-image.ts` (클라이언트 안전)
 - mock은 폴백·시드용. `media_id`는 `tmdb-m-{id}` / `tmdb-t-{id}` 또는 mock id
 
 ## 이미지
@@ -76,8 +85,9 @@ docs/
 ```
 UI
  ├─ data/mock.ts          폴백·시드
+ ├─ lib/home-curation.ts  날짜 큐레이션 풀
  ├─ lib/tmdb-api.ts       TMDB API (server-only)
- ├─ lib/tmdb-image.ts     포스터 URL
+ ├─ lib/tmdb-image.ts     포스터 URL · blur
  ├─ lib/journal.ts        저널 ↔ Supabase
  ├─ lib/journal-likes.ts  좋아요 ↔ Supabase
  ├─ lib/wishlist.ts       찜 ↔ Supabase

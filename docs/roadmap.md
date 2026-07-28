@@ -15,7 +15,8 @@
 - [x] Supabase + Google 로그인 · journals RLS  
 - [x] 아카이브 공개 피드 (모두의 몽글)  
 - [x] TMDB API 검색·트렌딩·상세 연동  
-- [x] 홈 레일 TMDB화 (트렌딩·포근·비오는날 discover)  
+- [x] 홈 레일 TMDB화 (일/주 트렌딩 + 날짜 큐레이션 discover)  
+- [x] 홈 UI: 1280 센터 셸 · PosterSwiper · 이미지 blur placeholder  
 - [x] 위시리스트 / 찜 (`wishlists` + `/wishlist`)  
 - [x] Vercel 배포 ([mongle-steel.vercel.app](https://mongle-steel.vercel.app))  
 - [x] Supabase Redirect URLs에 프로덕션 도메인 추가  
