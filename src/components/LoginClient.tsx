@@ -51,12 +51,12 @@ export function LoginClient() {
         </p>
       </div>
 
-      <div className="glass-panel space-y-4 rounded-3xl p-6">
+      <div className="surface-panel space-y-4 rounded-3xl p-6">
         <button
           type="button"
           onClick={signInWithGoogle}
           disabled={loading}
-          className="pearl-clay peach-glow flex w-full items-center justify-center gap-3 rounded-full px-6 py-3.5 font-bold transition hover:scale-[1.01] disabled:opacity-60"
+          className="accent-fill flex w-full items-center justify-center gap-3 rounded-full px-6 py-3.5 font-bold transition hover:scale-[1.01] disabled:opacity-60"
         >
           <GoogleMark />
           {loading ? "이동 중…" : "Google로 계속하기"}

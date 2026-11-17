@@ -96,7 +96,7 @@ export function TopAppBar() {
           <button
             type="button"
             onClick={() => router.back()}
-            className="pearl-clay-soft mr-1 flex h-9 w-9 items-center justify-center rounded-full text-primary transition-transform active:scale-95"
+            className="soft-fill mr-1 flex h-9 w-9 items-center justify-center rounded-full text-primary transition-transform active:scale-95"
             aria-label="뒤로가기"
           >
             <ArrowLeft size={18} />
@@ -136,7 +136,7 @@ export function TopAppBar() {
         ) : (
           <Link
             href="/explore"
-            className="pearl-clay-soft flex h-9 w-9 items-center justify-center rounded-full text-primary transition-transform hover:scale-105"
+            className="soft-fill flex h-9 w-9 items-center justify-center rounded-full text-primary transition-transform hover:scale-105"
             aria-label="검색"
           >
             <Search size={18} strokeWidth={1.75} />
@@ -144,7 +144,7 @@ export function TopAppBar() {
         )}
         <Link
           href={user ? "/profile" : `/login?next=${encodeURIComponent(pathname)}`}
-          className="pearl-clay relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full text-base leading-none transition-transform hover:scale-105"
+          className="accent-fill relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full text-base leading-none transition-transform hover:scale-105"
           aria-label={user ? "프로필" : "로그인"}
         >
           {user ? (

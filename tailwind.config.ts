@@ -91,47 +91,18 @@ const config: Config = {
           { lineHeight: "16px", fontWeight: "600", letterSpacing: "0.04em" },
         ],
       },
+      // Tailwind 기본 스케일(sm 2px … 2xl 16px)을 쓰고, 카드용 3xl만 20px로 낮춘다
       borderRadius: {
-        DEFAULT: "1rem",
-        sm: "0.5rem",
-        md: "1.5rem",
-        lg: "2rem",
-        xl: "3rem",
-        mongle: "2rem",
-        cloud: "1.5rem",
+        "3xl": "1.25rem",
       },
       spacing: {
         "container-mobile": "20px",
         "container-desktop": "40px",
       },
-      backgroundImage: {
-        "mongle-gradient":
-          "linear-gradient(120deg, #fff8f5, #ffc8bc 50%, #c9d8ff)",
-        "pearl-shine":
-          "linear-gradient(160deg, rgba(255,255,255,0.7), rgba(232,240,255,0.45) 45%, rgba(255,236,230,0.4))",
-        "hero-glow":
-          "radial-gradient(ellipse 75% 60% at 78% 32%, rgba(255, 220, 210, 0.18), transparent 58%), radial-gradient(ellipse 50% 45% at 18% 80%, rgba(170, 200, 255, 0.14), transparent 55%)",
-        scrim:
-          "linear-gradient(to top, rgba(5,6,7,1) 0%, rgba(5,6,7,0.55) 45%, transparent 80%)",
-        "scrim-side":
-          "linear-gradient(to right, rgba(5,6,7,0.7) 0%, transparent 55%)",
-      },
-      boxShadow: {
-        "peach-glow":
-          "0 0 16px rgba(201, 216, 255, 0.28), inset 0 1px 0 rgba(255,255,255,0.5)",
-        "nav-glow": "0 0 20px rgba(200, 220, 255, 0.22)",
-        lift: "0 26px 60px rgba(0, 0, 0, 0.5)",
-        poster:
-          "0 18px 48px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.12)",
-        soft: "0 10px 36px rgba(140, 170, 210, 0.12)",
-        pearl:
-          "inset 0 1.5px 1px rgba(255,255,255,0.8), inset 0 -8px 16px rgba(140,165,200,0.16), 0 12px 32px rgba(0,0,0,0.35)",
-      },
       animation: {
         "fade-up": "fadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) both",
         "fade-in": "fadeIn 1s ease-out both",
         "rail-in": "fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both",
-        float: "float 7s ease-in-out infinite",
       },
       keyframes: {
         fadeUp: {
@@ -141,10 +112,6 @@ const config: Config = {
         fadeIn: {
           from: { opacity: "0" },
           to: { opacity: "1" },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-12px)" },
         },
       },
     },

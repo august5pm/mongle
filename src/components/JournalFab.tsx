@@ -43,7 +43,7 @@ export function JournalFab() {
     <Link
       href={href}
       aria-label="새 몽글 쓰기"
-      className={`pearl-clay peach-glow fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300 hover:scale-110 active:scale-95 ${
+      className={`accent-fill fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300 hover:scale-110 active:scale-95 ${
         showOnScroll
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0"

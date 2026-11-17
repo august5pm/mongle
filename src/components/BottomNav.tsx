@@ -57,7 +57,7 @@ export function BottomNav() {
     >
       <nav
         aria-label="주요 메뉴"
-        className={`pointer-events-auto glass-panel spec-shine flex w-full max-w-lg items-end justify-between transition-[max-width,padding,border-radius] duration-500 ease-out ${
+        className={`pointer-events-auto chrome-glass flex w-full max-w-lg items-end justify-between transition-[max-width,padding,border-radius] duration-500 ease-out ${
           compact
             ? "gap-0 rounded-[1.85rem] px-1.5 py-1.5"
             : "gap-0 rounded-[1.5rem] px-2 py-2"
@@ -82,7 +82,7 @@ export function BottomNav() {
                 compact ? "px-1 py-2" : "px-1 py-2.5"
               } ${
                 active
-                  ? "pearl-clay text-[#2a3038]"
+                  ? "accent-fill text-[#2a3038]"
                   : "bg-transparent text-on-surface-variant/85 hover:text-primary"
               }`}
             >

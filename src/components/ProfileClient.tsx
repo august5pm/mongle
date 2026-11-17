@@ -107,22 +107,22 @@ export function ProfileClient() {
       {!ready ? (
         <p className="mt-8 text-on-surface-variant">불러오는 중…</p>
       ) : !user ? (
-        <div className="glass-panel mt-8 space-y-4 rounded-3xl p-6">
+        <div className="surface-panel mt-8 space-y-4 rounded-3xl p-6">
           <p className="text-body-md text-on-surface-variant">
             Google로 로그인하면 감정 기록이 계정에 연결됩니다.
           </p>
           <Link
             href={`/login?next=${encodeURIComponent("/profile")}`}
-            className="pearl-clay peach-glow inline-flex rounded-full px-6 py-3 text-sm font-bold"
+            className="accent-fill inline-flex rounded-full px-6 py-3 text-sm font-bold"
           >
             Google로 로그인
           </Link>
         </div>
       ) : (
         <>
-          <div className="glass-panel mt-8 rounded-3xl p-6">
+          <div className="surface-panel mt-8 rounded-3xl p-6">
             <div className="flex items-center gap-4">
-              <div className="pearl-clay flex h-16 w-16 items-center justify-center rounded-full text-3xl">
+              <div className="accent-fill flex h-16 w-16 items-center justify-center rounded-full text-3xl">
                 {profile.emoji}
               </div>
               <div className="min-w-0 flex-1">
@@ -141,7 +141,7 @@ export function ProfileClient() {
                   setNickname(profile.nickname);
                   setEmoji(profile.emoji);
                 }}
-                className="pearl-clay-soft shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold"
+                className="soft-fill shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold"
               >
                 {editing ? "닫기" : "편집"}
               </button>
@@ -163,8 +163,8 @@ export function ProfileClient() {
                           onClick={() => setEmoji(item)}
                           className={`flex h-11 items-center justify-center rounded-2xl text-xl transition ${
                             active
-                              ? "pearl-clay peach-glow scale-105"
-                              : "glass-panel hover:border-white/30"
+                              ? "accent-fill scale-105"
+                              : "surface-panel hover:border-white/30"
                           }`}
                           aria-label={`이모지 ${item}`}
                         >
@@ -188,7 +188,7 @@ export function ProfileClient() {
                     onChange={(e) => setNickname(e.target.value.slice(0, 20))}
                     maxLength={20}
                     placeholder="예: 몽글러"
-                    className="glass-panel h-12 w-full rounded-2xl px-4 text-sm outline-none placeholder:text-on-surface-variant/45 focus:ring-2 focus:ring-primary/30"
+                    className="surface-panel h-12 w-full rounded-2xl px-4 text-sm outline-none placeholder:text-on-surface-variant/45 focus:ring-2 focus:ring-primary/30"
                   />
                   <p className="mt-1.5 text-right text-[11px] text-on-surface-variant">
                     {nickname.trim().length}/20
@@ -199,7 +199,7 @@ export function ProfileClient() {
                   type="button"
                   disabled={saving}
                   onClick={saveProfile}
-                  className="pearl-clay peach-glow w-full rounded-full py-3 text-sm font-bold disabled:opacity-60"
+                  className="accent-fill w-full rounded-full py-3 text-sm font-bold disabled:opacity-60"
                 >
                   {saving ? "저장 중…" : "프로필 저장"}
                 </button>
@@ -231,26 +231,26 @@ export function ProfileClient() {
           <div className="mt-6 space-y-2">
             <Link
               href="/wishlist"
-              className="glass-panel block rounded-2xl px-5 py-4 text-sm text-on-surface transition-colors hover:border-white/30"
+              className="surface-panel block rounded-2xl px-5 py-4 text-sm text-on-surface transition-colors hover:border-white/30"
             >
               위시리스트 보기 →
             </Link>
             <Link
               href="/archive"
-              className="glass-panel block rounded-2xl px-5 py-4 text-sm text-on-surface transition-colors hover:border-white/30"
+              className="surface-panel block rounded-2xl px-5 py-4 text-sm text-on-surface transition-colors hover:border-white/30"
             >
               몽글 아카이브 보기 →
             </Link>
             <Link
               href="/journal/new"
-              className="glass-panel block rounded-2xl px-5 py-4 text-sm text-on-surface transition-colors hover:border-white/30"
+              className="surface-panel block rounded-2xl px-5 py-4 text-sm text-on-surface transition-colors hover:border-white/30"
             >
               새 몽글 남기기 →
             </Link>
             <button
               type="button"
               onClick={signOut}
-              className="glass-panel w-full rounded-2xl px-5 py-4 text-left text-sm text-on-surface-variant transition-colors hover:border-white/30"
+              className="surface-panel w-full rounded-2xl px-5 py-4 text-left text-sm text-on-surface-variant transition-colors hover:border-white/30"
             >
               로그아웃
             </button>

@@ -129,7 +129,7 @@ export function ArchiveClient() {
             ) : null}
           </div>
           <div className="flex gap-4">
-            <div className="glass-panel flex min-w-[140px] flex-col items-center justify-center rounded-3xl px-6 py-4">
+            <div className="surface-panel flex min-w-[140px] flex-col items-center justify-center rounded-3xl px-6 py-4">
               <span className="font-display text-headline-md leading-none text-secondary">
                 {ready ? stats.totalMongles : "—"}
               </span>
@@ -137,7 +137,7 @@ export function ArchiveClient() {
                 {tab === "mine" ? "내 몽글" : "전체 몽글"}
               </span>
             </div>
-            <div className="glass-panel flex min-w-[140px] flex-col items-center justify-center rounded-3xl px-6 py-4">
+            <div className="surface-panel flex min-w-[140px] flex-col items-center justify-center rounded-3xl px-6 py-4">
               <span className="font-display text-headline-md leading-none text-primary">
                 {ready ? stats.thisMonth : "—"}
               </span>
@@ -161,8 +161,8 @@ export function ArchiveClient() {
           onClick={() => setTab("all")}
           className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
             tab === "all"
-              ? "pearl-clay peach-glow"
-              : "glass-panel text-on-surface-variant hover:text-on-surface"
+              ? "accent-fill"
+              : "surface-panel text-on-surface-variant hover:text-on-surface"
           }`}
         >
           모두의 몽글
@@ -178,8 +178,8 @@ export function ArchiveClient() {
           disabled={!user}
           className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
             tab === "mine"
-              ? "pearl-clay peach-glow"
-              : "glass-panel text-on-surface-variant hover:text-on-surface disabled:cursor-not-allowed disabled:opacity-40"
+              ? "accent-fill"
+              : "surface-panel text-on-surface-variant hover:text-on-surface disabled:cursor-not-allowed disabled:opacity-40"
           }`}
         >
           내 몽글
@@ -187,13 +187,13 @@ export function ArchiveClient() {
       </div>
 
       {!user && ready ? (
-        <div className="glass-panel mb-8 flex flex-col items-start justify-between gap-4 rounded-3xl p-5 sm:flex-row sm:items-center">
+        <div className="surface-panel mb-8 flex flex-col items-start justify-between gap-4 rounded-3xl p-5 sm:flex-row sm:items-center">
           <p className="text-sm text-on-surface-variant">
             로그인하면 내 기록을 남기고, ‘내 몽글’에서 모아볼 수 있어요.
           </p>
           <Link
             href={`/login?next=${encodeURIComponent("/archive")}`}
-            className="pearl-clay peach-glow shrink-0 rounded-full px-5 py-2.5 text-sm font-bold"
+            className="accent-fill shrink-0 rounded-full px-5 py-2.5 text-sm font-bold"
           >
             로그인하기
           </Link>
@@ -201,7 +201,7 @@ export function ArchiveClient() {
       ) : null}
 
       {tab === "mine" && ready && myEntries.length === 0 ? (
-        <div className="glass-panel mb-8 rounded-3xl p-6 text-center text-sm text-on-surface-variant">
+        <div className="surface-panel mb-8 rounded-3xl p-6 text-center text-sm text-on-surface-variant">
           아직 남긴 기록이 없어요. 첫 몽글을 남겨 보세요.
         </div>
       ) : null}
@@ -238,9 +238,9 @@ export function ArchiveClient() {
         <Link
           href={writeHref}
           id="new-entry"
-          className="glass-panel group flex min-h-[400px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-white/15 transition-colors duration-300 hover:border-pearl/40"
+          className="surface-panel group flex min-h-[400px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-white/15 transition-colors duration-300 hover:border-pearl/40"
         >
-          <div className="pearl-clay mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-transform group-hover:scale-110">
+          <div className="accent-fill mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-transform group-hover:scale-110">
             <Plus size={28} />
           </div>
           <p className="font-display text-headline-md text-on-surface-variant">

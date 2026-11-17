@@ -17,11 +17,11 @@ import {
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 
 const bubbleStyles: Record<JournalEntry["bubbleTone"], string> = {
-  primary: "pearl-clay",
-  secondary: "pearl-clay-soft text-on-surface",
-  surface: "pearl-clay-soft text-on-surface",
-  tertiary: "pearl-clay",
-  container: "pearl-clay",
+  primary: "accent-fill",
+  secondary: "soft-fill text-on-surface",
+  surface: "soft-fill text-on-surface",
+  tertiary: "accent-fill",
+  container: "accent-fill",
 };
 
 type Props = {
@@ -122,7 +122,7 @@ export function JournalArchiveCard({
 
   if (!media) {
     return (
-      <div className="glass-panel flex min-h-[280px] flex-col justify-end rounded-3xl p-5">
+      <div className="surface-panel flex min-h-[280px] flex-col justify-end rounded-3xl p-5">
         <p className="text-sm text-on-surface-variant">작품을 불러오는 중…</p>
         <p className="mt-2 line-clamp-3 text-[13px]">“{entry.note}”</p>
       </div>
@@ -130,12 +130,12 @@ export function JournalArchiveCard({
   }
 
   return (
-    <article className="group relative overflow-hidden rounded-3xl glass-panel transition-all duration-500 ease-out hover:-translate-y-2">
+    <article className="group relative overflow-hidden rounded-3xl surface-panel transition-all duration-500 ease-out hover:-translate-y-2">
       {isMine ? (
         <div className="absolute right-3 top-3 z-20 flex gap-1.5">
           <Link
             href={`/journal/new?edit=${entry.id}`}
-            className="pearl-clay-soft flex h-9 w-9 items-center justify-center rounded-full text-on-surface transition hover:scale-105"
+            className="soft-fill flex h-9 w-9 items-center justify-center rounded-full text-on-surface transition hover:scale-105"
             aria-label="몽글 수정"
             title="수정"
           >
@@ -145,7 +145,7 @@ export function JournalArchiveCard({
             type="button"
             disabled={busy}
             onClick={onDelete}
-            className="pearl-clay-soft flex h-9 w-9 items-center justify-center rounded-full text-on-surface transition hover:scale-105 disabled:opacity-50"
+            className="soft-fill flex h-9 w-9 items-center justify-center rounded-full text-on-surface transition hover:scale-105 disabled:opacity-50"
             aria-label="몽글 삭제"
             title="삭제"
           >
@@ -173,7 +173,7 @@ export function JournalArchiveCard({
               </span>
             ) : null}
           </div>
-          <div className="absolute bottom-4 left-4 right-4 animate-float">
+          <div className="absolute bottom-4 left-4 right-4">
             <div
               className={`cloud-bubble p-4 shadow-xl backdrop-blur-md ${bubbleStyles[entry.bubbleTone]}`}
             >
@@ -215,7 +215,7 @@ export function JournalArchiveCard({
             aria-label={
               localLike.likedByMe ? "좋아요 취소" : "좋아요"
             }
-            className={`pearl-clay-soft flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2 text-sm transition hover:scale-105 disabled:opacity-50 ${
+            className={`soft-fill flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2 text-sm transition hover:scale-105 disabled:opacity-50 ${
               localLike.likedByMe ? "text-primary" : "text-on-surface-variant"
             }`}
           >

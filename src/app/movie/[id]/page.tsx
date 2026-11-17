@@ -79,13 +79,13 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
             {item.genres.map((genre) => (
               <span
                 key={genre}
-                className="glass-panel rounded-full px-3 py-1 text-label-sm text-secondary-fixed"
+                className="chrome-glass rounded-full px-3 py-1 text-label-sm text-secondary-fixed"
               >
                 {genre}
               </span>
             ))}
           </div>
-          <h1 className="font-display text-display-lg-mobile text-glow leading-tight text-on-surface md:text-display-lg">
+          <h1 className="font-display text-display-lg-mobile leading-tight text-on-surface md:text-display-lg">
             {item.title}
           </h1>
           <div className="flex flex-wrap items-center gap-6 text-on-surface-variant">
@@ -115,7 +115,7 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
         <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-6">
           <Link
             href={`/journal/new?mediaId=${item.id}`}
-            className="pearl-clay peach-glow flex items-center gap-3 rounded-full px-8 py-4 font-bold transition-all duration-300 hover:scale-105 active:scale-95"
+            className="accent-fill flex items-center gap-3 rounded-full px-8 py-4 font-bold transition-all duration-300 hover:scale-105 active:scale-95"
           >
             <PenLine size={22} />
             <span className="text-body-lg">몽글 기록하기</span>
@@ -141,7 +141,7 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
             </section>
           </div>
           <div className="space-y-6">
-            <div className="glass-panel rounded-3xl p-6">
+            <div className="surface-panel rounded-3xl p-6">
               <h3 className="mb-4 text-label-sm tracking-widest text-primary">
                 감독
               </h3>
@@ -205,11 +205,11 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
             <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
               {related.map((m) => (
                 <Link key={m.id} href={`/movie/${m.id}`} className="group">
-                  <div className="glass-panel relative mb-3 aspect-[2/3] overflow-hidden rounded-2xl">
+                  <div className="surface-panel relative mb-3 aspect-[2/3] overflow-hidden rounded-2xl">
                     <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
                       <MediaVisual item={m} size="w185" sizes="25vw" />
                     </div>
-                    <div className="glass-panel absolute right-2 top-2 rounded-md px-2 py-1 text-[10px] font-bold">
+                    <div className="chrome-glass absolute right-2 top-2 rounded-md px-2 py-1 text-[10px] font-bold">
                       {m.rating.toFixed(1)}
                     </div>
                   </div>

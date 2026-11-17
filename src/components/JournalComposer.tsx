@@ -249,7 +249,7 @@ export function JournalComposer() {
               setStep("pick");
             else router.back();
           }}
-          className="pearl-clay-soft flex h-10 w-10 items-center justify-center rounded-full"
+          className="soft-fill flex h-10 w-10 items-center justify-center rounded-full"
           aria-label="뒤로"
         >
           <ArrowLeft size={18} />
@@ -265,7 +265,7 @@ export function JournalComposer() {
       </div>
 
       {media ? (
-        <div className="glass-panel mb-8 flex items-center gap-4 rounded-3xl p-3">
+        <div className="surface-panel mb-8 flex items-center gap-4 rounded-3xl p-3">
           <div className="relative h-20 w-14 shrink-0 overflow-hidden rounded-xl">
             <MediaVisual item={media} sizes="56px" />
           </div>
@@ -307,7 +307,7 @@ export function JournalComposer() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="TMDB에서 제목으로 검색"
-              className="glass-panel h-12 w-full rounded-full pl-11 pr-4 text-sm outline-none placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/30"
+              className="surface-panel h-12 w-full rounded-full pl-11 pr-4 text-sm outline-none placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/30"
             />
           </div>
           {searching ? (
@@ -364,8 +364,8 @@ export function JournalComposer() {
                   onClick={() => setEmotion(s.id)}
                   className={`rounded-3xl px-4 py-5 text-left transition-all ${
                     active
-                      ? "pearl-clay peach-glow scale-[1.02]"
-                      : "glass-panel hover:border-white/30"
+                      ? "accent-fill scale-[1.02]"
+                      : "surface-panel hover:border-white/30"
                   }`}
                 >
                   <p className="font-display text-xl">{s.label}</p>
@@ -386,7 +386,7 @@ export function JournalComposer() {
             onClick={() => emotion && setStep("note")}
             className={`flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 font-bold transition ${
               emotion
-                ? "pearl-clay peach-glow hover:scale-[1.01]"
+                ? "accent-fill hover:scale-[1.01]"
                 : "cursor-not-allowed bg-white/10 text-on-surface-variant"
             }`}
           >
@@ -400,7 +400,7 @@ export function JournalComposer() {
           <p className="text-body-md text-on-surface-variant">
             한 줄로도 좋아요. 지금 떠오른 말을 남겨 보세요.
           </p>
-          <div className="pearl-clay-soft inline-flex rounded-full px-3 py-1 text-label-sm">
+          <div className="soft-fill inline-flex rounded-full px-3 py-1 text-label-sm">
             {sentiments.find((s) => s.id === emotion)?.label}
           </div>
           <textarea
@@ -411,7 +411,7 @@ export function JournalComposer() {
             }}
             rows={5}
             placeholder="예: 엔딩 크레딧이 올라갈 때 마음이 조용히 울렸다."
-            className="glass-panel w-full resize-none rounded-3xl p-5 text-body-md leading-relaxed outline-none placeholder:text-on-surface-variant/45 focus:ring-2 focus:ring-primary/30"
+            className="surface-panel w-full resize-none rounded-3xl p-5 text-body-md leading-relaxed outline-none placeholder:text-on-surface-variant/45 focus:ring-2 focus:ring-primary/30"
           />
           <div className="flex items-center justify-between text-xs text-on-surface-variant">
             <span>{note.trim().length}/140</span>
@@ -423,7 +423,7 @@ export function JournalComposer() {
             onClick={onSave}
             className={`flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 font-bold transition ${
               canSubmit
-                ? "pearl-clay peach-glow hover:scale-[1.01]"
+                ? "accent-fill hover:scale-[1.01]"
                 : "cursor-not-allowed bg-white/10 text-on-surface-variant"
             }`}
           >

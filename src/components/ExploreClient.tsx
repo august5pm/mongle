@@ -137,7 +137,7 @@ export function ExploreClient() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="작품 제목으로 찾아보세요 (TMDB)"
-            className="glass-panel h-14 w-full rounded-full pl-14 pr-6 text-body-lg text-on-surface outline-none transition-all placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:ring-2 focus:ring-primary/40"
+            className="surface-panel h-14 w-full rounded-full pl-14 pr-6 text-body-lg text-on-surface outline-none transition-all placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:ring-2 focus:ring-primary/40"
           />
           <div className="absolute inset-0 -z-10 rounded-full bg-primary/5 opacity-0 blur-2xl transition-opacity group-focus-within:opacity-100" />
         </div>
@@ -152,8 +152,8 @@ export function ExploreClient() {
                 onClick={() => setActiveChip(chip.id)}
                 className={`flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2 text-label-sm transition-all ${
                   active
-                    ? "pearl-clay peach-glow"
-                    : "glass-panel text-on-surface-variant hover:text-primary"
+                    ? "accent-fill"
+                    : "surface-panel text-on-surface-variant hover:text-primary"
                 }`}
               >
                 {chip.icon === "trending" ? <TrendingUp size={18} /> : null}
@@ -185,7 +185,7 @@ export function ExploreClient() {
             {featured ? (
               <Link
                 href={`/movie/${featured.id}`}
-                className="glass-panel group relative col-span-2 row-span-2 min-h-[280px] cursor-pointer overflow-hidden rounded-3xl"
+                className="surface-panel group relative col-span-2 row-span-2 min-h-[280px] cursor-pointer overflow-hidden rounded-3xl"
               >
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
                   <MediaVisual
@@ -215,7 +215,7 @@ export function ExploreClient() {
             {second ? (
               <Link
                 href={`/movie/${second.id}`}
-                className="glass-panel group relative col-span-2 min-h-[160px] cursor-pointer overflow-hidden rounded-3xl"
+                className="surface-panel group relative col-span-2 min-h-[160px] cursor-pointer overflow-hidden rounded-3xl"
               >
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
                   <MediaVisual
@@ -241,7 +241,7 @@ export function ExploreClient() {
             {third ? (
               <Link
                 href={`/movie/${third.id}`}
-                className="glass-panel group relative min-h-[140px] cursor-pointer overflow-hidden rounded-3xl"
+                className="surface-panel group relative min-h-[140px] cursor-pointer overflow-hidden rounded-3xl"
               >
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
                   <MediaVisual item={third} size="w185" sizes="30vw" />
@@ -258,7 +258,7 @@ export function ExploreClient() {
             {fourth ? (
               <Link
                 href={`/movie/${fourth.id}`}
-                className="glass-panel group relative min-h-[140px] cursor-pointer overflow-hidden rounded-3xl"
+                className="surface-panel group relative min-h-[140px] cursor-pointer overflow-hidden rounded-3xl"
               >
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
                   <MediaVisual item={fourth} size="w185" sizes="30vw" />
@@ -309,7 +309,7 @@ export function ExploreClient() {
                           : mood.id,
                     )
                   }
-                  className="glass-panel space-y-4 rounded-3xl p-6 text-left transition-transform duration-300 hover:-translate-y-1"
+                  className="surface-panel space-y-4 rounded-3xl p-6 text-left transition-transform duration-300 hover:-translate-y-1"
                 >
                   <div
                     className={`flex h-12 w-12 items-center justify-center rounded-full ${iconWrap}`}
@@ -377,7 +377,7 @@ export function ExploreClient() {
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {results.map((item) => (
               <Link key={item.id} href={`/movie/${item.id}`} className="group">
-                <div className="glass-panel relative mb-2 aspect-[2/3] overflow-hidden rounded-2xl">
+                <div className="surface-panel relative mb-2 aspect-[2/3] overflow-hidden rounded-2xl">
                   <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
                     <MediaVisual item={item} size="w185" sizes="20vw" />
                   </div>

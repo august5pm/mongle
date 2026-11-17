@@ -49,7 +49,7 @@ export default function RootLayout({
       <body
         className={`${dongle.variable} ${nunito.variable} ${pretendard.variable} bg-background text-on-surface antialiased`}
       >
-        <a href="#main-content" className="skip-to-content pearl-clay">
+        <a href="#main-content" className="skip-to-content accent-fill">
           본문으로 건너뛰기
         </a>
         <TopAppBar />

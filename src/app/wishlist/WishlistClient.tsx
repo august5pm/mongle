@@ -73,26 +73,26 @@ export function WishlistClient() {
       {!ready ? (
         <p className="mt-10 text-on-surface-variant">불러오는 중…</p>
       ) : !loggedIn ? (
-        <div className="glass-panel mt-10 space-y-4 rounded-3xl p-6">
+        <div className="surface-panel mt-10 space-y-4 rounded-3xl p-6">
           <p className="text-body-md text-on-surface-variant">
             로그인하면 위시리스트가 계정에 저장됩니다.
           </p>
           <Link
             href={`/login?next=${encodeURIComponent("/wishlist")}`}
-            className="pearl-clay peach-glow inline-flex rounded-full px-6 py-3 text-sm font-bold"
+            className="accent-fill inline-flex rounded-full px-6 py-3 text-sm font-bold"
           >
             Google로 로그인
           </Link>
         </div>
       ) : rows.length === 0 ? (
-        <div className="glass-panel mt-10 space-y-4 rounded-3xl p-8 text-center">
+        <div className="surface-panel mt-10 space-y-4 rounded-3xl p-8 text-center">
           <Bookmark size={28} className="mx-auto text-primary" />
           <p className="text-body-md text-on-surface-variant">
             아직 담아 둔 작품이 없어요.
           </p>
           <Link
             href="/explore"
-            className="pearl-clay peach-glow inline-flex rounded-full px-6 py-3 text-sm font-bold"
+            className="accent-fill inline-flex rounded-full px-6 py-3 text-sm font-bold"
           >
             찾으러 가기
           </Link>
@@ -104,7 +104,7 @@ export function WishlistClient() {
             return (
               <div key={row.id} className="group relative">
                 <Link href={`/movie/${row.media_id}`} className="block">
-                  <div className="glass-panel relative mb-3 aspect-[2/3] overflow-hidden rounded-2xl">
+                  <div className="surface-panel relative mb-3 aspect-[2/3] overflow-hidden rounded-2xl">
                     <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
                       <MediaVisual item={item} size="w185" sizes="25vw" />
                     </div>

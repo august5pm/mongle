@@ -1,7 +1,7 @@
 # 디자인 시스템
 
-어두운 보이드 배경 위에 **진주빛(pearl) 클레이·글래스** 재질을 올리는 방향입니다.  
-레퍼런스는 유백 광택의 3D 클라우드, 앱 크롬은 둥근 검정 파비콘·플로팅 네비로 통일합니다.
+어두운 시네마 배경 위에 **평평한 면 + 얇은 헤어라인**으로 층을 나누는 차분한 방향입니다.  
+글래스 질감은 떠 있는 크롬(하단 네비, 이미지 위 배지)에만 쓰고, 브랜드의 웜 피치는 단색 액센트로 남깁니다.
 
 ## 컬러
 
@@ -17,7 +17,17 @@
 | `secondary` | `#c9d8ff` | 쿨 블루 포인트 |
 | `surface.container` | `#14181c` | 떠 있는 면 |
 
-Ambient: 좌상단 웜 피치 / 우상단 쿨 블루 radial glow (`body` background-image).
+서피스·액센트 CSS 변수 (`globals.css` `:root`)
+
+| 변수 | 값 | 용도 |
+|------|-----|------|
+| `--surface-1` | `white / 4%` | 기본 면 (`.surface-panel`) |
+| `--surface-2` · `--surface-3` | `white / 7%` · `11%` | 한 단계 위 면 |
+| `--hairline` · `--hairline-strong` | `white / 8%` · `14%` | 테두리 |
+| `--accent` · `--accent-hover` | `#ffe6de` · `#fff1ec` | 주 CTA·활성 상태 |
+| `--on-accent` | `#2b1c18` | 액센트 위 텍스트 |
+
+Ambient: 상단 중앙에 아주 옅은 웜 radial 하나 (`body` background-image). 그림자·글로우는 최소화합니다.
 
 ## 타이포
 
@@ -33,11 +43,10 @@ Ambient: 좌상단 웜 피치 / 우상단 쿨 블루 radial glow (`body` backgro
 
 | 클래스 | 용도 |
 |--------|------|
-| `.glass-panel` | 카드·네비·검색창 — 맑은 반투명 글래스 |
-| `.pearl-clay` | 주 CTA — **불투명** 크림·피치 진주 (탁한 반투명 지양) |
-| `.pearl-clay-soft` | 보조 버튼·아이콘 칩 — 밝은 유리 + 선명 보더 |
-| `.peach-glow` | `filter: drop-shadow` 쿨 블루 글로우 (box-shadow를 덮지 않음) |
-| `.spec-shine` | 스펙큘러 하이라이트 오버레이 |
+| `.surface-panel` | 카드·입력·패널 — 블러·그림자 없이 `--surface-1` + 헤어라인 |
+| `.chrome-glass` | 떠 있는 크롬 전용 글래스 — 하단 네비, 이미지 위 배지 |
+| `.accent-fill` | 주 CTA·선택된 탭/칩 — 단색 웜 오프화이트 |
+| `.soft-fill` | 보조 버튼·아이콘 칩 — 뒤 배경을 어둡게 눌러 이미지 위에서도 읽힘 |
 | `.cloud-bubble` | 저널 말풍선 모서리 |
 | `.app-shell` | 중앙 `max-width: 1280px` 콘텐츠 프레임 |
 | `.poster-card` | `--poster-w` 기반 세로 포스터 카드 |
@@ -48,8 +57,9 @@ Ambient: 좌상단 웜 피치 / 우상단 쿨 블루 radial glow (`body` backgro
 
 - 페이지 셸: `--app-max: 80rem` (1280px), 패딩은 `.app-shell`
 - 포스터 폭: `--poster-w` (`clamp`, 셸 안에서는 `cqi`)
-- 포스터 모서리: 프로젝트에서 `rounded-lg`가 2rem으로 오버라이드되므로, 작은 라운드는 `rounded-[8px]` 사용
-- 카드/패널: `rounded-2xl` ~ `rounded-3xl`
+- Tailwind 기본 반경 스케일을 쓰고, `rounded-3xl`만 20px로 낮춰 둠
+- 포스터: `rounded-[8px]` (= `rounded-lg`) · 썸네일: `rounded-xl` (12px)
+- 카드/패널: `rounded-2xl` (16px) ~ `rounded-3xl` (20px)
 - 버튼/칩: `rounded-full`
 - 하단 네비·FAB을 위해 `main`에 `pb-32`
 
@@ -62,7 +72,6 @@ Ambient: 좌상단 웜 피치 / 우상단 쿨 블루 radial glow (`body` backgro
 ## 모션
 
 - 레일/카드: `animate-rail-in`, hover `-translate-y`
-- 히어로 글로우: `animate-float`
 - 포스터 레일: `PosterSwiper` (FreeMode · 마우스휠 · 페이지 단위 화살표)
 - BottomNav expand↔compact: ~700ms `cubic-bezier(0.32, 0.72, 0, 1)` (그림자 transition은 width/padding만)
 
@@ -70,5 +79,7 @@ Ambient: 좌상단 웜 피치 / 우상단 쿨 블루 radial glow (`body` backgro
 
 - 히어로에 카드·뱃지·통계를 잔뜩 얹기  
 - 반투명 CTA로 배경이 비쳐 탁해 보이게 만들기  
+- 모든 카드에 글래스·블러·드롭섀도 얹기 (글래스는 떠 있는 크롬에만)  
+- 글로우·스펙큘러·둥둥 뜨는 장식 애니메이션
 - Inter / 기본 system UI 스택을 브랜드 폰트로 쓰기
 - 홈에 가짜 “이어보기” 프로그레스 바를 두기

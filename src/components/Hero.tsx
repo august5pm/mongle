@@ -39,7 +39,7 @@ export function Hero({ item }: HeroProps) {
       </div>
 
       <div className="relative z-10 mb-6 space-y-3 px-[var(--app-pad)]">
-        <div className="pearl-clay-soft inline-flex items-center gap-2 rounded-full px-3 py-1">
+        <div className="soft-fill inline-flex items-center gap-2 rounded-full px-3 py-1">
           <span className="relative h-4 w-5 shrink-0">
             <Image
               src="/cloud.png"
@@ -69,7 +69,7 @@ export function Hero({ item }: HeroProps) {
         <div className="flex items-center gap-3 pt-1">
           <Link
             href={`/movie/${item.id}`}
-            className="pearl-clay peach-glow flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold transition-transform hover:scale-105 active:scale-[0.98]"
+            className="accent-fill flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold transition-transform hover:scale-105 active:scale-[0.98]"
           >
             <Play size={18} fill="currentColor" />
             자세히 보기
