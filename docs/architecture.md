@@ -24,6 +24,8 @@ src/
     SoftFluffyBento.tsx   # 큐레이션 A (내부는 PosterRail)
     HomePosterBits.tsx
     MediaLink.tsx         # 포스터 → 상세 공유 요소 전환 (View Transitions)
+    NavigationProgress.tsx # 느린 페이지 이동 시 상단 진행 바
+    StatusScreen.tsx      # 404·오류 공용 화면
     nav-tabs.ts           # TopAppBar(데스크톱)·BottomNav(모바일) 공용 탭
   data/mock.ts            # 폴백 작품 · 저널 시드 미리보기
   lib/
@@ -76,6 +78,21 @@ docs/
 - 큐레이션 카테고리: `lib/home-curation.ts` (`pickTodayCurations`)
 - 포스터 URL · blur: `lib/tmdb-image.ts` (클라이언트 안전)
 - mock은 폴백·시드용. `media_id`는 `tmdb-m-{id}` / `tmdb-t-{id}` 또는 mock id
+- **캐시:** TMDB 응답은 `tmdbFetch` 안의 `unstable_cache`로 30분 캐시 (렌더링 방식과 무관, 실패는 캐시 안 함)
+- **상세 렌더링:** `/movie/[id]`는 `dynamic = "force-dynamic"` — ISR로 두면 TMDB 장애 시 `error.tsx` 대신 Next 기본 500이 뜸
+- **오류 구분:** TMDB 404 → `notFound()` (없는 작품) / 그 밖의 실패(키 오류·장애·네트워크) → throw → `error.tsx`. `generateMetadata`는 실패를 삼켜 기본 제목으로 (메타데이터 단계 오류는 `error.tsx`가 못 잡음)
+
+## 오류·404·로딩
+
+| 파일 | 역할 |
+|------|------|
+| `app/not-found.tsx` | 전역 404 |
+| `app/movie/[id]/not-found.tsx` | 없는 작품 404 |
+| `app/error.tsx` | 페이지 렌더링 오류 (상단바·탭바 유지, 다시 시도) |
+| `app/global-error.tsx` | 루트 레이아웃까지 실패했을 때의 안전망 |
+| `NavigationProgress` | 120ms 넘게 걸리는 이동에 상단 2px 진행 바. `MediaLink` 전환 이동은 제외 (전환 중엔 화면이 멈춰 안 보임) |
+
+`loading.tsx`는 두지 않음 — 넣으면 포스터 → 상세 전환이 스켈레톤으로 커지는 모양이 됨
 
 ## 이미지
 

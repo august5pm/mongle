@@ -1,5 +1,6 @@
 import "server-only";
 
+import { unstable_cache } from "next/cache";
 import type { MediaItem, MediaType } from "@/data/mock";
 import {
   pickTodayCurations,
@@ -154,19 +155,45 @@ function mapDetail(detail: TmdbDetail, type: MediaType): MediaItem {
   };
 }
 
-async function tmdbFetch<T>(path: string, params: Record<string, string> = {}) {
+/** TMDB가 HTTP 오류로 응답 — status로 404(없는 작품)와 장애를 구분한다 */
+export class TmdbHttpError extends Error {
+  constructor(readonly status: number) {
+    super(`TMDB 요청 실패 (${status})`);
+    this.name = "TmdbHttpError";
+  }
+}
+
+const TMDB_CACHE_SECONDS = 60 * 30;
+
+async function tmdbFetchUncached(
+  path: string,
+  params: Record<string, string>,
+): Promise<unknown> {
   const url = new URL(`${TMDB_API}${path}`);
   url.searchParams.set("api_key", apiKey());
   url.searchParams.set("language", "ko-KR");
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
 
   const res = await fetch(url.toString(), {
-    next: { revalidate: 60 * 30 },
+    next: { revalidate: TMDB_CACHE_SECONDS },
   });
   if (!res.ok) {
-    throw new Error(`TMDB 요청 실패 (${res.status})`);
+    throw new TmdbHttpError(res.status);
   }
-  return (await res.json()) as T;
+  return res.json();
+}
+
+/**
+ * TMDB 응답 캐시 (30분). fetch 옵션 대신 unstable_cache를 쓰는 이유:
+ * 동적 렌더링 라우트(상세)에서는 fetch 캐시가 꺼지기 때문 — 렌더링 방식과 무관하게 캐시를 유지한다.
+ * 실패(throw)는 캐시되지 않아 장애가 끝나면 바로 회복된다. 캐시 키에 API 키는 넣지 않는다.
+ */
+const tmdbFetchCached = unstable_cache(tmdbFetchUncached, ["tmdb-api"], {
+  revalidate: TMDB_CACHE_SECONDS,
+});
+
+async function tmdbFetch<T>(path: string, params: Record<string, string> = {}) {
+  return (await tmdbFetchCached(path, params)) as T;
 }
 
 export async function searchTmdb(query: string, page = 1): Promise<MediaItem[]> {
@@ -209,10 +236,16 @@ export async function fetchTmdbMediaByAppId(
       ? `/tv/${parsed.tmdbId}`
       : `/movie/${parsed.tmdbId}`;
 
-  const detail = await tmdbFetch<TmdbDetail>(path, {
-    append_to_response: "credits",
-  });
-  return mapDetail(detail, parsed.type);
+  try {
+    const detail = await tmdbFetch<TmdbDetail>(path, {
+      append_to_response: "credits",
+    });
+    return mapDetail(detail, parsed.type);
+  } catch (error) {
+    // 없는 작품만 undefined(→ 404). 키 오류·장애·네트워크 실패는 그대로 던져 error.tsx로
+    if (error instanceof TmdbHttpError && error.status === 404) return undefined;
+    throw error;
+  }
 }
 
 /** Discover movies by genre / sort — for home mood rails */

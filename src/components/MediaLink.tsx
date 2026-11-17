@@ -100,5 +100,6 @@ export function MediaLink({
     });
   };
 
-  return <Link href={href} onClick={handleClick} {...props} />;
+  // data-media-link: NavigationProgress가 전환 이동을 구분하는 표시
+  return <Link href={href} onClick={handleClick} data-media-link="" {...props} />;
 }

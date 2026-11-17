@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { BottomNav } from "@/components/BottomNav";
 import { JournalFab } from "@/components/JournalFab";
 import { ViewTransitionRouteWatcher } from "@/components/MediaLink";
+import { NavigationProgress } from "@/components/NavigationProgress";
 import { SiteFooter } from "@/components/SiteFooter";
 import { TopAppBar } from "@/components/TopAppBar";
 import "./globals.css";
@@ -67,6 +68,7 @@ export default function RootLayout({
         <JournalFab />
         <BottomNav />
         <ViewTransitionRouteWatcher />
+        <NavigationProgress />
       </body>
     </html>
   );

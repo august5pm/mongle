@@ -13,30 +13,31 @@ type MoviePageProps = {
   params: { id: string };
 };
 
-export function generateStaticParams() {
-  return allMedia.map((item) => ({ id: item.id }));
-}
+/**
+ * 요청마다 렌더링 — 정적 생성(ISR)으로 두면 TMDB 장애 시 error.tsx 대신 Next 기본 500 화면이 뜬다.
+ * TMDB 응답 자체는 lib/tmdb-api의 unstable_cache로 30분 캐시된다.
+ */
+export const dynamic = "force-dynamic";
 
+/** 없는 작품이면 undefined(→ notFound), TMDB 장애는 throw(→ error.tsx) */
 async function resolveMedia(id: string): Promise<MediaItem | undefined> {
   const local = getMediaById(id);
   if (local) return local;
-  if (parseAppMediaId(id)) {
-    try {
-      return await fetchTmdbMediaByAppId(id);
-    } catch {
-      return undefined;
-    }
-  }
+  if (parseAppMediaId(id)) return fetchTmdbMediaByAppId(id);
   return undefined;
 }
 
 export async function generateMetadata({
   params,
 }: MoviePageProps): Promise<Metadata> {
-  const item = await resolveMedia(params.id);
-  return {
-    title: item?.title ?? "Details",
-  };
+  // 메타데이터 단계의 오류는 error.tsx가 잡지 못하고 기본 500 화면이 뜨므로 여기서는 삼킨다.
+  // 실제 오류는 아래 페이지 본문에서 다시 던져 error.tsx가 처리한다.
+  try {
+    const item = await resolveMedia(params.id);
+    return { title: item?.title ?? "작품을 찾을 수 없어요" };
+  } catch {
+    return { title: "잠시 문제가 생겼어요" };
+  }
 }
 
 export default async function MovieDetailPage({ params }: MoviePageProps) {
