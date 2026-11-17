@@ -64,7 +64,8 @@ Ambient: 상단 중앙에 아주 옅은 웜 radial 하나 (`body` background-ima
 | `.app-shell` | 중앙 `max-width: 1280px` 콘텐츠 프레임 |
 | `.poster-card` | `--poster-w` 기반 세로 포스터 카드 |
 | `.edge-fade-x` | 히어로 좌우 배경 페이드 |
-| `.hero-fade-bottom` | 히어로 하단 페이드 |
+| `.hero-fade-bottom` | 히어로 하단 페이드 (모바일 55%, sm+ 32%) |
+| `.hero-frame` | 홈 키비주얼 높이 — 모바일 2:3, sm+ 16:9를 블리드 폭(`cqi`) 기준으로 계산 |
 
 ## 라운드 · 간격
 

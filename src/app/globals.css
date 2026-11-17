@@ -118,6 +118,29 @@ body {
     -webkit-mask-image: linear-gradient(to bottom, black 58%, transparent 100%);
   }
 
+  /*
+   * 홈 키비주얼 높이 — 모바일은 포스터 2:3, sm+는 백드롭 16:9에 맞춰 잘림을 최소화하고 화면 높이로만 상한.
+   * aspect-ratio + max-height는 높이 상한이 폭까지 줄여 버려서, 블리드 폭(cqi + 좌우 패딩)으로 높이를 직접 계산한다.
+   */
+  .hero-frame {
+    --hero-w: calc(100cqi + 2 * var(--app-pad));
+    height: clamp(440px, calc(var(--hero-w) * 1.5), 80svh);
+  }
+
+  @media (min-width: 640px) {
+    .hero-frame {
+      height: clamp(420px, calc(var(--hero-w) * 0.5625), 75vh);
+    }
+  }
+
+  /* sm+ 백드롭은 원본 비율로 커졌으니 페이드를 아래쪽으로 몰아 이미지를 더 보여준다 */
+  @media (min-width: 640px) {
+    .hero-mask {
+      mask-image: linear-gradient(to bottom, black 76%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 76%, transparent 100%);
+    }
+  }
+
   /* 키비주얼 전용 — 좌우 가장자리 페이드 (배경과 연결) */
   .edge-fade-x {
     overflow: hidden;
@@ -143,13 +166,20 @@ body {
     position: absolute;
     inset: auto 0 0 0;
     z-index: 2;
-    height: min(55%, 280px);
+    /* 모바일은 포스터 위에 텍스트가 올라가므로 하단을 넉넉히 어둡게 */
+    height: 55%;
     background: linear-gradient(
       to top,
       var(--background) 0%,
       rgba(5, 6, 7, 0.85) 40%,
       transparent 100%
     );
+  }
+
+  @media (min-width: 640px) {
+    .hero-fade-bottom {
+      height: min(32%, 260px);
+    }
   }
 
   .mongle-gradient-text {
