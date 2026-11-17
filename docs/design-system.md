@@ -33,10 +33,15 @@ Ambient: 상단 중앙에 아주 옅은 웜 radial 하나 (`body` background-ima
 
 | 역할 | 폰트 | CSS |
 |------|------|-----|
-| 로고 워드마크·푸터 | Dongle | `font-brand` |
+| 로고 워드마크·푸터 | Dongle (「몽글Mongle」 8글자 서브셋) | `font-brand` |
 | 제목 | Pretendard Variable 700–800, 자간 `-0.02 ~ -0.035em` | `font-display` |
-| 영문 본문 | Nunito | `font-sans` |
+| 영문 본문 | Nunito 가변 (라틴 범위) | `font-sans` |
 | 한글 본문 | Pretendard Variable | `--font-ko` |
+
+글꼴 파일은 모두 `src/app/fonts`에 두고 `next/font/local`로 불러온다 (빌드 때 Google Fonts에 접속하지 않음). 라이선스는 `src/app/fonts/licenses` (모두 SIL OFL 1.1).
+
+- Dongle은 로고 글자만 담은 서브셋 — `font-brand`로 다른 글자를 쓰면 Pretendard로 표시됨. 글자를 늘리려면 `https://fonts.googleapis.com/css2?family=Dongle:wght@400;700&text=<글자>`로 다시 받아 교체
+- Nunito에 없는 문자(라틴 확장 등)는 Pretendard가 받음
 
 제목 크기 토큰 (`tailwind.config.ts`)
 

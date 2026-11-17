@@ -40,7 +40,7 @@
 | API | TMDB (검색·트렌딩·상세, 서버 전용 키) |
 | Icons | Lucide React |
 | Carousel | Swiper (홈 포스터 레일) |
-| Fonts | Dongle(로고) · Pretendard(제목·한글 본문) · Nunito(영문 본문) |
+| Fonts | Dongle(로고) · Pretendard(제목·한글 본문) · Nunito(영문 본문) — 모두 저장소에 포함 (`next/font/local`, OFL) |
 | Deploy | Vercel |
 | Runtime | Node.js 22 (`nvm use 22`, `engines.node: 22.x`) |
 

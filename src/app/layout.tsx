@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Dongle, Nunito } from "next/font/google";
 import localFont from "next/font/local";
 import { BottomNav } from "@/components/BottomNav";
 import { JournalFab } from "@/components/JournalFab";
@@ -16,19 +15,31 @@ import {
 } from "@/lib/site";
 import "./globals.css";
 
-/** 몽글 브랜드·제목용 — 둥글고 귀여운 한글 폰트 */
-const dongle = Dongle({
-  subsets: ["latin"],
-  weight: ["300", "400", "700"],
-  variable: "--font-display",
+/*
+ * 글꼴은 모두 저장소에 둔다 (next/font/google 미사용).
+ * 빌드 때 Google Fonts를 받아오면 가끔 확장자 없는 주소(l/font?kit=…)가 와서
+ * Next 14의 폰트 로더가 실패했다 — CI·Vercel 빌드가 외부 네트워크에 의존하지 않게 한다.
+ * 라이선스: src/app/fonts/licenses (모두 SIL OFL 1.1)
+ */
+
+/**
+ * 로고 워드마크 전용 Dongle — Google Fonts text 서브셋으로 「몽글Mongle」 8글자만 담았다.
+ * font-brand로 다른 글자를 쓰면 다음 글꼴(Pretendard)로 표시된다.
+ */
+const dongle = localFont({
+  src: [
+    { path: "./fonts/Dongle-Brand-400.woff2", weight: "400" },
+    { path: "./fonts/Dongle-Brand-700.woff2", weight: "700" },
+  ],
+  variable: "--font-brand",
   display: "swap",
 });
 
-/** 본문용 — 부드럽고 둥근 산세리프 */
-const nunito = Nunito({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
+/** 영문 본문 — Nunito 가변(라틴 범위). 한글·그 밖의 문자는 Pretendard가 받는다 */
+const nunito = localFont({
+  src: "./fonts/Nunito-latin-variable.woff2",
   variable: "--font-sans",
+  weight: "200 1000",
   display: "swap",
 });
 

@@ -72,7 +72,8 @@ const config: Config = {
           "Pretendard",
           "sans-serif",
         ],
-        brand: ["var(--font-display)", "Dongle", "sans-serif"],
+        // 로고 워드마크 전용 (「몽글Mongle」 서브셋) — 다른 글자는 Pretendard로 대체
+        brand: ["var(--font-brand)", "var(--font-ko)", "Pretendard", "sans-serif"],
       },
       fontSize: {
         "display-lg": [
