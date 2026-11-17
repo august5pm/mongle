@@ -136,7 +136,7 @@ export function ExploreClient() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="작품 제목으로 찾아보세요 (TMDB)"
+            placeholder="작품 제목으로 찾아보세요"
             className="surface-panel h-14 w-full rounded-full pl-14 pr-6 text-body-lg text-on-surface outline-none transition-[border-color,box-shadow] placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:ring-2 focus:ring-primary/40"
           />
           <div className="absolute inset-0 -z-10 rounded-full bg-primary/5 opacity-0 blur-2xl transition-opacity group-focus-within:opacity-100" />
@@ -173,7 +173,7 @@ export function ExploreClient() {
               </h2>
               <p className="text-body-md text-on-surface-variant/70">
                 {trending.length
-                  ? "TMDB 이번 주 트렌딩"
+                  ? "이번 주 많이 찾은 작품"
                   : "이번 주 사람들이 남긴 감정과 이야기"}
               </p>
             </div>

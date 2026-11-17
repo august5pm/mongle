@@ -21,6 +21,9 @@
 
 - 페이지 하단 (모바일에서는 BottomNav 위): 몽글 워드마크 + `© {year} by august5pm. All rights reserved.`
 - GitHub: https://github.com/august5pm
+- **TMDB 출처 표기 (필수):** TMDB 공식 로고(`public/tmdb-logo.svg`, Alt short 원본, themoviedb.org 링크) + 고지문
+  `This website uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.`
+  — [API 이용약관](https://www.themoviedb.org/api-terms-of-use) 3항. 로고는 몽글 로고보다 덜 눈에 띄게(64px, 60% 불투명)
 
 ### JournalFab
 

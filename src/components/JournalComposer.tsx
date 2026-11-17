@@ -306,7 +306,7 @@ export function JournalComposer() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="TMDB에서 제목으로 검색"
+              placeholder="작품 제목으로 검색"
               className="surface-panel h-12 w-full rounded-full pl-11 pr-4 text-sm outline-none placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary/30"
             />
           </div>
