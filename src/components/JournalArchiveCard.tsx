@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { MediaLink } from "@/components/MediaLink";
 import { usePathname, useRouter } from "next/navigation";
 import type { LucideIcon } from "lucide-react";
 import { Heart, Pencil, Trash2 } from "lucide-react";
@@ -154,8 +155,8 @@ export function JournalArchiveCard({
         </div>
       ) : null}
 
-      <Link href={`/movie/${media.id}`} className="block cursor-pointer">
-        <div className="relative aspect-[2/3] w-full">
+      <MediaLink href={`/movie/${media.id}`} className="block cursor-pointer">
+        <div data-vt-source className="relative aspect-[2/3] w-full overflow-hidden">
           <div className="absolute inset-0 transition-transform duration-slow group-hover:scale-[1.04]">
             <MediaVisual item={media} sizes="(max-width:768px) 100vw, 25vw" />
           </div>
@@ -187,7 +188,7 @@ export function JournalArchiveCard({
             </div>
           </div>
         </div>
-      </Link>
+      </MediaLink>
 
       <div className="flex items-center justify-between gap-2 p-5 pt-4">
         <div className="min-w-0 flex-1">

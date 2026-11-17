@@ -11,7 +11,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label="주요 메뉴"
-      className="chrome-glass fixed inset-x-0 bottom-0 z-50 rounded-none border-x-0 border-b-0 pb-[env(safe-area-inset-bottom)] shadow-none md:hidden"
+      className="vt-app-tabbar chrome-glass fixed inset-x-0 bottom-0 z-50 rounded-none border-x-0 border-b-0 pb-[env(safe-area-inset-bottom)] shadow-none md:hidden"
     >
       <ul className="mx-auto flex h-14 max-w-lg items-stretch">
         {NAV_TABS.map(({ href, label, icon: Icon }) => {

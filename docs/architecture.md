@@ -23,6 +23,8 @@ src/
     PosterSwiper.tsx      # FreeMode 스와이프 레일
     SoftFluffyBento.tsx   # 큐레이션 A (내부는 PosterRail)
     HomePosterBits.tsx
+    MediaLink.tsx         # 포스터 → 상세 공유 요소 전환 (View Transitions)
+    nav-tabs.ts           # TopAppBar(데스크톱)·BottomNav(모바일) 공용 탭
   data/mock.ts            # 폴백 작품 · 저널 시드 미리보기
   lib/
     home-curation.ts      # 날짜/요일 큐레이션 풀·픽

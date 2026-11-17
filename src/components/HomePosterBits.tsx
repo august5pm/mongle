@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MediaLink } from "@/components/MediaLink";
 import { Star } from "lucide-react";
 import type { MediaItem } from "@/data/mock";
 import { MediaVisual } from "@/components/MediaVisual";
@@ -71,8 +72,11 @@ export function CompactPosterCard({
   priority = false,
 }: CompactPosterCardProps) {
   return (
-    <Link href={`/movie/${item.id}`} className="poster-card group block">
-      <div className="relative aspect-[2/3] w-full overflow-hidden rounded-[8px] bg-surface-container">
+    <MediaLink href={`/movie/${item.id}`} className="poster-card group block">
+      <div
+        data-vt-source
+        className="relative aspect-[2/3] w-full overflow-hidden rounded-[8px] bg-surface-container"
+      >
         <div className="absolute inset-0 transition-[transform,filter] duration-slow group-hover:scale-[1.04] group-hover:brightness-110">
           <MediaVisual
             item={item}
@@ -84,6 +88,6 @@ export function CompactPosterCard({
         </div>
       </div>
       <PosterMeta item={item} />
-    </Link>
+    </MediaLink>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { MediaLink } from "@/components/MediaLink";
 import { notFound } from "next/navigation";
 import { Calendar, Clock, PenLine, Star } from "lucide-react";
 import { allMedia, getMediaById, type MediaItem } from "@/data/mock";
@@ -63,18 +64,21 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
   return (
     <div className="relative min-h-screen">
       <div className="app-bleed relative h-[min(530px,70vh)] w-auto overflow-hidden md:h-[min(663px,75vh)]">
-        <div className="mask-vignette absolute inset-0 scale-105">
-          <MediaVisual
-            item={item}
-            kind="backdrop"
-            size="w1280"
-            priority
-            sizes="(max-width:1100px) 100vw, 1100px"
-          />
+        {/* 공유 요소 전환 도착점 — 이미지+그라데이션만 (텍스트는 vt-media-meta로 따로) */}
+        <div className="vt-media-hero absolute inset-0 overflow-hidden">
+          <div className="mask-vignette absolute inset-0 scale-105">
+            <MediaVisual
+              item={item}
+              kind="backdrop"
+              size="w1280"
+              priority
+              sizes="(max-width:1100px) 100vw, 1100px"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
 
-        <div className="absolute bottom-0 left-0 flex w-full flex-col gap-4 px-[var(--app-pad)] pb-6">
+        <div className="vt-media-meta absolute bottom-0 left-0 flex w-full flex-col gap-4 px-[var(--app-pad)] pb-6">
           <div className="mb-2 flex flex-wrap gap-2">
             {item.genres.map((genre) => (
               <span
@@ -204,8 +208,8 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
             </div>
             <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
               {related.map((m) => (
-                <Link key={m.id} href={`/movie/${m.id}`} className="group">
-                  <div className="surface-panel relative mb-3 aspect-[2/3] overflow-hidden rounded-2xl">
+                <MediaLink key={m.id} href={`/movie/${m.id}`} className="group">
+                  <div data-vt-source className="surface-panel relative mb-3 aspect-[2/3] overflow-hidden rounded-2xl">
                     <div className="absolute inset-0 transition-transform duration-slow group-hover:scale-[1.04]">
                       <MediaVisual item={m} size="w185" sizes="25vw" />
                     </div>
@@ -220,7 +224,7 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
                     {m.year}
                     {m.director ? ` • ${m.director}` : ""}
                   </p>
-                </Link>
+                </MediaLink>
               ))}
             </div>
           </section>

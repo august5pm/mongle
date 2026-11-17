@@ -3,6 +3,7 @@ import { Dongle, Nunito } from "next/font/google";
 import localFont from "next/font/local";
 import { BottomNav } from "@/components/BottomNav";
 import { JournalFab } from "@/components/JournalFab";
+import { ViewTransitionRouteWatcher } from "@/components/MediaLink";
 import { SiteFooter } from "@/components/SiteFooter";
 import { TopAppBar } from "@/components/TopAppBar";
 import "./globals.css";
@@ -65,6 +66,7 @@ export default function RootLayout({
         </main>
         <JournalFab />
         <BottomNav />
+        <ViewTransitionRouteWatcher />
       </body>
     </html>
   );

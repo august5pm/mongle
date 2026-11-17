@@ -381,6 +381,76 @@ button:focus-visible,
   filter: blur(8px);
 }
 
+/* 포스터 → 상세 공유 요소 전환 (MediaLink) */
+.vt-media-hero {
+  view-transition-name: media-hero;
+}
+
+.vt-media-meta {
+  view-transition-name: media-meta;
+}
+
+/* 고정 크롬은 자기 그룹으로 분리 — 커지는 이미지가 상단바·탭바를 덮지 않게 */
+.vt-app-header {
+  view-transition-name: app-header;
+}
+
+.vt-app-tabbar {
+  view-transition-name: app-tabbar;
+}
+
+::view-transition-group(media-hero) {
+  animation-duration: 460ms;
+  animation-timing-function: var(--ease-emphasized);
+  overflow: clip;
+}
+
+/* 포스터(2:3)와 백드롭(16:9)처럼 비율이 달라도 찌그러지지 않게 */
+::view-transition-old(media-hero),
+::view-transition-new(media-hero) {
+  height: 100%;
+  object-fit: cover;
+  animation-timing-function: var(--ease-standard);
+}
+
+/* 작은 포스터가 크게 늘어나며 흐려지는 구간을 짧게 — 도착 이미지가 빨리 주도하도록 */
+::view-transition-old(media-hero) {
+  animation-duration: 180ms;
+}
+
+::view-transition-new(media-hero) {
+  animation-duration: 280ms;
+}
+
+/* 나머지 화면은 짧게 교차 페이드 */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 220ms;
+  animation-timing-function: var(--ease-standard);
+}
+
+/* 상세 제목·메타는 이미지가 자리 잡은 뒤 아래에서 떠오름 */
+::view-transition-new(media-meta) {
+  animation: vt-meta-in 360ms var(--ease-emphasized) 180ms both;
+}
+
+::view-transition-old(media-meta) {
+  animation: vt-meta-out 160ms var(--ease-standard) both;
+}
+
+@keyframes vt-meta-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes vt-meta-out {
+  to {
+    opacity: 0;
+  }
+}
+
 /* 움직임 줄이기 설정 존중 */
 @media (prefers-reduced-motion: reduce) {
   html {

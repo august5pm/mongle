@@ -102,6 +102,7 @@ Ambient: 상단 중앙에 아주 옅은 웜 radial 하나 (`body` background-ima
 - **스크롤 등장:** `.reveal` — CSS scroll-driven(`animation-timeline: view()`)으로 16px 떠오르며 페이드. 홈 레일·찾기 섹션·아카이브 카드에 사용. 미지원 브라우저는 정적으로 보임. 같은 요소에 hover transform을 함께 쓰지 않기 (애니메이션이 덮어씀)
 - **상단바:** `.appbar-scrim` — 스크롤 0→120px 동안 배경 30%→78%, 헤어라인 등장
 - **이미지 로드:** `MediaVisual`이 톤 배경 위로 `blur(8px)`→선명 + 페이드인 (`.media-img[data-loaded]`). `priority` 이미지는 LCP를 위해 처음부터 표시
+- **포스터 → 상세 전환:** View Transitions API. `MediaLink`가 클릭한 포스터(`[data-vt-source]`)와 상세 백드롭(`.vt-media-hero`)을 `media-hero`로 이어 460ms 동안 커지게 하고, 제목·메타(`.vt-media-meta`)는 180ms 뒤 떠오름. 상단바·탭바는 `.vt-app-header`·`.vt-app-tabbar`로 분리해 이미지에 가리지 않음. 도착 이미지 디코딩을 최대 600ms 기다린 뒤 전환. 미지원 브라우저·움직임 줄이기·새 탭 클릭은 일반 이동
 - **포스터 레일:** `PosterSwiper` (FreeMode · 마우스휠 · 페이지 단위 화살표)
 - **움직임 줄이기:** `prefers-reduced-motion: reduce`면 모든 transition/animation을 사실상 끄고 `.reveal`·`.appbar-scrim`도 해제
 

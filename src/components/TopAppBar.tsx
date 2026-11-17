@@ -88,7 +88,7 @@ export function TopAppBar() {
   const profile = getMongleProfile(user);
 
   return (
-    <header className="fixed top-0 z-50 w-full">
+    <header className="vt-app-header fixed top-0 z-50 w-full">
       <div className="absolute inset-0 appbar-scrim border-b border-white/10 bg-[#050607]/55 backdrop-blur-2xl" />
 
       <div className="app-shell relative z-10 flex h-16 items-center justify-between">

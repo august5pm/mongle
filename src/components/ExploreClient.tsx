@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import { MediaLink } from "@/components/MediaLink";
 import {
   Bolt,
   Cloud,
@@ -181,7 +181,7 @@ export function ExploreClient() {
 
           <div className="bento-grid">
             {featured ? (
-              <Link
+              <MediaLink
                 href={`/movie/${featured.id}`}
                 className="surface-panel group relative col-span-2 row-span-2 min-h-[280px] cursor-pointer overflow-hidden rounded-3xl"
               >
@@ -207,11 +207,11 @@ export function ExploreClient() {
                     {featured.overview}
                   </p>
                 </div>
-              </Link>
+              </MediaLink>
             ) : null}
 
             {second ? (
-              <Link
+              <MediaLink
                 href={`/movie/${second.id}`}
                 className="surface-panel group relative col-span-2 min-h-[160px] cursor-pointer overflow-hidden rounded-3xl"
               >
@@ -233,11 +233,11 @@ export function ExploreClient() {
                     ★ {second.rating.toFixed(1)}
                   </p>
                 </div>
-              </Link>
+              </MediaLink>
             ) : null}
 
             {third ? (
-              <Link
+              <MediaLink
                 href={`/movie/${third.id}`}
                 className="surface-panel group relative min-h-[140px] cursor-pointer overflow-hidden rounded-3xl"
               >
@@ -250,11 +250,11 @@ export function ExploreClient() {
                     {third.title}
                   </p>
                 </div>
-              </Link>
+              </MediaLink>
             ) : null}
 
             {fourth ? (
-              <Link
+              <MediaLink
                 href={`/movie/${fourth.id}`}
                 className="surface-panel group relative min-h-[140px] cursor-pointer overflow-hidden rounded-3xl"
               >
@@ -267,7 +267,7 @@ export function ExploreClient() {
                     {fourth.title}
                   </p>
                 </div>
-              </Link>
+              </MediaLink>
             ) : null}
           </div>
         </section>
@@ -371,14 +371,14 @@ export function ExploreClient() {
           ) : null}
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {results.map((item) => (
-              <Link key={item.id} href={`/movie/${item.id}`} className="group">
-                <div className="surface-panel relative mb-2 aspect-[2/3] overflow-hidden rounded-2xl">
+              <MediaLink key={item.id} href={`/movie/${item.id}`} className="group">
+                <div data-vt-source className="surface-panel relative mb-2 aspect-[2/3] overflow-hidden rounded-2xl">
                   <div className="absolute inset-0 transition-transform duration-slow group-hover:scale-[1.04]">
                     <MediaVisual item={item} size="w185" sizes="20vw" />
                   </div>
                 </div>
                 <p className="truncate text-sm font-bold">{item.title}</p>
-              </Link>
+              </MediaLink>
             ))}
           </div>
         </section>

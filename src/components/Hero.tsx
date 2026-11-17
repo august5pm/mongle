@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { MediaLink } from "@/components/MediaLink";
 import Image from "next/image";
 import { Play } from "lucide-react";
 import type { MediaItem } from "@/data/mock";
@@ -16,7 +16,7 @@ export function Hero({ item }: HeroProps) {
       className="app-bleed relative mt-16 flex min-h-[360px] scroll-mt-20 flex-col justify-end overflow-hidden"
       style={{ height: "min(52vh, 560px)" }}
     >
-      <div className="edge-fade-x absolute inset-0 z-0">
+      <div data-vt-source className="edge-fade-x absolute inset-0 z-0">
         <div className="hero-mask absolute inset-0 animate-fade-in">
           <MediaVisual
             item={item}
@@ -60,13 +60,14 @@ export function Hero({ item }: HeroProps) {
         </p>
 
         <div className="flex items-center gap-3 pt-1">
-          <Link
+          <MediaLink
             href={`/movie/${item.id}`}
+            sourceSelector="#home-hero [data-vt-source]"
             className="accent-fill flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold"
           >
             <Play size={18} fill="currentColor" />
             자세히 보기
-          </Link>
+          </MediaLink>
           <WishlistButton
             mediaId={item.id}
             title={item.title}

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { MediaLink } from "@/components/MediaLink";
 import { useEffect, useState } from "react";
 import { Bookmark } from "lucide-react";
 import type { MediaItem } from "@/data/mock";
@@ -103,8 +104,8 @@ export function WishlistClient() {
             const item = rowToMedia(row);
             return (
               <div key={row.id} className="group relative">
-                <Link href={`/movie/${row.media_id}`} className="block">
-                  <div className="surface-panel relative mb-3 aspect-[2/3] overflow-hidden rounded-2xl">
+                <MediaLink href={`/movie/${row.media_id}`} className="block">
+                  <div data-vt-source className="surface-panel relative mb-3 aspect-[2/3] overflow-hidden rounded-2xl">
                     <div className="absolute inset-0 transition-transform duration-slow group-hover:scale-[1.04]">
                       <MediaVisual item={item} size="w185" sizes="25vw" />
                     </div>
@@ -115,7 +116,7 @@ export function WishlistClient() {
                   <p className="text-[11px] text-on-surface-variant">
                     {row.media_type === "tv" ? "시리즈" : "영화"}
                   </p>
-                </Link>
+                </MediaLink>
                 <div className="absolute right-2 top-2 z-10">
                   <WishlistButton
                     mediaId={row.media_id}
