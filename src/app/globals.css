@@ -459,6 +459,19 @@ button:focus-visible,
   animation-timing-function: var(--ease-standard);
 }
 
+/*
+ * 돌아오는 길(상세 → 목록): 큰 상세 이미지가 줄어드는 동안 남아 있고,
+ * 포스터는 거의 다 줄어든 뒤에 드러난다 (가는 길의 반대)
+ */
+:root[data-vt-direction="back"]::view-transition-old(media-hero) {
+  animation-duration: 320ms;
+}
+
+:root[data-vt-direction="back"]::view-transition-new(media-hero) {
+  animation-duration: 200ms;
+  animation-delay: 160ms;
+}
+
 /* 상세 제목·메타는 이미지가 자리 잡은 뒤 아래에서 떠오름 */
 ::view-transition-new(media-meta) {
   animation: vt-meta-in 360ms var(--ease-emphasized) 180ms both;

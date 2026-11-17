@@ -23,7 +23,7 @@ src/
     PosterSwiper.tsx      # FreeMode 스와이프 레일
     SoftFluffyBento.tsx   # 큐레이션 A (내부는 PosterRail)
     HomePosterBits.tsx
-    MediaLink.tsx         # 포스터 → 상세 공유 요소 전환 (View Transitions)
+    MediaLink.tsx         # 포스터 ↔ 상세 공유 요소 전환 (View Transitions, 상단바 ← 역방향 포함)
     NavigationProgress.tsx # 느린 페이지 이동 시 상단 진행 바
     StatusScreen.tsx      # 404·오류 공용 화면
     nav-tabs.ts           # TopAppBar(데스크톱)·BottomNav(모바일) 공용 탭

@@ -24,7 +24,7 @@ export function collectPageErrors(page: Page) {
 /** document.startViewTransition 호출과 결과를 기록 (페이지 로드 전에 주입) */
 export async function recordViewTransitions(page: Page) {
   await page.addInitScript(() => {
-    type Rec = { finished?: boolean; error?: string };
+    type Rec = { finished?: boolean; error?: string; namedTargets?: number };
     const w = window as unknown as { __vt: Rec[] };
     w.__vt = [];
     const original = document.startViewTransition?.bind(document);
@@ -33,6 +33,11 @@ export async function recordViewTransitions(page: Page) {
       const rec: Rec = {};
       w.__vt.push(rec);
       const t = original(cb);
+      // 새 화면에서 전환 도착점으로 이름이 붙은 요소 수 (돌아오는 전환에서만 생김)
+      t.updateCallbackDone.then(() => {
+        const n = document.querySelectorAll("[style*='view-transition-name: media-hero']").length;
+        if (n) rec.namedTargets = n;
+      });
       t.finished.then(
         () => (rec.finished = true),
         (e: unknown) => (rec.error = String(e)),
@@ -44,5 +49,10 @@ export async function recordViewTransitions(page: Page) {
 
 export const viewTransitions = (page: Page) =>
   page.evaluate(
-    () => (window as unknown as { __vt: { finished?: boolean; error?: string }[] }).__vt,
+    () =>
+      (
+        window as unknown as {
+          __vt: { finished?: boolean; error?: string; namedTargets?: number }[];
+        }
+      ).__vt,
   );

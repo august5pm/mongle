@@ -5,14 +5,19 @@ import { usePathname, useRouter } from "next/navigation";
 import { useLayoutEffect, type ComponentProps, type MouseEvent } from "react";
 
 /**
- * 포스터 → 상세 공유 요소 전환 (View Transitions API).
+ * 포스터 ↔ 상세 공유 요소 전환 (View Transitions API).
  *
+ * 가는 길(MediaLink 클릭)
  * 1. 클릭한 링크 안의 `[data-vt-source]`(없으면 링크 자신)에 `view-transition-name: media-hero`를 붙이고
  * 2. `document.startViewTransition` 안에서 router.push 한 뒤
  * 3. 새 경로가 커밋되는 순간(`ViewTransitionRouteWatcher`의 layout effect) 전환을 마무리한다.
  * 상세 페이지의 `.vt-media-hero`가 같은 이름을 가져 두 요소가 이어진다.
  *
- * 미지원 브라우저·움직임 줄이기·새 탭 클릭은 일반 Link 동작 그대로.
+ * 돌아오는 길(`navigateBackWithTransition`, 상단바 ← 버튼)
+ * 클릭했던 포스터를 기억해 두었다가, 목록이 다시 그려지는 순간 그 포스터에 같은 이름을 붙여
+ * 상세 이미지가 원래 자리로 줄어들게 한다.
+ *
+ * 미지원 브라우저·움직임 줄이기·새 탭 클릭은 일반 동작 그대로.
  */
 
 const NAME = "media-hero";
@@ -20,6 +25,86 @@ const NAME = "media-hero";
 const IMAGE_WAIT_MS = 600;
 
 let finishPending: (() => void) | null = null;
+
+/** 마지막으로 전환을 일으킨 포스터 — 뒤로 갈 때 도착점을 찾는 데 쓴다 */
+type TransitionOrigin = {
+  /** 출발한 목록 경로 */
+  fromPath: string;
+  /** 도착한 상세 경로 */
+  detailPath: string;
+  sourceSelector?: string;
+  /** 같은 작품 링크가 여러 개일 때(여러 레일) 몇 번째였는지 */
+  linkIndex: number;
+  /** 출발 시 스크롤 위치 — Next는 화면을 그린 뒤에야 스크롤을 복원하므로 직접 맞춘다 */
+  scrollY: number;
+};
+let lastOrigin: TransitionOrigin | null = null;
+
+function canTransition() {
+  return (
+    typeof document.startViewTransition === "function" &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
+
+const linksTo = (path: string) =>
+  document.querySelectorAll<HTMLAnchorElement>(
+    `a[data-media-link][href="${CSS.escape(path)}"]`,
+  );
+
+/** 돌아온 목록에서 출발했던 포스터를 찾는다. 화면 밖이면 null(→ 상세 이미지는 그냥 사라짐) */
+function findOriginTarget(origin: TransitionOrigin) {
+  let el: HTMLElement | null = null;
+  if (origin.sourceSelector) {
+    el = document.querySelector<HTMLElement>(origin.sourceSelector);
+  } else {
+    const links = linksTo(origin.detailPath);
+    const link = links[origin.linkIndex] ?? links[0];
+    el = link?.querySelector<HTMLElement>("[data-vt-source]") ?? link ?? null;
+  }
+  if (!el) return null;
+  const r = el.getBoundingClientRect();
+  const visible = r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth;
+  return visible ? el : null;
+}
+
+/**
+ * 상세 → 목록 역방향 전환. 이 상세에 전환으로 들어온 경우에만 동작하고,
+ * 그 밖에는 router.back()과 같다.
+ */
+export function navigateBackWithTransition(router: { back: () => void }) {
+  const origin = lastOrigin;
+  if (!canTransition() || !origin || origin.detailPath !== window.location.pathname) {
+    router.back();
+    return;
+  }
+  lastOrigin = null;
+
+  const root = document.documentElement;
+  root.dataset.vtDirection = "back";
+  let target: HTMLElement | null = null;
+
+  const transition = document.startViewTransition(
+    () =>
+      new Promise<void>((resolve) => {
+        finishPending = () => {
+          if (window.location.pathname === origin.fromPath) {
+            // 도착점 위치를 재기 전에 스크롤을 출발 시점으로 (Next의 복원보다 먼저)
+            window.scrollTo({ top: origin.scrollY, behavior: "instant" });
+            target = findOriginTarget(origin);
+            target?.style.setProperty("view-transition-name", NAME);
+          }
+          resolve();
+        };
+        router.back();
+      }),
+  );
+
+  transition.finished.finally(() => {
+    target?.style.removeProperty("view-transition-name");
+    delete root.dataset.vtDirection;
+  });
+}
 
 /** 루트 레이아웃에 한 번 마운트 — 경로가 바뀌어 새 화면이 DOM에 반영되면 전환을 끝낸다 */
 export function ViewTransitionRouteWatcher() {
@@ -66,8 +151,7 @@ export function MediaLink({
       e.ctrlKey ||
       e.shiftKey ||
       e.altKey ||
-      typeof document.startViewTransition !== "function" ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !canTransition() ||
       href === window.location.pathname
     ) {
       return;
@@ -75,11 +159,19 @@ export function MediaLink({
 
     e.preventDefault();
 
+    const link = e.currentTarget;
     const source =
       (sourceSelector
         ? document.querySelector<HTMLElement>(sourceSelector)
-        : e.currentTarget.querySelector<HTMLElement>("[data-vt-source]")) ??
-      e.currentTarget;
+        : link.querySelector<HTMLElement>("[data-vt-source]")) ?? link;
+
+    lastOrigin = {
+      fromPath: window.location.pathname,
+      detailPath: href,
+      sourceSelector,
+      linkIndex: Array.prototype.indexOf.call(linksTo(href), link),
+      scrollY: window.scrollY,
+    };
 
     // 이름은 페이지에서 유일해야 하므로, 현재 페이지에 이미 있는 상세 히어로(.vt-media-hero)는 잠시 끈다
     document

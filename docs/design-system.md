@@ -104,6 +104,8 @@ Ambient: 상단 중앙에 아주 옅은 웜 radial 하나 (`body` background-ima
 - **상단바:** `.appbar-scrim` — 스크롤 0→120px 동안 배경 30%→78%, 헤어라인 등장
 - **이미지 로드:** `MediaVisual`이 톤 배경 위로 `blur(8px)`→선명 + 페이드인 (`.media-img[data-loaded]`). `priority` 이미지는 LCP를 위해 처음부터 표시
 - **포스터 → 상세 전환:** View Transitions API. `MediaLink`가 클릭한 포스터(`[data-vt-source]`)와 상세 백드롭(`.vt-media-hero`)을 `media-hero`로 이어 460ms 동안 커지게 하고, 제목·메타(`.vt-media-meta`)는 180ms 뒤 떠오름. 상단바·탭바는 `.vt-app-header`·`.vt-app-tabbar`로 분리해 이미지에 가리지 않음. 도착 이미지 디코딩을 최대 600ms 기다린 뒤 전환. 미지원 브라우저·움직임 줄이기·새 탭 클릭은 일반 이동
+- **상세 → 목록 (돌아오기):** 상단바 ← 버튼은 `navigateBackWithTransition` — 전환으로 들어온 상세라면 출발했던 포스터(같은 작품이 여러 레일에 있어도 몇 번째 링크였는지 기억)로 상세 이미지가 줄어듦 (`html[data-vt-direction="back"]`: 큰 이미지는 320ms 동안 남고 포스터는 160ms 뒤 드러남). 스크롤은 Next보다 먼저 출발 위치로 맞춘 뒤 도착점을 잼. 포스터가 화면 밖이면 이미지는 그냥 사라짐. 브라우저 뒤로 가기·스와이프는 전환 없음 (브라우저 자체 제스처 애니메이션과 겹치므로)
+- **이미지 재표시:** 한 번 로드된 이미지는 다시 그려질 때(뒤로 가기 등) 페이드인 없이 바로 보임
 - **포스터 레일:** `PosterSwiper` (FreeMode · 마우스휠 · 페이지 단위 화살표)
 - **움직임 줄이기:** `prefers-reduced-motion: reduce`면 모든 transition/animation을 사실상 끄고 `.reveal`·`.appbar-scrim`도 해제
 

@@ -69,8 +69,12 @@ test.describe("모션", () => {
       }
     });
     await page.goto("/profile", { waitUntil: "domcontentloaded" });
-    // 하이드레이션 전에 누르면 브라우저 기본 이동이 일어나므로 완료 신호를 기다린다
-    await page.waitForFunction(() => Boolean((window as unknown as { next?: unknown }).next));
+    // 하이드레이션 전에 누르면 브라우저 기본 이동이 일어나므로, 이 링크에 React가 붙었는지 확인한다
+    // (window.next는 하이드레이션 전에 생겨서 부하가 걸리면 신호로 부족했다)
+    await page.waitForFunction(() => {
+      const a = document.querySelector("header nav a[href='/archive']");
+      return Boolean(a && Object.keys(a).some((k) => k.startsWith("__reactProps")));
+    });
     const bar = page.locator("div.fixed.top-0.h-\\[2px\\]");
     await page.locator("header nav a[href='/archive']").click();
     await expect.poll(() => bar.evaluate((el) => (el as HTMLElement).style.opacity)).toBe("1");

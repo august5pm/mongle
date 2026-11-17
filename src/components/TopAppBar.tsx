@@ -10,6 +10,7 @@ import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 import { getMongleProfile } from "@/lib/profile";
 import { WishlistButton } from "@/components/WishlistButton";
 import { NAV_TABS, isTabActive } from "@/components/nav-tabs";
+import { navigateBackWithTransition } from "@/components/MediaLink";
 import { getMediaById } from "@/data/mock";
 
 export function TopAppBar() {
@@ -96,7 +97,7 @@ export function TopAppBar() {
         {isDetail ? (
           <button
             type="button"
-            onClick={() => router.back()}
+            onClick={() => navigateBackWithTransition(router)}
             className="soft-fill mr-1 flex h-9 w-9 items-center justify-center rounded-full text-primary"
             aria-label="뒤로가기"
           >
