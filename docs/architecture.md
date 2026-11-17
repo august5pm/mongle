@@ -82,6 +82,19 @@ docs/
 - **상세 렌더링:** `/movie/[id]`는 `dynamic = "force-dynamic"` — ISR로 두면 TMDB 장애 시 `error.tsx` 대신 Next 기본 500이 뜸
 - **오류 구분:** TMDB 404 → `notFound()` (없는 작품) / 그 밖의 실패(키 오류·장애·네트워크) → throw → `error.tsx`. `generateMetadata`는 실패를 삼켜 기본 제목으로 (메타데이터 단계 오류는 `error.tsx`가 못 잡음)
 
+## 공유 미리보기 (OG · 트위터 카드)
+
+| 대상 | 이미지 | 제목 · 설명 |
+|------|--------|-------------|
+| 사이트 공통 (`layout.tsx`) | `public/og-default.png` (1200×630 브랜드 이미지) | 몽글 · 사이트 설명 |
+| 상세 (`movie/[id]` `generateMetadata`) | 작품 백드롭 w1280 → 없으면 포스터 → 없으면 기본 이미지 | `작품명 · 몽글` · 줄거리 110자 |
+
+- 절대 URL 기준 `metadataBase`: `NEXT_PUBLIC_SITE_URL` → Vercel `VERCEL_PROJECT_PRODUCTION_URL` → `http://localhost:3000` (`lib/site.ts`)
+- 공통 `og:url`은 두지 않음 — 하위 페이지가 물려받으면 모든 공유가 홈 링크로 묶임. 상세만 `og:url`·canonical 지정
+- 하위 페이지의 `openGraph`는 레이아웃 값을 통째로 덮어쓰므로 `BASE_OPEN_GRAPH`(siteName·locale)를 펼쳐 씀
+- TMDB 이미지는 `tmdbImageForShare`로 `image.tmdb.org` 주소를 씀 — `media.themoviedb.org`는 301 리다이렉트라 일부 크롤러(카카오톡 등)가 못 가져옴
+- `og-default.png`는 HTML을 Playwright로 찍은 정적 이미지 (한글 글꼴 때문에 `ImageResponse` 대신)
+
 ## 오류·404·로딩
 
 | 파일 | 역할 |

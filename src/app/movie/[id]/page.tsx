@@ -7,7 +7,8 @@ import { allMedia, getMediaById, type MediaItem } from "@/data/mock";
 import { MediaVisual } from "@/components/MediaVisual";
 import { WishlistButton } from "@/components/WishlistButton";
 import { fetchTmdbMediaByAppId, trendingTmdb } from "@/lib/tmdb-api";
-import { parseAppMediaId } from "@/lib/tmdb-image";
+import { parseAppMediaId, tmdbImageForShare } from "@/lib/tmdb-image";
+import { BASE_OPEN_GRAPH, DEFAULT_OG_IMAGE, SITE_NAME, summarize } from "@/lib/site";
 
 type MoviePageProps = {
   params: { id: string };
@@ -32,12 +33,46 @@ export async function generateMetadata({
 }: MoviePageProps): Promise<Metadata> {
   // 메타데이터 단계의 오류는 error.tsx가 잡지 못하고 기본 500 화면이 뜨므로 여기서는 삼킨다.
   // 실제 오류는 아래 페이지 본문에서 다시 던져 error.tsx가 처리한다.
+  let item: MediaItem | undefined;
   try {
-    const item = await resolveMedia(params.id);
-    return { title: item?.title ?? "작품을 찾을 수 없어요" };
+    item = await resolveMedia(params.id);
   } catch {
     return { title: "잠시 문제가 생겼어요" };
   }
+  if (!item) return { title: "작품을 찾을 수 없어요" };
+
+  // 공유 미리보기: 가로 백드롭(16:9) 우선, 없으면 포스터, 둘 다 없으면 사이트 기본 이미지
+  const backdrop = tmdbImageForShare(item.backdropPath, "w1280");
+  const poster = tmdbImageForShare(item.posterPath, "w780");
+  const image = backdrop
+    ? { url: backdrop, width: 1280, height: 720, alt: `${item.title} 장면` }
+    : poster
+      ? { url: poster, width: 780, height: 1170, alt: `${item.title} 포스터` }
+      : DEFAULT_OG_IMAGE;
+  const title = `${item.title} · ${SITE_NAME}`;
+  const description =
+    summarize(item.overview) ?? `${item.title} — 몽글에서 감정을 기록해 보세요.`;
+  const url = `/movie/${item.id}`;
+
+  return {
+    title: item.title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      ...BASE_OPEN_GRAPH,
+      type: item.type === "tv" ? "video.tv_show" : "video.movie",
+      title,
+      description,
+      url,
+      images: [image],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image.url],
+    },
+  };
 }
 
 export default async function MovieDetailPage({ params }: MoviePageProps) {

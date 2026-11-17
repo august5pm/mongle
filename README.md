@@ -64,6 +64,7 @@ npm run dev
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase 프로젝트 URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | anon public key |
 | `TMDB_API_KEY` | TMDB API v3 키 (서버 전용) |
+| `NEXT_PUBLIC_SITE_URL` | (선택) 공유 미리보기 절대 URL 기준. 비우면 Vercel 프로덕션 도메인 사용 |
 
 구글 로그인·DB 테이블 설정은 [docs/supabase-setup.md](./docs/supabase-setup.md)를 따르세요.
 

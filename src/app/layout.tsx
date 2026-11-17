@@ -7,6 +7,13 @@ import { ViewTransitionRouteWatcher } from "@/components/MediaLink";
 import { NavigationProgress } from "@/components/NavigationProgress";
 import { SiteFooter } from "@/components/SiteFooter";
 import { TopAppBar } from "@/components/TopAppBar";
+import {
+  BASE_OPEN_GRAPH,
+  DEFAULT_OG_IMAGE,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/site";
 import "./globals.css";
 
 /** 몽글 브랜드·제목용 — 둥글고 귀여운 한글 폰트 */
@@ -33,12 +40,26 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: SITE_URL,
   title: {
-    default: "몽글",
-    template: "%s · 몽글",
+    default: SITE_NAME,
+    template: `%s · ${SITE_NAME}`,
   },
-  description:
-    "몽글(Mongle) — 영화와 감정을 부드럽게 기록하는 시네마틱 공간.",
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    ...BASE_OPEN_GRAPH,
+    type: "website",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    // url은 두지 않는다 — 하위 페이지가 물려받으면 모든 공유 링크가 홈으로 묶임
+    images: [DEFAULT_OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE.url],
+  },
 };
 
 export default function RootLayout({

@@ -10,10 +10,32 @@ export type TmdbSize =
   | "w1280"
   | "original";
 
-export function tmdbImage(path: string | undefined, size: TmdbSize = "w500") {
+/** 공식 이미지 CDN — media.themoviedb.org는 여기로 301 리다이렉트한다 */
+const TMDB_IMG_CDN = "https://image.tmdb.org/t/p";
+
+function buildTmdbImageUrl(
+  base: string,
+  path: string | undefined,
+  size: TmdbSize,
+) {
   if (!path) return undefined;
   if (path.startsWith("http")) return path;
-  return `${TMDB_IMG}/${size}${path.startsWith("/") ? path : `/${path}`}`;
+  return `${base}/${size}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+export function tmdbImage(path: string | undefined, size: TmdbSize = "w500") {
+  return buildTmdbImageUrl(TMDB_IMG, path, size);
+}
+
+/**
+ * 외부 크롤러(OG·트위터 카드)용 — 리다이렉트 없이 바로 이미지를 주는 CDN 주소.
+ * 카카오톡 등 일부 크롤러는 og:image의 리다이렉트를 따라가지 않는다.
+ */
+export function tmdbImageForShare(
+  path: string | undefined,
+  size: TmdbSize = "w1280",
+) {
+  return buildTmdbImageUrl(TMDB_IMG_CDN, path, size);
 }
 
 /** next/image blur용 — tone 그라데이션에서 첫 hex를 뽑아 단색 SVG data URL 생성 */
