@@ -163,7 +163,7 @@ export function ProfileClient() {
                           onClick={() => setEmoji(item)}
                           className={`flex h-11 items-center justify-center rounded-2xl text-xl transition ${
                             active
-                              ? "accent-fill scale-105"
+                              ? "accent-fill"
                               : "surface-panel hover:border-white/30"
                           }`}
                           aria-label={`이모지 ${item}`}

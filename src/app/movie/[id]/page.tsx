@@ -115,7 +115,7 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
         <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-6">
           <Link
             href={`/journal/new?mediaId=${item.id}`}
-            className="accent-fill flex items-center gap-3 rounded-full px-8 py-4 font-bold transition-all duration-300 hover:scale-105 active:scale-95"
+            className="accent-fill flex items-center gap-3 rounded-full px-8 py-4 font-bold"
           >
             <PenLine size={22} />
             <span className="text-body-lg">몽글 기록하기</span>
@@ -168,7 +168,7 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
               {item.cast.map((person) => (
                 <div
                   key={person.name}
-                  className="w-32 flex-shrink-0 snap-start transition-transform duration-300 hover:-translate-y-1"
+                  className="w-32 flex-shrink-0 snap-start"
                 >
                   <div className="mb-3 aspect-square overflow-hidden rounded-xl border border-white/5 bg-surface-container transition-colors hover:border-primary/50">
                     <div
@@ -206,7 +206,7 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
               {related.map((m) => (
                 <Link key={m.id} href={`/movie/${m.id}`} className="group">
                   <div className="surface-panel relative mb-3 aspect-[2/3] overflow-hidden rounded-2xl">
-                    <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
+                    <div className="absolute inset-0 transition-transform duration-slow group-hover:scale-[1.04]">
                       <MediaVisual item={m} size="w185" sizes="25vw" />
                     </div>
                     <div className="chrome-glass absolute right-2 top-2 rounded-md px-2 py-1 text-[10px] font-bold">

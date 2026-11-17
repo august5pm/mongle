@@ -235,9 +235,9 @@ export function ArchiveClient() {
         <Link
           href={writeHref}
           id="new-entry"
-          className="surface-panel group flex min-h-[400px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-white/15 transition-colors duration-300 hover:border-pearl/40"
+          className="surface-panel group flex min-h-[400px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-white/15 transition-colors duration-base hover:border-white/30"
         >
-          <div className="accent-fill mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-transform group-hover:scale-110">
+          <div className="accent-fill mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-transform duration-base group-hover:scale-105">
             <Plus size={28} />
           </div>
           <p className="font-display text-headline-md text-on-surface-variant">

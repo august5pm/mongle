@@ -102,16 +102,22 @@ const config: Config = {
         "container-mobile": "20px",
         "container-desktop": "40px",
       },
+      // 모션 토큰 — globals.css의 --ease-* / --dur-* 와 같은 값
+      transitionTimingFunction: {
+        DEFAULT: "cubic-bezier(0.2, 0, 0, 1)",
+        standard: "cubic-bezier(0.2, 0, 0, 1)",
+        emphasized: "cubic-bezier(0.05, 0.7, 0.1, 1)",
+      },
+      transitionDuration: {
+        DEFAULT: "200ms",
+        fast: "150ms",
+        base: "240ms",
+        slow: "400ms",
+      },
       animation: {
-        "fade-up": "fadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) both",
-        "fade-in": "fadeIn 1s ease-out both",
-        "rail-in": "fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "fade-in": "fadeIn 600ms cubic-bezier(0.2, 0, 0, 1) both",
       },
       keyframes: {
-        fadeUp: {
-          from: { opacity: "0", transform: "translateY(14px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
-        },
         fadeIn: {
           from: { opacity: "0" },
           to: { opacity: "1" },

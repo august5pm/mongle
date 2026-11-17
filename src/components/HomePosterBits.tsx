@@ -73,13 +73,15 @@ export function CompactPosterCard({
   return (
     <Link href={`/movie/${item.id}`} className="poster-card group block">
       <div className="relative aspect-[2/3] w-full overflow-hidden rounded-[8px] bg-surface-container">
-        <MediaVisual
-          item={item}
-          size="w342"
-          priority={priority}
-          sizes="(max-width:1280px) 22vw, 168px"
-          className="object-center"
-        />
+        <div className="absolute inset-0 transition-[transform,filter] duration-slow group-hover:scale-[1.04] group-hover:brightness-110">
+          <MediaVisual
+            item={item}
+            size="w342"
+            priority={priority}
+            sizes="(max-width:1280px) 22vw, 168px"
+            className="object-center"
+          />
+        </div>
       </div>
       <PosterMeta item={item} />
     </Link>

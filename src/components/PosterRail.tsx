@@ -25,7 +25,7 @@ export function PosterRail({
   if (!items.length) return null;
 
   return (
-    <section id={id} className="mt-7 scroll-mt-20">
+    <section id={id} className="reveal mt-7 scroll-mt-20">
       <HomeSectionHeader
         title={title}
         moreHref={moreHref}

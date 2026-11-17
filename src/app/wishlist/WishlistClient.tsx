@@ -105,7 +105,7 @@ export function WishlistClient() {
               <div key={row.id} className="group relative">
                 <Link href={`/movie/${row.media_id}`} className="block">
                   <div className="surface-panel relative mb-3 aspect-[2/3] overflow-hidden rounded-2xl">
-                    <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
+                    <div className="absolute inset-0 transition-transform duration-slow group-hover:scale-[1.04]">
                       <MediaVisual item={item} size="w185" sizes="25vw" />
                     </div>
                   </div>

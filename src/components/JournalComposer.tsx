@@ -335,7 +335,7 @@ export function JournalComposer() {
                         sizes="33vw"
                         placeholder="blur"
                         blurDataURL={blurDataURLFromTone(item.posterTone)}
-                        className="object-cover transition-opacity duration-500"
+                        className="object-cover"
                       />
                     ) : null}
                   </div>
@@ -362,9 +362,9 @@ export function JournalComposer() {
                   key={s.id}
                   type="button"
                   onClick={() => setEmotion(s.id)}
-                  className={`rounded-3xl px-4 py-5 text-left transition-all ${
+                  className={`rounded-3xl px-4 py-5 text-left transition-colors ${
                     active
-                      ? "accent-fill scale-[1.02]"
+                      ? "accent-fill"
                       : "surface-panel hover:border-white/30"
                   }`}
                 >
@@ -386,7 +386,7 @@ export function JournalComposer() {
             onClick={() => emotion && setStep("note")}
             className={`flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 font-bold transition ${
               emotion
-                ? "accent-fill hover:scale-[1.01]"
+                ? "accent-fill"
                 : "cursor-not-allowed bg-white/10 text-on-surface-variant"
             }`}
           >
@@ -423,7 +423,7 @@ export function JournalComposer() {
             onClick={onSave}
             className={`flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 font-bold transition ${
               canSubmit
-                ? "accent-fill hover:scale-[1.01]"
+                ? "accent-fill"
                 : "cursor-not-allowed bg-white/10 text-on-surface-variant"
             }`}
           >

@@ -130,12 +130,12 @@ export function JournalArchiveCard({
   }
 
   return (
-    <article className="group relative overflow-hidden rounded-3xl surface-panel transition-all duration-500 ease-out hover:-translate-y-2">
+    <article className="group relative overflow-hidden rounded-3xl surface-panel reveal">
       {isMine ? (
         <div className="absolute right-3 top-3 z-20 flex gap-1.5">
           <Link
             href={`/journal/new?edit=${entry.id}`}
-            className="soft-fill flex h-9 w-9 items-center justify-center rounded-full text-on-surface transition hover:scale-105"
+            className="soft-fill flex h-9 w-9 items-center justify-center rounded-full text-on-surface"
             aria-label="몽글 수정"
             title="수정"
           >
@@ -145,7 +145,7 @@ export function JournalArchiveCard({
             type="button"
             disabled={busy}
             onClick={onDelete}
-            className="soft-fill flex h-9 w-9 items-center justify-center rounded-full text-on-surface transition hover:scale-105 disabled:opacity-50"
+            className="soft-fill flex h-9 w-9 items-center justify-center rounded-full text-on-surface disabled:opacity-50"
             aria-label="몽글 삭제"
             title="삭제"
           >
@@ -156,7 +156,7 @@ export function JournalArchiveCard({
 
       <Link href={`/movie/${media.id}`} className="block cursor-pointer">
         <div className="relative aspect-[2/3] w-full">
-          <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
+          <div className="absolute inset-0 transition-transform duration-slow group-hover:scale-[1.04]">
             <MediaVisual item={media} sizes="(max-width:768px) 100vw, 25vw" />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
@@ -215,7 +215,7 @@ export function JournalArchiveCard({
             aria-label={
               localLike.likedByMe ? "좋아요 취소" : "좋아요"
             }
-            className={`soft-fill flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2 text-sm transition hover:scale-105 disabled:opacity-50 ${
+            className={`soft-fill flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2 text-sm disabled:opacity-50 ${
               localLike.likedByMe ? "text-primary" : "text-on-surface-variant"
             }`}
           >

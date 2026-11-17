@@ -137,7 +137,7 @@ export function ExploreClient() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="작품 제목으로 찾아보세요 (TMDB)"
-            className="surface-panel h-14 w-full rounded-full pl-14 pr-6 text-body-lg text-on-surface outline-none transition-all placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:ring-2 focus:ring-primary/40"
+            className="surface-panel h-14 w-full rounded-full pl-14 pr-6 text-body-lg text-on-surface outline-none transition-[border-color,box-shadow] placeholder:text-on-surface-variant/50 focus:border-primary/50 focus:ring-2 focus:ring-primary/40"
           />
           <div className="absolute inset-0 -z-10 rounded-full bg-primary/5 opacity-0 blur-2xl transition-opacity group-focus-within:opacity-100" />
         </div>
@@ -150,7 +150,7 @@ export function ExploreClient() {
                 key={chip.id}
                 type="button"
                 onClick={() => setActiveChip(chip.id)}
-                className={`flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2 text-label-sm transition-all ${
+                className={`flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2 text-label-sm transition-colors ${
                   active
                     ? "accent-fill"
                     : "surface-panel text-on-surface-variant hover:text-primary"
@@ -165,7 +165,7 @@ export function ExploreClient() {
       </section>
 
       {!query.trim() ? (
-        <section className="space-y-6">
+        <section className="reveal space-y-6">
           <div className="flex items-end justify-between">
             <div className="space-y-1">
               <h2 className="font-display text-headline-md text-on-surface">
@@ -185,7 +185,7 @@ export function ExploreClient() {
                 href={`/movie/${featured.id}`}
                 className="surface-panel group relative col-span-2 row-span-2 min-h-[280px] cursor-pointer overflow-hidden rounded-3xl"
               >
-                <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                <div className="absolute inset-0 transition-transform duration-slow group-hover:scale-[1.04]">
                   <MediaVisual
                     item={featured}
                     size="w500"
@@ -215,7 +215,7 @@ export function ExploreClient() {
                 href={`/movie/${second.id}`}
                 className="surface-panel group relative col-span-2 min-h-[160px] cursor-pointer overflow-hidden rounded-3xl"
               >
-                <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                <div className="absolute inset-0 transition-transform duration-slow group-hover:scale-[1.04]">
                   <MediaVisual
                     item={second}
                     kind="backdrop"
@@ -241,7 +241,7 @@ export function ExploreClient() {
                 href={`/movie/${third.id}`}
                 className="surface-panel group relative min-h-[140px] cursor-pointer overflow-hidden rounded-3xl"
               >
-                <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                <div className="absolute inset-0 transition-transform duration-slow group-hover:scale-[1.04]">
                   <MediaVisual item={third} size="w185" sizes="30vw" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
@@ -258,7 +258,7 @@ export function ExploreClient() {
                 href={`/movie/${fourth.id}`}
                 className="surface-panel group relative min-h-[140px] cursor-pointer overflow-hidden rounded-3xl"
               >
-                <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                <div className="absolute inset-0 transition-transform duration-slow group-hover:scale-[1.04]">
                   <MediaVisual item={fourth} size="w185" sizes="30vw" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
@@ -273,7 +273,7 @@ export function ExploreClient() {
         </section>
       ) : null}
 
-      <section className="space-y-6">
+      <section className="reveal space-y-6">
         <h2 className="font-display text-headline-md text-on-surface">
           감정으로 둘러보기
         </h2>
@@ -307,7 +307,7 @@ export function ExploreClient() {
                           : mood.id,
                     )
                   }
-                  className="surface-panel space-y-4 rounded-3xl p-6 text-left transition-transform duration-300 hover:-translate-y-1"
+                  className="surface-panel space-y-4 rounded-3xl p-6 text-left transition-colors hover:border-white/20"
                 >
                   <div
                     className={`flex h-12 w-12 items-center justify-center rounded-full ${iconWrap}`}
@@ -373,7 +373,7 @@ export function ExploreClient() {
             {results.map((item) => (
               <Link key={item.id} href={`/movie/${item.id}`} className="group">
                 <div className="surface-panel relative mb-2 aspect-[2/3] overflow-hidden rounded-2xl">
-                  <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
+                  <div className="absolute inset-0 transition-transform duration-slow group-hover:scale-[1.04]">
                     <MediaVisual item={item} size="w185" sizes="20vw" />
                   </div>
                 </div>

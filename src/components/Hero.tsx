@@ -62,7 +62,7 @@ export function Hero({ item }: HeroProps) {
         <div className="flex items-center gap-3 pt-1">
           <Link
             href={`/movie/${item.id}`}
-            className="accent-fill flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold transition-transform hover:scale-105 active:scale-[0.98]"
+            className="accent-fill flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold"
           >
             <Play size={18} fill="currentColor" />
             자세히 보기

@@ -84,15 +84,32 @@ Ambient: 상단 중앙에 아주 옅은 웜 radial 하나 (`body` background-ima
 
 ## 모션
 
-- 레일/카드: `animate-rail-in`, hover `-translate-y`
-- 포스터 레일: `PosterSwiper` (FreeMode · 마우스휠 · 페이지 단위 화살표)
-- 네비 탭: 색 전환만 150ms
+토큰 (`tailwind.config.ts` = `globals.css` `--ease-*` / `--dur-*`)
+
+| 토큰 | 값 | 용도 |
+|------|-----|------|
+| `ease-standard` (기본) | `cubic-bezier(0.2, 0, 0, 1)` | 대부분의 상태 변화 |
+| `ease-emphasized` | `cubic-bezier(0.05, 0.7, 0.1, 1)` | 등장 |
+| `duration-fast` | 150ms | 색·누름 |
+| `duration-base` (기본 200ms) | 240ms | 작은 이동·FAB |
+| `duration-slow` | 400ms | 이미지 줌·로드 페이드 |
+
+규칙
+
+- **누름:** `a`/`button`의 `.accent-fill`·`.soft-fill`은 `:active`에서 `scale(0.97)` (CSS 공통). 버튼에 `hover:scale-*` 쓰지 않기
+- **카드 호버:** 카드 자체는 움직이지 않고, 안쪽 이미지만 `group-hover:scale-[1.04]` + `duration-slow`. 테두리는 `hover:border-white/20`
+- **`transition-all` 금지:** 바뀌는 속성만 (`transition-colors`, `transition-[opacity,transform]` …)
+- **스크롤 등장:** `.reveal` — CSS scroll-driven(`animation-timeline: view()`)으로 16px 떠오르며 페이드. 홈 레일·찾기 섹션·아카이브 카드에 사용. 미지원 브라우저는 정적으로 보임. 같은 요소에 hover transform을 함께 쓰지 않기 (애니메이션이 덮어씀)
+- **상단바:** `.appbar-scrim` — 스크롤 0→120px 동안 배경 30%→78%, 헤어라인 등장
+- **이미지 로드:** `MediaVisual`이 톤 배경 위로 `blur(8px)`→선명 + 페이드인 (`.media-img[data-loaded]`). `priority` 이미지는 LCP를 위해 처음부터 표시
+- **포스터 레일:** `PosterSwiper` (FreeMode · 마우스휠 · 페이지 단위 화살표)
+- **움직임 줄이기:** `prefers-reduced-motion: reduce`면 모든 transition/animation을 사실상 끄고 `.reveal`·`.appbar-scrim`도 해제
 
 ## 하지 않을 것
 
 - 히어로에 카드·뱃지·통계를 잔뜩 얹기  
 - 반투명 CTA로 배경이 비쳐 탁해 보이게 만들기  
 - 모든 카드에 글래스·블러·드롭섀도 얹기 (글래스는 떠 있는 크롬에만)  
-- 글로우·스펙큘러·둥둥 뜨는 장식 애니메이션
+- 글로우·스펙큘러·둥둥 뜨거나 깜빡이는 장식 애니메이션
 - Inter / 기본 system UI 스택을 브랜드 폰트로 쓰기
 - 홈에 가짜 “이어보기” 프로그레스 바를 두기

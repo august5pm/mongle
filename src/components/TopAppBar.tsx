@@ -89,7 +89,7 @@ export function TopAppBar() {
 
   return (
     <header className="fixed top-0 z-50 w-full">
-      <div className="absolute inset-0 border-b border-white/10 bg-[#050607]/55 backdrop-blur-2xl" />
+      <div className="absolute inset-0 appbar-scrim border-b border-white/10 bg-[#050607]/55 backdrop-blur-2xl" />
 
       <div className="app-shell relative z-10 flex h-16 items-center justify-between">
       <div className="relative z-10 flex items-center gap-2.5">
@@ -97,7 +97,7 @@ export function TopAppBar() {
           <button
             type="button"
             onClick={() => router.back()}
-            className="soft-fill mr-1 flex h-9 w-9 items-center justify-center rounded-full text-primary transition-transform active:scale-95"
+            className="soft-fill mr-1 flex h-9 w-9 items-center justify-center rounded-full text-primary"
             aria-label="뒤로가기"
           >
             <ArrowLeft size={18} />
@@ -133,7 +133,7 @@ export function TopAppBar() {
                   <Link
                     href={href}
                     aria-current={active ? "page" : undefined}
-                    className={`rounded-full px-3.5 py-1.5 text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 ${
+                    className={`rounded-full px-3.5 py-1.5 text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-fast ${
                       active
                         ? "bg-white/[0.08] text-on-surface"
                         : "text-on-surface-variant hover:text-on-surface"
@@ -160,7 +160,7 @@ export function TopAppBar() {
         ) : (
           <Link
             href="/explore"
-            className="soft-fill flex h-9 w-9 items-center justify-center rounded-full text-primary transition-transform hover:scale-105"
+            className="soft-fill flex h-9 w-9 items-center justify-center rounded-full text-primary"
             aria-label="검색"
           >
             <Search size={18} strokeWidth={1.75} />
@@ -168,7 +168,7 @@ export function TopAppBar() {
         )}
         <Link
           href={user ? "/profile" : `/login?next=${encodeURIComponent(pathname)}`}
-          className="accent-fill relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full text-base leading-none transition-transform hover:scale-105"
+          className="accent-fill relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full text-base leading-none"
           aria-label={user ? "프로필" : "로그인"}
         >
           {user ? (

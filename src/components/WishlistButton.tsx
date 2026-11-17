@@ -115,7 +115,7 @@ export function WishlistButton({
         disabled={pending}
         aria-label={active ? "위시리스트에서 제거" : "찜하기"}
         aria-pressed={active}
-        className={`soft-fill flex h-9 w-9 items-center justify-center rounded-full transition-opacity hover:opacity-80 disabled:opacity-50 ${className}`}
+        className={`soft-fill flex h-9 w-9 items-center justify-center rounded-full disabled:opacity-50 ${className}`}
       >
         <Heart
           size={18}
@@ -134,7 +134,7 @@ export function WishlistButton({
         disabled={pending}
         aria-label={active ? "위시리스트에서 제거" : "나중에 보기"}
         aria-pressed={active}
-        className={`soft-fill flex h-12 w-12 items-center justify-center rounded-full transition-transform hover:scale-105 disabled:opacity-50 ${className}`}
+        className={`soft-fill flex h-12 w-12 items-center justify-center rounded-full disabled:opacity-50 ${className}`}
       >
         <Bookmark
           size={20}
@@ -151,7 +151,7 @@ export function WishlistButton({
       onClick={onClick}
       disabled={pending}
       aria-pressed={active}
-      className={`soft-fill flex items-center gap-3 rounded-full px-6 py-4 text-on-surface transition-transform hover:scale-[1.02] disabled:opacity-50 ${className}`}
+      className={`soft-fill flex items-center gap-3 rounded-full px-6 py-4 text-on-surface disabled:opacity-50 ${className}`}
     >
       <Bookmark size={20} fill={active ? "currentColor" : "none"} />
       <span>{active ? "위시리스트에 담김" : label}</span>

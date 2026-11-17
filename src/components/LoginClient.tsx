@@ -56,7 +56,7 @@ export function LoginClient() {
           type="button"
           onClick={signInWithGoogle}
           disabled={loading}
-          className="accent-fill flex w-full items-center justify-center gap-3 rounded-full px-6 py-3.5 font-bold transition hover:scale-[1.01] disabled:opacity-60"
+          className="accent-fill flex w-full items-center justify-center gap-3 rounded-full px-6 py-3.5 font-bold disabled:opacity-60"
         >
           <GoogleMark />
           {loading ? "이동 중…" : "Google로 계속하기"}
