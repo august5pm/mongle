@@ -105,7 +105,21 @@ npm run dev    # 개발 서버
 npm run build  # 프로덕션 빌드
 npm run start  # 빌드 결과 실행
 npm run lint   # ESLint
+npm run test:e2e  # E2E 스모크 테스트 (빌드 후 데스크톱·모바일 Chromium)
 ```
+
+### E2E 테스트
+
+`e2e/`의 Playwright 테스트가 프로덕션 빌드(`next start`, 포트 3100)를 띄워 데스크톱(1440×900)·모바일(390×844)에서 검사합니다.
+키 없이 mock 데이터로 돌고, TMDB 키가 있어도 데이터 내용이 아니라 구조·동작을 보므로 깨지지 않습니다.
+
+- 페이지 렌더링 · 404 · 리다이렉트 · TMDB 출처 표기 · OG 메타
+- 데스크톱 상단 탭 / 모바일 하단 탭바, 홈 키비주얼 비율·이미지 선택
+- 스크롤 등장 · 이미지 로드 · 상단바 스크림 · 포스터 호버 · 진행 바 · 움직임 줄이기
+- 포스터 → 상세 View Transition
+
+처음 한 번 `npx playwright install chromium`. 실패 시 `npx playwright show-report`.
+GitHub Actions(`.github/workflows/e2e.yml`)가 `main` 푸시·PR마다 lint·타입 체크와 함께 돌립니다.
 
 > `next dev` 실행 중 `npm run build`를 돌리면 `.next` 캐시가 깨질 수 있습니다.  
 > 이상하면 프로세스를 종료한 뒤 `rm -rf .next && npm run dev`로 재시작하세요.

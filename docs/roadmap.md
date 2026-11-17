@@ -24,6 +24,11 @@
 - [x] 저널 삭제·수정  
 - [x] README 스크린샷 · 기본 접근성 (skip link, focus-visible, aria)  
 - [x] 몽글 좋아요 (`journal_likes`)  
+- [x] TMDB 출처 표기 (로고 + 고지문)  
+- [x] 404 · 오류 화면, 이동 진행 바, TMDB 장애/없는 작품 구분  
+- [x] 공유 미리보기 (OG · 트위터 카드)  
+- [x] E2E 스모크 테스트 (Playwright) + GitHub Actions  
+- [x] README 스크린샷 갱신 (디자인 개편 반영)  
 
 ## 다음 우선순위
 
