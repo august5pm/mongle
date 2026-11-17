@@ -42,14 +42,14 @@
 | Carousel | Swiper (홈 포스터 레일) |
 | Fonts | Dongle(로고) · Pretendard(제목·한글 본문) · Nunito(영문 본문) |
 | Deploy | Vercel |
-| Runtime | Node.js 20 (`nvm use 20`) |
+| Runtime | Node.js 22 (`nvm use 22`, `engines.node: 22.x`) |
 
 ---
 
 ## 시작하기
 
 ```bash
-nvm use 20
+nvm use 22
 npm install
 cp .env.example .env.local   # 값 채우기
 npm run dev

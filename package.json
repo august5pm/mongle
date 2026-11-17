@@ -2,6 +2,9 @@
   "name": "mongle",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -21,7 +24,7 @@
   },
   "devDependencies": {
     "@playwright/test": "1.61.1",
-    "@types/node": "^20",
+    "@types/node": "^22.20.5",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",

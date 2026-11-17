@@ -45,5 +45,5 @@
 # 복구
 pkill -f next   # 또는 해당 포트 프로세스 종료
 rm -rf .next
-nvm use 20 && npm run dev
+nvm use 22 && npm run dev
 ```

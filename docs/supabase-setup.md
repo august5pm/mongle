@@ -66,7 +66,7 @@ Authorized JavaScript origins에 프로덕션도 넣습니다:
 ## 3. 확인
 
 ```bash
-nvm use 20
+nvm use 22
 npm run dev
 ```
 
