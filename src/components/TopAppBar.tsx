@@ -115,14 +115,9 @@ export function TopAppBar() {
               priority
             />
           </span>
-          <span className="flex items-baseline gap-2">
-            <h1 className="font-brand text-[2.35rem] font-bold leading-none tracking-tight mongle-gradient-text">
-              몽글
-            </h1>
-            <span className="hidden font-brand text-sm font-normal tracking-[0.08em] text-on-surface-variant sm:inline">
-              Mongle
-            </span>
-          </span>
+          <h1 className="font-brand text-[2.35rem] font-bold leading-none tracking-tight mongle-gradient-text">
+            몽글
+          </h1>
         </Link>
 
         <nav aria-label="주요 메뉴" className="ml-6 hidden md:block">

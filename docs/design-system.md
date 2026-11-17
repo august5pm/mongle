@@ -51,7 +51,7 @@ Ambient: 상단 중앙에 아주 옅은 웜 radial 하나 (`body` background-ima
 | `text-display-lg-mobile` | 1.875rem / 800 | 페이지 제목 (모바일) |
 | `text-headline-md` | 1.375rem / 700 | 섹션 제목 |
 
-- 홈 히어로 제목은 `clamp(2rem, 5.5cqi, 3.75rem)` + `text-balance`
+- 홈 히어로 제목은 `clamp(2rem, 5.5cqi, 3.75rem)` + `text-balance` — 모바일은 포스터 그림 속 제목이 주인공이라 `text-2xl`로 한 단계 작게
 - 섹션 제목은 본문색(`text-on-surface`) — 피치색 제목은 쓰지 않음
 - UI 문구는 한국어 하나로 (영어 부제·`#해시태그` 병기 안 함)
 

@@ -89,7 +89,8 @@ export function Hero({ item }: HeroProps) {
           </span>
         </div>
 
-        <h2 className="max-w-[16ch] text-balance font-display text-[clamp(2rem,5.5cqi,3.75rem)] font-extrabold leading-[1.08] tracking-[-0.035em] text-on-surface">
+        {/* 모바일은 포스터 그림 속 제목이 주인공 — 텍스트 제목은 한 단계 작게 (그림에 제목이 없는 작품도 있어 숨기지는 않음) */}
+        <h2 className="max-w-[16ch] text-balance font-display text-2xl font-extrabold leading-[1.08] tracking-[-0.03em] text-on-surface sm:text-[clamp(2rem,5.5cqi,3.75rem)] sm:tracking-[-0.035em]">
           {item.title}
         </h2>
 
