@@ -40,7 +40,7 @@
 | API | TMDB (검색·트렌딩·상세, 서버 전용 키) |
 | Icons | Lucide React |
 | Carousel | Swiper (홈 포스터 레일) |
-| Fonts | Dongle(브랜드·제목) · Nunito / Pretendard(본문) |
+| Fonts | Dongle(로고) · Pretendard(제목·한글 본문) · Nunito(영문 본문) |
 | Deploy | Vercel |
 | Runtime | Node.js 20 (`nvm use 20`) |
 

@@ -47,7 +47,7 @@ export function HomeSectionHeader({
 }: SectionHeaderProps) {
   return (
     <div className="mb-3.5 flex items-center justify-between gap-3">
-      <h3 className="text-[17px] font-semibold tracking-tight text-on-surface">
+      <h3 className="text-xl font-bold tracking-[-0.02em] text-on-surface">
         {title}
       </h3>
       <Link

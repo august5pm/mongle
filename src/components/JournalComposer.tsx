@@ -258,7 +258,7 @@ export function JournalComposer() {
           <p className="text-label-sm tracking-widest text-primary">
             {isEdit ? "몽글 수정" : "새 몽글"}
           </p>
-          <h1 className="font-display text-3xl text-on-surface">
+          <h1 className="font-display text-2xl font-extrabold tracking-tight text-on-surface">
             {isEdit ? "기록을 다듬어요" : "감정을 남겨요"}
           </h1>
         </div>
@@ -368,7 +368,7 @@ export function JournalComposer() {
                       : "surface-panel hover:border-white/30"
                   }`}
                 >
-                  <p className="font-display text-xl">{s.label}</p>
+                  <p className="font-display text-base font-bold">{s.label}</p>
                   <p
                     className={`mt-1 text-[11px] leading-snug ${
                       active ? "text-[#5c4038]/80" : "text-on-surface-variant"

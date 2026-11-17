@@ -55,7 +55,7 @@ export default function RootLayout({
         <TopAppBar />
         <main
           id="main-content"
-          className="min-h-screen pb-[calc(4.75rem+env(safe-area-inset-bottom))]"
+          className="min-h-screen pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:pb-0"
           tabIndex={-1}
         >
           <div className="app-shell">

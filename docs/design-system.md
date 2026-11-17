@@ -33,11 +33,24 @@ Ambient: 상단 중앙에 아주 옅은 웜 radial 하나 (`body` background-ima
 
 | 역할 | 폰트 | CSS |
 |------|------|-----|
-| 브랜드·큰 제목 | Dongle | `font-brand` / `font-display` |
+| 로고 워드마크·푸터 | Dongle | `font-brand` |
+| 제목 | Pretendard Variable 700–800, 자간 `-0.02 ~ -0.035em` | `font-display` |
 | 영문 본문 | Nunito | `font-sans` |
 | 한글 본문 | Pretendard Variable | `--font-ko` |
 
-브랜드 그라데이션 텍스트: `.mongle-gradient-text`
+제목 크기 토큰 (`tailwind.config.ts`)
+
+| 토큰 | 크기 | 용도 |
+|------|------|------|
+| `text-display-lg` | 2.75rem / 800 | 페이지 제목 (데스크톱) |
+| `text-display-lg-mobile` | 1.875rem / 800 | 페이지 제목 (모바일) |
+| `text-headline-md` | 1.375rem / 700 | 섹션 제목 |
+
+- 홈 히어로 제목은 `clamp(2rem, 5.5cqi, 3.75rem)` + `text-balance`
+- 섹션 제목은 본문색(`text-on-surface`) — 피치색 제목은 쓰지 않음
+- UI 문구는 한국어 하나로 (영어 부제·`#해시태그` 병기 안 함)
+
+브랜드 그라데이션 텍스트: `.mongle-gradient-text` (로고 전용)
 
 ## 서피스 유틸 (`globals.css`)
 
@@ -61,7 +74,7 @@ Ambient: 상단 중앙에 아주 옅은 웜 radial 하나 (`body` background-ima
 - 포스터: `rounded-[8px]` (= `rounded-lg`) · 썸네일: `rounded-xl` (12px)
 - 카드/패널: `rounded-2xl` (16px) ~ `rounded-3xl` (20px)
 - 버튼/칩: `rounded-full`
-- 하단 네비·FAB을 위해 `main`에 `pb-32`
+- 모바일 하단 탭바를 위해 `main`에 `pb-[calc(3.5rem+safe-area)]`, 데스크톱(`md+`)은 `pb-0`
 
 ## 파비콘 · 브랜드 마크
 
@@ -73,7 +86,7 @@ Ambient: 상단 중앙에 아주 옅은 웜 radial 하나 (`body` background-ima
 
 - 레일/카드: `animate-rail-in`, hover `-translate-y`
 - 포스터 레일: `PosterSwiper` (FreeMode · 마우스휠 · 페이지 단위 화살표)
-- BottomNav expand↔compact: ~700ms `cubic-bezier(0.32, 0.72, 0, 1)` (그림자 transition은 width/padding만)
+- 네비 탭: 색 전환만 150ms
 
 ## 하지 않을 것
 

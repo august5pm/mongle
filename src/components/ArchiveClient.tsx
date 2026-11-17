@@ -115,14 +115,11 @@ export function ArchiveClient() {
       <section className="mb-8">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <h2 className="mb-2 font-display text-display-lg-mobile text-primary md:text-display-lg">
+            <h2 className="mb-2 font-display text-display-lg-mobile text-on-surface md:text-display-lg">
               몽글 아카이브
             </h2>
             <p className="text-body-lg text-on-surface-variant">
               사람들이 남긴 영화의 여운이 모이는 공간
-            </p>
-            <p className="mt-1 text-xs tracking-wide text-on-surface-variant/70">
-              Shared Mongle Archive
             </p>
             {loadError ? (
               <p className="mt-2 text-sm text-error">{loadError}</p>

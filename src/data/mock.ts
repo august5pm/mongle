@@ -41,47 +41,42 @@ export type JournalEntry = {
 export const sentiments: {
   id: Sentiment;
   label: string;
-  hash: string;
   description: string;
   count: number;
 }[] = [
   {
     id: "Dreamy",
     label: "몽환",
-    hash: "#Dreamy",
     description: "초현실적인 화면과 은은한 사운드트랙.",
     count: 12,
   },
   {
     id: "Warm",
     label: "따뜻함",
-    hash: "#Warm",
     description: "담요처럼 포근한 이야기들.",
     count: 24,
   },
   {
     id: "Intense",
     label: "강렬",
-    hash: "#Intense",
     description: "첫 장면부터 엔딩까지 손을 놓지 못하게.",
     count: 8,
   },
   {
     id: "Soft",
     label: "잔잔함",
-    hash: "#Melancholic",
     description: "크레딧이 끝난 뒤에도 남는 고요한 감정.",
     count: 15,
   },
 ];
 
 export const exploreChips = [
-  { id: "Cinematic", label: "시네마틱", hash: "#Cinematic", icon: "trending" as const },
-  { id: "Warm", label: "따뜻함", hash: "#Warm", icon: null },
-  { id: "Thrilling", label: "스릴", hash: "#Thrilling", icon: null },
-  { id: "Dreamy", label: "몽환", hash: "#Dreamy", icon: null },
-  { id: "Melancholic", label: "잔잔함", hash: "#Melancholic", icon: null },
-  { id: "Nostalgic", label: "그리움", hash: "#Nostalgic", icon: null },
+  { id: "Cinematic", label: "시네마틱", icon: "trending" as const },
+  { id: "Warm", label: "따뜻함", icon: null },
+  { id: "Thrilling", label: "스릴", icon: null },
+  { id: "Dreamy", label: "몽환", icon: null },
+  { id: "Melancholic", label: "잔잔함", icon: null },
+  { id: "Nostalgic", label: "그리움", icon: null },
 ];
 
 export const featured: MediaItem = {

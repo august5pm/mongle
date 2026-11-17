@@ -132,7 +132,7 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="space-y-6 lg:col-span-2">
             <section>
-              <h2 className="mb-4 font-display text-headline-md text-primary">
+              <h2 className="mb-4 font-display text-headline-md text-on-surface">
                 줄거리
               </h2>
               <p className="text-body-lg leading-relaxed text-on-surface-variant">
@@ -160,7 +160,7 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
         {item.cast && item.cast.length > 0 ? (
           <section>
             <div className="mb-6 flex items-end justify-between">
-              <h2 className="font-display text-headline-md text-primary">
+              <h2 className="font-display text-headline-md text-on-surface">
                 출연
               </h2>
             </div>
@@ -195,7 +195,7 @@ export default async function MovieDetailPage({ params }: MoviePageProps) {
         {related.length > 0 ? (
           <section>
             <div className="mb-6 flex items-end justify-between">
-              <h2 className="font-display text-headline-md text-primary">
+              <h2 className="font-display text-headline-md text-on-surface">
                 비슷한 몽글
               </h2>
               <span className="text-label-sm text-on-surface-variant">

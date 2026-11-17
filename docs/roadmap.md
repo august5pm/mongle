@@ -6,7 +6,8 @@
 - [x] 브랜드 몽글 / Dongle·Nunito·Pretendard  
 - [x] 진주 글래스·클레이 디자인 토큰 (탁한 반투명 CTA 개선 포함)  
 - [x] 홈 · 찾기 · 아카이브 · 상세 · 프로필  
-- [x] BottomNav 스크롤 모프, Archive FAB 스크롤 숨김  
+- [x] Archive FAB 스크롤 숨김  
+- [x] 디자인 정리: 평평한 서피스·단색 액센트, Pretendard 제목, 데스크톱 상단 탭 / 모바일 하단 탭바  
 - [x] mock 데이터 + TMDB 이미지 path / `MediaVisual`  
 - [x] 파비콘 (라운드 블랙 + 클라우드)  
 - [x] GitHub 공개: [august5pm/mongle](https://github.com/august5pm/mongle)  

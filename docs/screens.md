@@ -6,19 +6,20 @@
 
 - 고정 상단, blur 배경
 - 로고(클라우드 + 몽글), 검색(`/explore`), 프로필 아바타
+- 데스크톱(`md+`): 로고 옆에 주요 메뉴 텍스트 탭 (홈 · 찾기 · 몽글 · 프로필)
 - 상세(`/movie/*`)에서는 뒤로가기 + 찜 아이콘
 
-### BottomNav
+### BottomNav (모바일 전용)
 
-탭: 홈 · 찾기 · 몽글 · 프로필  
+탭: 홈 · 찾기 · 몽글 · 프로필 (`components/nav-tabs.ts`를 TopAppBar와 공유)  
 
-- **확장:** 넓은 플로팅 도크 + 라벨  
-- **컴팩트:** 스크롤 다운 시 알약형으로 축소, 활성 탭은 pearl 칩  
-- 항상 떠 있는 도크가 폭·여백만 변해 형태가 이어짐
+- 화면 하단에 붙은 얇은 탭바(`chrome-glass`), 아이콘 + 라벨  
+- 활성 탭은 피치색 텍스트·굵은 아이콘  
+- 데스크톱(`md+`)에서는 숨기고 TopAppBar 탭을 사용
 
 ### SiteFooter
 
-- 페이지 하단 (BottomNav 위): 몽글 워드마크 + `© {year} by august5pm. All rights reserved.`
+- 페이지 하단 (모바일에서는 BottomNav 위): 몽글 워드마크 + `© {year} by august5pm. All rights reserved.`
 - GitHub: https://github.com/august5pm
 
 ### JournalFab

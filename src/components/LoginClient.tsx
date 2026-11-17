@@ -45,7 +45,7 @@ export function LoginClient() {
         <div className="relative mx-auto mb-4 h-14 w-16">
           <Image src="/cloud.png" alt="몽글 구름 로고" fill className="object-contain" />
         </div>
-        <h1 className="font-display text-4xl text-on-surface">몽글 로그인</h1>
+        <h1 className="font-display text-3xl font-extrabold tracking-tight text-on-surface">몽글 로그인</h1>
         <p className="mt-2 text-body-md text-on-surface-variant">
           구글로 로그인하면 감정 기록이 어디에 있어도 이어집니다.
         </p>

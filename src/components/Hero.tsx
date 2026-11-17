@@ -10,14 +10,6 @@ type HeroProps = {
 };
 
 export function Hero({ item }: HeroProps) {
-  const titleLines = item.title.includes(" ")
-    ? (() => {
-        const words = item.title.split(" ");
-        const mid = Math.ceil(words.length / 2);
-        return [words.slice(0, mid).join(" "), words.slice(mid).join(" ")];
-      })()
-    : [item.title];
-
   return (
     <section
       id="home-hero"
@@ -35,6 +27,11 @@ export function Hero({ item }: HeroProps) {
             className="object-center"
           />
         </div>
+        {/* 텍스트 쪽(좌하단)만 어둡게 — 밝은 키비주얼에서도 제목·설명이 읽히게 */}
+        <div
+          className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(to_right,rgba(5,6,7,0.78)_0%,rgba(5,6,7,0.4)_38%,transparent_68%)]"
+          aria-hidden
+        />
         <div className="hero-fade-bottom" aria-hidden />
       </div>
 
@@ -54,15 +51,11 @@ export function Hero({ item }: HeroProps) {
           </span>
         </div>
 
-        <h2 className="font-display text-[clamp(1.75rem,4.5cqi,3.25rem)] leading-tight text-on-surface">
-          {titleLines.map((line) => (
-            <span key={line} className="block">
-              {line}
-            </span>
-          ))}
+        <h2 className="max-w-[16ch] text-balance font-display text-[clamp(2rem,5.5cqi,3.75rem)] font-extrabold leading-[1.08] tracking-[-0.035em] text-on-surface">
+          {item.title}
         </h2>
 
-        <p className="max-w-md line-clamp-2 text-sm text-on-surface-variant md:text-body-md">
+        <p className="max-w-md line-clamp-2 text-sm text-on-surface/75 md:text-body-md">
           {item.overview}
         </p>
 

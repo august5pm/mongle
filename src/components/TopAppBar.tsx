@@ -9,6 +9,7 @@ import type { User } from "@supabase/supabase-js";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
 import { getMongleProfile } from "@/lib/profile";
 import { WishlistButton } from "@/components/WishlistButton";
+import { NAV_TABS, isTabActive } from "@/components/nav-tabs";
 import { getMediaById } from "@/data/mock";
 
 export function TopAppBar() {
@@ -122,6 +123,29 @@ export function TopAppBar() {
             </span>
           </span>
         </Link>
+
+        <nav aria-label="주요 메뉴" className="ml-6 hidden md:block">
+          <ul className="flex items-center gap-1">
+            {NAV_TABS.map(({ href, label }) => {
+              const active = isTabActive(pathname, href);
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    aria-current={active ? "page" : undefined}
+                    className={`rounded-full px-3.5 py-1.5 text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 ${
+                      active
+                        ? "bg-white/[0.08] text-on-surface"
+                        : "text-on-surface-variant hover:text-on-surface"
+                    }`}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
       </div>
 
       <div className="relative z-10 flex items-center gap-3">

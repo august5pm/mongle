@@ -63,8 +63,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        serif: ["var(--font-display)", "Dongle", "sans-serif"],
-        display: ["var(--font-display)", "Dongle", "sans-serif"],
+        // 제목은 Pretendard로 단단하게, Dongle은 로고 워드마크(font-brand)에만
+        display: ["var(--font-ko)", "Pretendard", "var(--font-sans)", "sans-serif"],
         sans: [
           "var(--font-sans)",
           "var(--font-ko)",
@@ -76,14 +76,17 @@ const config: Config = {
       },
       fontSize: {
         "display-lg": [
-          "3.25rem",
-          { lineHeight: "1.15", fontWeight: "700", letterSpacing: "-0.01em" },
+          "2.75rem",
+          { lineHeight: "1.12", fontWeight: "800", letterSpacing: "-0.03em" },
         ],
         "display-lg-mobile": [
-          "2.25rem",
-          { lineHeight: "1.2", fontWeight: "700" },
+          "1.875rem",
+          { lineHeight: "1.18", fontWeight: "800", letterSpacing: "-0.025em" },
         ],
-        "headline-md": ["1.75rem", { lineHeight: "1.3", fontWeight: "700" }],
+        "headline-md": [
+          "1.375rem",
+          { lineHeight: "1.3", fontWeight: "700", letterSpacing: "-0.02em" },
+        ],
         "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
         "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
         "label-sm": [

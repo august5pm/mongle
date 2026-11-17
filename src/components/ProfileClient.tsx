@@ -215,13 +215,13 @@ export function ProfileClient() {
             <dl className="mt-8 grid grid-cols-2 gap-3 text-center">
               <div>
                 <dt className="text-xs text-on-surface-variant">몽글</dt>
-                <dd className="mt-1 font-display text-2xl text-primary">
+                <dd className="mt-1 font-display text-2xl font-bold tracking-tight text-on-surface">
                   {stats.totalMongles}
                 </dd>
               </div>
               <div>
                 <dt className="text-xs text-on-surface-variant">이번 달</dt>
-                <dd className="mt-1 font-display text-2xl text-primary">
+                <dd className="mt-1 font-display text-2xl font-bold tracking-tight text-on-surface">
                   {stats.thisMonth}
                 </dd>
               </div>

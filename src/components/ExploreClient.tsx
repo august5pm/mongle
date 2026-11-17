@@ -158,7 +158,6 @@ export function ExploreClient() {
               >
                 {chip.icon === "trending" ? <TrendingUp size={18} /> : null}
                 <span>{chip.label}</span>
-                <span className="text-[10px] opacity-60">{chip.hash}</span>
               </button>
             );
           })}
@@ -169,7 +168,7 @@ export function ExploreClient() {
         <section className="space-y-6">
           <div className="flex items-end justify-between">
             <div className="space-y-1">
-              <h2 className="font-display text-headline-md text-primary">
+              <h2 className="font-display text-headline-md text-on-surface">
                 지금 뜨는 몽글
               </h2>
               <p className="text-body-md text-on-surface-variant/70">
@@ -178,7 +177,6 @@ export function ExploreClient() {
                   : "이번 주 사람들이 남긴 감정과 이야기"}
               </p>
             </div>
-            <span className="text-label-sm text-secondary">Trending</span>
           </div>
 
           <div className="bento-grid">
@@ -276,7 +274,7 @@ export function ExploreClient() {
       ) : null}
 
       <section className="space-y-6">
-        <h2 className="font-display text-headline-md text-primary">
+        <h2 className="font-display text-headline-md text-on-surface">
           감정으로 둘러보기
         </h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -320,9 +318,6 @@ export function ExploreClient() {
                     <h3 className="font-display text-headline-md">
                       {mood.label}
                     </h3>
-                    <p className="text-xs text-on-surface-variant/70">
-                      {mood.hash}
-                    </p>
                     <p className="text-body-md text-on-surface-variant">
                       {mood.description}
                     </p>
