@@ -124,6 +124,12 @@ export function ArchiveClient() {
             {loadError ? (
               <p className="mt-2 text-sm text-error">{loadError}</p>
             ) : null}
+            <Link
+              href="/stats"
+              className="mt-3 inline-flex text-sm font-semibold text-on-surface-variant underline-offset-4 transition-colors duration-fast hover:text-on-surface hover:underline"
+            >
+              감정 통계 보기 →
+            </Link>
           </div>
           <div className="flex gap-4">
             <div className="surface-panel flex min-w-[140px] flex-col items-center justify-center rounded-3xl px-6 py-4">

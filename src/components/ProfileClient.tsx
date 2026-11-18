@@ -230,6 +230,12 @@ export function ProfileClient() {
 
           <div className="mt-6 space-y-2">
             <Link
+              href="/stats"
+              className="surface-panel block rounded-2xl px-5 py-4 text-sm text-on-surface transition-colors hover:border-white/30"
+            >
+              감정 통계 보기 →
+            </Link>
+            <Link
               href="/wishlist"
               className="surface-panel block rounded-2xl px-5 py-4 text-sm text-on-surface transition-colors hover:border-white/30"
             >

@@ -9,6 +9,7 @@ src/
     page.tsx              # 홈 (트렌딩 + 날짜 큐레이션)
     explore/
     archive/              # ArchiveClient
+    stats/                # 감정 통계 (StatsClient)
     wishlist/
     movie/[id]/
     journal/new/          # 작성·수정 (로그인 필요)
@@ -33,6 +34,7 @@ src/
     tmdb-api.ts           # TMDB API (server-only)
     tmdb-image.ts         # 포스터 URL · blur placeholder
     journal.ts            # journals CRUD
+    journal-stats.ts      # 감정·월·장르 집계 (순수 함수)
     journal-likes.ts      # 좋아요 토글·카운트
     wishlist.ts           # 찜 CRUD
     supabase/             # client / server / middleware
@@ -63,6 +65,7 @@ docs/
 | `/` | Hero + 일/주 트렌딩 + 날짜 큐레이션 2레일 (실패 시 mock) |
 | `/explore` | TMDB 검색·트렌딩 |
 | `/archive` | 공개 피드 / 내 몽글, 좋아요 |
+| `/stats` | 감정 통계 (내 몽글 / 모두의 몽글) |
 | `/wishlist` | 찜 목록 (로그인) |
 | `/journal/new` | 작성·`?edit=` 수정, 미로그인 시 `/login` |
 | `/login` | Google 버튼 |
@@ -121,6 +124,7 @@ UI
  ├─ lib/tmdb-api.ts       TMDB API (server-only)
  ├─ lib/tmdb-image.ts     포스터 URL · blur
  ├─ lib/journal.ts        저널 ↔ Supabase
+ ├─ lib/journal-stats.ts  감정 통계 집계
  ├─ lib/journal-likes.ts  좋아요 ↔ Supabase
  ├─ lib/wishlist.ts       찜 ↔ Supabase
  └─ lib/supabase/*        Auth 세션

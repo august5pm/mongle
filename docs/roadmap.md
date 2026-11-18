@@ -29,6 +29,7 @@
 - [x] 공유 미리보기 (OG · 트위터 카드)  
 - [x] E2E 스모크 테스트 (Playwright) + GitHub Actions  
 - [x] README 스크린샷 갱신 (디자인 개편 반영)  
+- [x] 감정 통계 (`/stats`)  
 
 ## 다음 우선순위
 
@@ -36,7 +37,7 @@
 
 - GitHub ↔ Vercel 자동 배포 연결 확인  
 - Google Cloud JS origin에 프로덕션 도메인 추가 (콘솔에서)  
-- 감정 통계 · About 페이지  
+- About 페이지  
 ## 참고 · 주의
 
 개발 서버(`next dev`) 실행 중 `npm run build`를 돌리면 `.next`가 깨질 수 있습니다.
