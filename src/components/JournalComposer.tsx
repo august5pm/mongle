@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Check, Search } from "lucide-react";
-import type { User } from "@supabase/supabase-js";
 import {
   allMedia,
   getMediaById,
@@ -19,7 +18,8 @@ import {
   fetchJournalById,
   updateJournalEntry,
 } from "@/lib/journal";
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { useAuthUser } from "@/lib/auth-user";
 
 type Step = "pick" | "feel" | "note";
 
@@ -31,8 +31,7 @@ export function JournalComposer() {
   const isEdit = Boolean(editId);
   const localPreset = presetId ? getMediaById(presetId) : undefined;
 
-  const [user, setUser] = useState<User | null>(null);
-  const [authReady, setAuthReady] = useState(false);
+  const { user, ready: authReady } = useAuthUser();
   const [editReady, setEditReady] = useState(!editId);
   const [media, setMedia] = useState<MediaItem | undefined>(localPreset);
   const [step, setStep] = useState<Step>(localPreset ? "feel" : "pick");
@@ -124,18 +123,6 @@ export function JournalComposer() {
       cancelled = true;
     };
   }, [editId, presetId, localPreset]);
-
-  useEffect(() => {
-    if (!isSupabaseConfigured()) {
-      setAuthReady(true);
-      return;
-    }
-    const supabase = createClient();
-    supabase.auth.getUser().then(({ data }) => {
-      setUser(data.user ?? null);
-      setAuthReady(true);
-    });
-  }, []);
 
   useEffect(() => {
     if (!authReady) return;

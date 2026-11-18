@@ -23,7 +23,8 @@ import {
   fetchLikeStates,
   type LikeState,
 } from "@/lib/journal-likes";
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { getCurrentUser } from "@/lib/auth-user";
 
 const emotionIcons: Record<string, typeof Sparkles> = {
   "순수한 경이": Sparkles,
@@ -59,22 +60,16 @@ export function ArchiveClient() {
         return;
       }
 
-      const supabase = createClient();
-      const {
-        data: { user: u },
-      } = await supabase.auth.getUser();
+      const u = await getCurrentUser();
       setUser(u);
 
-      const publicFeed = await fetchPublicJournals();
+      // 공개 피드와 내 기록은 서로 기다릴 필요가 없다
+      const [publicFeed, mine] = await Promise.all([
+        fetchPublicJournals(),
+        u ? fetchMyJournals() : Promise.resolve([] as JournalEntry[]),
+      ]);
       setAllEntries(publicFeed);
-
-      let mine: JournalEntry[] = [];
-      if (u) {
-        mine = await fetchMyJournals();
-        setMyEntries(mine);
-      } else {
-        setMyEntries([]);
-      }
+      setMyEntries(mine);
 
       const ids = [
         ...publicFeed.map((e) => e.id),

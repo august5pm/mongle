@@ -39,8 +39,9 @@ src/
     emotion-colors.ts     # 감정 색 (--emotion-*) 매핑
     journal-likes.ts      # 좋아요 토글·카운트
     wishlist.ts           # 찜 CRUD
-    supabase/             # client / server / middleware
-src/middleware.ts         # 세션 쿠키 갱신
+    auth-user.ts          # 로그인 사용자 공용 저장소 (useAuthUser / getCurrentUser)
+    safe-redirect.ts      # ?next= 경로 검증 (오픈 리다이렉트 방지)
+    supabase/             # client(브라우저) / server(로그인 콜백 전용)
 supabase/migrations/      # journals · wishlists · journal_likes
 docs/
 ```
@@ -51,7 +52,8 @@ docs/
 |------|------|
 | 로그인 | Google OAuth via Supabase (`/login`) |
 | 콜백 | `/auth/callback` |
-| 세션 | `@supabase/ssr` + `middleware` 쿠키 갱신 |
+| 세션 | `@supabase/ssr` 브라우저 클라이언트가 쿠키에 저장·자동 갱신. 미들웨어 없음 — 서버에서 세션을 읽는 곳은 `/auth/callback`뿐 |
+| 로그인 사용자 | `lib/auth-user.ts` — `onAuthStateChange` 구독 하나를 앱 전체가 공유 (`useAuthUser` 훅, 데이터 함수는 `getCurrentUser`). `auth.getUser()`는 매번 Auth 서버에 요청하므로 쓰지 않음 |
 | 저널 | `public.journals` — **조회 공개**, 작성/수정/삭제 본인만 (RLS) |
 | 위시리스트 | `public.wishlists` — 본인만 SELECT/INSERT/DELETE |
 | 좋아요 | `public.journal_likes` — **조회 공개**, 추가/삭제 본인만 |

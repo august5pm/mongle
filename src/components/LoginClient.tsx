@@ -5,10 +5,11 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { safeNextPath } from "@/lib/safe-redirect";
 
 export function LoginClient() {
   const searchParams = useSearchParams();
-  const next = searchParams.get("next") ?? "/archive";
+  const next = safeNextPath(searchParams.get("next"));
   const err = searchParams.get("error");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { User } from "@supabase/supabase-js";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { getCurrentUser } from "@/lib/auth-user";
 import { computeArchiveStats, fetchMyJournals } from "@/lib/journal";
 import {
   PROFILE_EMOJIS,
@@ -26,10 +27,7 @@ export function ProfileClient() {
         setReady(true);
         return;
       }
-      const supabase = createClient();
-      const {
-        data: { user: u },
-      } = await supabase.auth.getUser();
+      const u = await getCurrentUser();
       setUser(u);
       if (u) {
         const p = getMongleProfile(u);
@@ -87,7 +85,7 @@ export function ProfileClient() {
       }
       setEditing(false);
       setMessage("프로필을 저장했어요.");
-      window.dispatchEvent(new Event("mongle-profile-updated"));
+      // 상단바 아바타는 USER_UPDATED 이벤트로 공용 저장소(auth-user)가 갱신한다
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "저장에 실패했어요.");
     } finally {

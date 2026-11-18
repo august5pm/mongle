@@ -4,13 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PenLine } from "lucide-react";
-import type { User } from "@supabase/supabase-js";
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { useAuthUser } from "@/lib/auth-user";
 
 export function JournalFab() {
   const pathname = usePathname();
   const [showOnScroll, setShowOnScroll] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
+  const { user } = useAuthUser();
   const isArchive = pathname === "/archive";
 
   useEffect(() => {
@@ -26,12 +25,6 @@ export function JournalFab() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [isArchive]);
-
-  useEffect(() => {
-    if (!isSupabaseConfigured()) return;
-    const supabase = createClient();
-    supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
-  }, []);
 
   if (!isArchive) return null;
 

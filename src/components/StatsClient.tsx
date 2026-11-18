@@ -16,7 +16,8 @@ import {
   type MonthBucket,
 } from "@/lib/journal-stats";
 import { EMOTION_COLOR } from "@/lib/emotion-colors";
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { getCurrentUser } from "@/lib/auth-user";
 
 const LABELS = Object.fromEntries(
   sentiments.map((s) => [s.id, s.label]),
@@ -42,10 +43,7 @@ export function StatsClient() {
           if (!cancelled) setAllEntries(getSeedJournals());
           return;
         }
-        const supabase = createClient();
-        const {
-          data: { user: u },
-        } = await supabase.auth.getUser();
+        const u = await getCurrentUser();
         const [publicFeed, mine] = await Promise.all([
           fetchPublicJournals(),
           u ? fetchMyJournals() : Promise.resolve([]),

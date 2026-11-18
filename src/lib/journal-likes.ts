@@ -1,4 +1,5 @@
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { getCurrentUser } from "@/lib/auth-user";
 
 export type LikeState = {
   count: number;
@@ -23,9 +24,7 @@ export async function fetchLikeStates(
   if (!ids.length || !isSupabaseConfigured()) return empty;
 
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   const { data, error } = await supabase
     .from("journal_likes")
@@ -55,9 +54,7 @@ export async function toggleJournalLike(
   }
 
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) throw new Error("로그인이 필요합니다.");
 
   const { data: existing, error: findError } = await supabase

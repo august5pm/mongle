@@ -6,6 +6,7 @@ import {
   type Sentiment,
 } from "@/data/mock";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { getCurrentUser } from "@/lib/auth-user";
 import { getMongleProfile } from "@/lib/profile";
 
 export type JournalRow = {
@@ -109,9 +110,7 @@ export async function fetchPublicJournals(): Promise<JournalEntry[]> {
 export async function fetchMyJournals(): Promise<JournalEntry[]> {
   if (!isSupabaseConfigured()) return [];
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) return [];
 
   const { data, error } = await supabase
@@ -139,9 +138,7 @@ export async function addJournalEntry(input: {
   }
 
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) throw new Error("로그인이 필요합니다.");
 
   const profile = getMongleProfile(user);
@@ -173,9 +170,7 @@ export async function fetchJournalById(
 ): Promise<JournalEntry | null> {
   if (!isSupabaseConfigured()) return null;
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) return null;
 
   const { data, error } = await supabase
@@ -200,9 +195,7 @@ export async function updateJournalEntry(
     throw new Error("Supabase가 설정되지 않았습니다.");
   }
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) throw new Error("로그인이 필요합니다.");
 
   const trimmed = input.note.trim();
@@ -232,9 +225,7 @@ export async function deleteJournalEntry(id: string): Promise<void> {
     throw new Error("Supabase가 설정되지 않았습니다.");
   }
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) throw new Error("로그인이 필요합니다.");
 
   const { error } = await supabase

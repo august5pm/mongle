@@ -1,5 +1,6 @@
 import type { MediaType } from "@/data/mock";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { getCurrentUser } from "@/lib/auth-user";
 
 export type WishlistRow = {
   id: string;
@@ -25,9 +26,7 @@ export function isWishlistConfigured() {
 export async function fetchMyWishlist(): Promise<WishlistRow[]> {
   if (!isSupabaseConfigured()) return [];
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) return [];
 
   const { data, error } = await supabase
@@ -43,9 +42,7 @@ export async function fetchMyWishlist(): Promise<WishlistRow[]> {
 export async function isInWishlist(mediaId: string): Promise<boolean> {
   if (!isSupabaseConfigured()) return false;
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) return false;
 
   const { data, error } = await supabase
@@ -64,9 +61,7 @@ export async function addToWishlist(input: WishlistInput): Promise<void> {
     throw new Error("Supabase가 설정되지 않았습니다.");
   }
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) throw new Error("로그인이 필요합니다.");
 
   const { error } = await supabase.from("wishlists").insert({
@@ -85,9 +80,7 @@ export async function removeFromWishlist(mediaId: string): Promise<void> {
     throw new Error("Supabase가 설정되지 않았습니다.");
   }
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (!user) throw new Error("로그인이 필요합니다.");
 
   const { error } = await supabase

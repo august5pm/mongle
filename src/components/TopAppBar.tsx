@@ -5,8 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowLeft, Search } from "lucide-react";
-import type { User } from "@supabase/supabase-js";
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { useAuthUser } from "@/lib/auth-user";
 import { getMongleProfile } from "@/lib/profile";
 import { WishlistButton } from "@/components/WishlistButton";
 import { NAV_TABS, isTabActive } from "@/components/nav-tabs";
@@ -18,33 +17,12 @@ export function TopAppBar() {
   const router = useRouter();
   const isDetail = pathname.startsWith("/movie/");
   const detailId = isDetail ? decodeURIComponent(pathname.slice("/movie/".length)) : null;
-  const [user, setUser] = useState<User | null>(null);
+  const { user } = useAuthUser();
   const [detailMeta, setDetailMeta] = useState<{
     title: string;
     posterPath?: string;
     mediaType: "movie" | "tv";
   } | null>(null);
-
-  useEffect(() => {
-    if (!isSupabaseConfigured()) return;
-    const supabase = createClient();
-    supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    const onProfileUpdated = () => {
-      supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
-    };
-    window.addEventListener("mongle-profile-updated", onProfileUpdated);
-
-    return () => {
-      subscription.unsubscribe();
-      window.removeEventListener("mongle-profile-updated", onProfileUpdated);
-    };
-  }, []);
 
   useEffect(() => {
     if (!detailId) {

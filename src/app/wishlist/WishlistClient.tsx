@@ -7,7 +7,8 @@ import { Bookmark } from "lucide-react";
 import type { MediaItem } from "@/data/mock";
 import { MediaVisual } from "@/components/MediaVisual";
 import { WishlistButton } from "@/components/WishlistButton";
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { getCurrentUser } from "@/lib/auth-user";
 import { fetchMyWishlist, type WishlistRow } from "@/lib/wishlist";
 
 function rowToMedia(row: WishlistRow): MediaItem {
@@ -36,10 +37,7 @@ export function WishlistClient() {
       setReady(true);
       return;
     }
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const user = await getCurrentUser();
     setLoggedIn(Boolean(user));
     if (!user) {
       setRows([]);

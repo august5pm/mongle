@@ -84,7 +84,7 @@ npm run dev
 | 테이블 | `public.journals` — SELECT 공개, INSERT/UPDATE/DELETE 본인만 |
 | 테이블 | `public.wishlists` — SELECT/INSERT/DELETE 본인만 |
 | 테이블 | `public.journal_likes` — SELECT 공개, INSERT/DELETE 본인만 |
-| 미들웨어 | 세션 쿠키 갱신 (`src/middleware.ts`) |
+| 세션 | 브라우저 클라이언트가 쿠키에 저장·자동 갱신 (미들웨어 없음). 로그인 뒤 `?next=`는 같은 사이트 경로만 허용 |
 | 비로그인 아카이브 | 시드 미리보기 + 로그인 CTA |
 | 로그인 아카이브 | DB의 내 기록만 |
 

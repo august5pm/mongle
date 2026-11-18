@@ -4,7 +4,8 @@ import { useEffect, useState, useTransition } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Bookmark, Heart } from "lucide-react";
 import type { MediaType } from "@/data/mock";
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { getCurrentUser } from "@/lib/auth-user";
 import {
   isInWishlist,
   toggleWishlist,
@@ -46,14 +47,7 @@ export function WishlistButton({
         return;
       }
       try {
-        const supabase = createClient();
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (!user || cancelled) {
-          if (!cancelled) setReady(true);
-          return;
-        }
+        // 로그인 전이면 false
         const inList = await isInWishlist(mediaId);
         if (!cancelled) setSaved(inList);
       } catch {
@@ -76,10 +70,7 @@ export function WishlistButton({
 
     startTransition(async () => {
       try {
-        const supabase = createClient();
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
+        const user = await getCurrentUser();
         if (!user) {
           router.push(`/login?next=${encodeURIComponent(pathname)}`);
           return;
