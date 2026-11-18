@@ -19,7 +19,7 @@
 
 ### SiteFooter
 
-- 페이지 하단 (모바일에서는 BottomNav 위): 몽글 워드마크 + `© {year} by august5pm. All rights reserved.`
+- 페이지 하단 (모바일에서는 BottomNav 위): 몽글 워드마크 + 「몽글 소개」(`/about`) 링크 + `© {year} by august5pm. All rights reserved.`
 - GitHub: https://github.com/august5pm
 - **TMDB 출처 표기 (필수):** TMDB 공식 로고(`public/tmdb-logo.svg`, Alt short 원본, themoviedb.org 링크) + 고지문
   `This website uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.`
@@ -116,6 +116,16 @@ Google OAuth (`LoginClient`) → `/auth/callback`
 - CTA: 몽글 기록하기 → `/journal/new?mediaId=` (미로그인 시 작성 화면에서 로그인으로 보냄)  
 - 위시리스트 토글 (`WishlistButton`)  
 - 줄거리 · 감독 · 출연 · 관련 작품(TMDB 트렌딩)  
+
+## `/about` 몽글 소개
+
+정적 페이지 (서버 컴포넌트), 진입은 푸터 「몽글 소개」
+
+- 머리말: 클라우드 + 「영화가 끝난 뒤에 남는 감정을 기록하는 곳」 + 둘러보기 / 모두의 몽글 읽기  
+- **이렇게 써요:** 고르기(`/explore`) → 기록하기(`/journal/new`) → 돌아보기(`/stats`) 3단계 카드  
+- **네 가지 감정:** `sentiments` 설명 + 통계와 같은 감정 색  
+- **알아 두면 좋은 것:** 공개 범위(몽글은 닉네임·이모지와 함께 공개, 이메일 비공개, 위시리스트는 나만) · Google 로그인 · TMDB 출처 · 만든 사람/GitHub  
+- 자체 OG(`og:url` = `/about`)
 
 ## `/profile` 프로필
 

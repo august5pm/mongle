@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -8,6 +9,12 @@ export function SiteFooter() {
       <p className="font-brand text-xl tracking-wide text-on-surface/80">
         몽글
       </p>
+      <Link
+        href="/about"
+        className="mt-1.5 inline-block text-[13px] text-on-surface-variant transition-colors duration-fast hover:text-on-surface"
+      >
+        몽글 소개
+      </Link>
       <p className="mt-2.5 text-[12px] leading-relaxed tracking-wide text-on-surface-variant/65">
         © {year} by{" "}
         <a

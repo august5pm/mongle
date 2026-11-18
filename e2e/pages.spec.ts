@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { MOCK_MEDIA_ID, collectPageErrors } from "./helpers";
 
 test.describe("페이지 렌더링", () => {
-  for (const path of ["/", "/explore", "/archive", `/movie/${MOCK_MEDIA_ID}`, "/profile", "/login", "/stats"]) {
+  for (const path of ["/", "/explore", "/archive", `/movie/${MOCK_MEDIA_ID}`, "/profile", "/login", "/stats", "/about"]) {
     test(`${path} 가 예외 없이 열린다`, async ({ page }) => {
       const errors = collectPageErrors(page);
       const res = await page.goto(path);

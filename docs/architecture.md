@@ -10,6 +10,7 @@ src/
     explore/
     archive/              # ArchiveClient
     stats/                # 감정 통계 (StatsClient)
+    about/                # 몽글 소개 (정적)
     wishlist/
     movie/[id]/
     journal/new/          # 작성·수정 (로그인 필요)
@@ -35,6 +36,7 @@ src/
     tmdb-image.ts         # 포스터 URL · blur placeholder
     journal.ts            # journals CRUD
     journal-stats.ts      # 감정·월·장르 집계 (순수 함수)
+    emotion-colors.ts     # 감정 색 (--emotion-*) 매핑
     journal-likes.ts      # 좋아요 토글·카운트
     wishlist.ts           # 찜 CRUD
     supabase/             # client / server / middleware
@@ -66,6 +68,7 @@ docs/
 | `/explore` | TMDB 검색·트렌딩 |
 | `/archive` | 공개 피드 / 내 몽글, 좋아요 |
 | `/stats` | 감정 통계 (내 몽글 / 모두의 몽글) |
+| `/about` | 몽글 소개 (정적) |
 | `/wishlist` | 찜 목록 (로그인) |
 | `/journal/new` | 작성·`?edit=` 수정, 미로그인 시 `/login` |
 | `/login` | Google 버튼 |

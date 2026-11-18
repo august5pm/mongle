@@ -15,15 +15,8 @@ import {
   type EmotionStats,
   type MonthBucket,
 } from "@/lib/journal-stats";
+import { EMOTION_COLOR } from "@/lib/emotion-colors";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
-
-/** globals.css --emotion-* — 쌓는 순서(SENTIMENT_ORDER)와 함께 검증한 색 */
-const EMOTION_COLOR: Record<Sentiment, string> = {
-  Dreamy: "var(--emotion-dreamy)",
-  Warm: "var(--emotion-warm)",
-  Intense: "var(--emotion-intense)",
-  Soft: "var(--emotion-soft)",
-};
 
 const LABELS = Object.fromEntries(
   sentiments.map((s) => [s.id, s.label]),

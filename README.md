@@ -78,6 +78,7 @@ npm run dev
 | `/explore` | 검색, 감정/분위기 칩, 트렌딩 벤토 |
 | `/archive` | 모두의 몽글 / 내 몽글, 좋아요, 수정·삭제 |
 | `/stats` | 감정 분포, 최근 6개월 감정 흐름, 자주 기록한 장르 |
+| `/about` | 몽글 소개, 이용 흐름, 네 가지 감정, 공개 범위·데이터 출처 |
 | `/journal/new` | 작품 선택 → 감정 → 한 줄 메모 (`?edit=` 수정) |
 | `/wishlist` | 찜한 작품 목록 (로그인) |
 | `/movie/[id]` | 상세, 위시리스트, 기록하기 |
@@ -118,7 +119,7 @@ npm run test:e2e  # E2E 스모크 테스트 (빌드 후 데스크톱·모바일 
 - 데스크톱 상단 탭 / 모바일 하단 탭바, 홈 키비주얼 비율·이미지 선택
 - 스크롤 등장 · 이미지 로드 · 상단바 스크림 · 포스터 호버 · 진행 바 · 움직임 줄이기
 - 포스터 → 상세 View Transition
-- 감정 통계 (분포·월별 막대 툴팁·표 보기·아카이브 진입)
+- 감정 통계 (분포·월별 막대 툴팁·표 보기·아카이브 진입), 몽글 소개
 
 처음 한 번 `npx playwright install chromium`. 실패 시 `npx playwright show-report`.
 GitHub Actions(`.github/workflows/e2e.yml`)가 `main` 푸시·PR마다 lint·타입 체크와 함께 돌립니다.
